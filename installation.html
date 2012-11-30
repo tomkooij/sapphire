@@ -57,32 +57,31 @@
   <div class="section" id="installation">
 <h1>1. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>In theory, installing a Python package should be as easy as py.  Er, pie.
-Using Pip.  Like so:</p>
+Using <a class="reference external" href="http://www.pip-installer.org/">Pip</a>.  Like so:</p>
 <div class="highlight-python"><pre>$ pip install sapphire</pre>
 </div>
 <p>Then, the python package called <tt class="docutils literal"><span class="pre">sapphire</span></tt> would be retrieved from the
 internet.  It would have its dependencies listed and <tt class="docutils literal"><span class="pre">pip</span></tt> would pull
-them in and all should be well.  In fact, sapphire <em>does</em> have its
+them in and all should be well.  In fact, SAPPHiRE <em>does</em> have its
 dependencies listed and pip <em>will</em> pull them in.  It is only then, that
 things start go wrong.  Whether you&#8217;ll experience difficulties depends on
 the operating system you&#8217;re using and previously installed software.
-Before I&#8217;ll go on describing how to install sapphire itself, we will first
+Before I&#8217;ll go on describing how to install SAPPHiRE itself, we will first
 install the prerequisites.</p>
+<div class="section" id="installing-the-prerequisites">
+<h2>1.1. Installing the prerequisites<a class="headerlink" href="#installing-the-prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>Follow the instructions below for your operating system of choice.</p>
 <div class="section" id="mac-os-x">
-<h2>1.1. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
-<p>Homebrew + pip</p>
+<h3>1.1.1. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h3>
+<p>If you&#8217;re using Mac OS X, the easiest way to install open source software
+(like Python, the program language we&#8217;re using) including lots and lots of
+great packages, is done using <a class="reference external" href="http://mxcl.github.com/homebrew/">Homebrew</a>.  Please follow the installation
+instructions (really easy) and when done, type the following into a
+terminal:</p>
+<div class="highlight-python"><pre>$ brew install python</pre>
 </div>
-<div class="section" id="windows">
-<h2>1.2. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
-<p>Python(x,y)</p>
-</div>
-<div class="section" id="debian-ubuntu">
-<h2>1.3. Debian / Ubuntu<a class="headerlink" href="#debian-ubuntu" title="Permalink to this headline">¶</a></h2>
-<p>apt-get + pip</p>
-</div>
-<div class="section" id="using-pip">
-<h2>1.4. Using pip<a class="headerlink" href="#using-pip" title="Permalink to this headline">¶</a></h2>
-<p>As of this writing, several of the dependencies listed by sapphire do not
+<p>This will install Python and Pip.</p>
+<p>As of this writing, several of the dependencies listed by SAPPHiRE do not
 have their own dependencies listed in a way that pip (or other tools, for
 that matter) know how to handle.  Furthermore, matplotlib needs to be
 installed all by itself, and its dependencies must be installed before it.</p>
@@ -93,9 +92,48 @@ $ pip install numexpr
 $ pip install cython
 $ pip install matplotlib</pre>
 </div>
+<p>There are more prerequisites to be installed, but they are correctly
+handled by the python package management software.</p>
+</div>
+<div class="section" id="windows">
+<h3>1.1.2. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>While Python follows a <em>batteries included</em> philosophy with an extensive
+standard library, the unix philosophy favors minimalism.  Therefore, it is
+custom to install Python and then continue to install additional packages
+as needed.  Not so with Windows.  Windows does not have a package manager
+which can handle many software packages.  Instead, it favors installing
+relatively few software packages encompassing lots of functionality.
+Installing a package requires running a separate installer.</p>
+<p>Luckily, the <a class="reference external" href="http://code.google.com/p/pythonxy/">Python(x,y)</a> project
+solves this problem by installing not only Python, but a complete
+scientific environment.  This means that all are prerequisites are
+automatically covered.  Please install Python(x,y).</p>
+</div>
+<div class="section" id="debian-and-derivatives-like-ubuntu">
+<h3>1.1.3. Debian and derivatives (like Ubuntu)<a class="headerlink" href="#debian-and-derivatives-like-ubuntu" title="Permalink to this headline">¶</a></h3>
+<p>Debian has a first-class package manager which other distributions and
+operating systems have a hard time competing with.  In my personal
+opinion, anyway.  Lots of python packages can be installed using
+<tt class="docutils literal"><span class="pre">apt-get</span></tt>, but some of them are outdated.  Use <tt class="docutils literal"><span class="pre">apt-get</span></tt> for python
+pacakges at your own discretion (read: risk).  Pip handles python packages
+very well, so I&#8217;ll give some instructions using Pip.</p>
+<p>As of this writing, several of the dependencies listed by SAPPHiRE do not
+have their own dependencies listed in a way that pip (or other tools, for
+that matter) know how to handle.  Furthermore, matplotlib needs to be
+installed all by itself, and its dependencies must be installed before it.</p>
+<p>After trial and error, this is the magic incantation which works on my
+system:</p>
+<div class="highlight-python"><pre>$ pip install numpy
+$ pip install numexpr
+$ pip install cython
+$ pip install matplotlib</pre>
+</div>
+<p>There are more prerequisites to be installed, but they are correctly
+handled by the python package management software.</p>
+</div>
 </div>
 <div class="section" id="installing-sapphire">
-<h2>1.5. Installing sapphire<a class="headerlink" href="#installing-sapphire" title="Permalink to this headline">¶</a></h2>
+<h2>1.2. Installing SAPPHiRE<a class="headerlink" href="#installing-sapphire" title="Permalink to this headline">¶</a></h2>
 <p>Like so:</p>
 <div class="highlight-python"><pre>$ python setup.py install</pre>
 </div>
@@ -111,11 +149,13 @@ $ pip install matplotlib</pre>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">1. Installation</a><ul>
-<li><a class="reference internal" href="#mac-os-x">1.1. Mac OS X</a></li>
-<li><a class="reference internal" href="#windows">1.2. Windows</a></li>
-<li><a class="reference internal" href="#debian-ubuntu">1.3. Debian / Ubuntu</a></li>
-<li><a class="reference internal" href="#using-pip">1.4. Using pip</a></li>
-<li><a class="reference internal" href="#installing-sapphire">1.5. Installing sapphire</a></li>
+<li><a class="reference internal" href="#installing-the-prerequisites">1.1. Installing the prerequisites</a><ul>
+<li><a class="reference internal" href="#mac-os-x">1.1.1. Mac OS X</a></li>
+<li><a class="reference internal" href="#windows">1.1.2. Windows</a></li>
+<li><a class="reference internal" href="#debian-and-derivatives-like-ubuntu">1.1.3. Debian and derivatives (like Ubuntu)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installing-sapphire">1.2. Installing SAPPHiRE</a></li>
 </ul>
 </li>
 </ul>
