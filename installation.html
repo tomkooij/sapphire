@@ -65,9 +65,9 @@ internet.  It would have its dependencies listed and <tt class="docutils literal
 them in and all should be well.  In fact, SAPPHiRE <em>does</em> have its
 dependencies listed and pip <em>will</em> pull them in.  It is only then, that
 things start go wrong.  Whether you&#8217;ll experience difficulties depends on
-the operating system you&#8217;re using and previously installed software.
-Before I&#8217;ll go on describing how to install SAPPHiRE itself, we will first
-install the prerequisites.</p>
+the operating system you&#8217;re using and any previously installed software.
+But don&#8217;t worry, we&#8217;ve got you covered.  Before I&#8217;ll go on describing how
+to install SAPPHiRE itself, we will first install the prerequisites.</p>
 <div class="section" id="installing-the-prerequisites">
 <h2>1.1. Installing the prerequisites<a class="headerlink" href="#installing-the-prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>Follow the instructions below for your operating system of choice.</p>
@@ -75,7 +75,7 @@ install the prerequisites.</p>
 <h3>1.1.1. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h3>
 <p>If you&#8217;re using Mac OS X, the easiest way to install open source software
 (like Python, the program language we&#8217;re using) including lots and lots of
-great packages, is done using <a class="reference external" href="http://mxcl.github.com/homebrew/">Homebrew</a>.  Please follow the installation
+great packages, is done using <a class="reference external" href="https://mxcl.github.com/homebrew/">Homebrew</a>.  Please follow the installation
 instructions (really easy) and when done, type the following into a
 terminal:</p>
 <div class="highlight-python"><pre>$ brew install python</pre>
@@ -114,19 +114,28 @@ automatically covered.  Please install Python(x,y).</p>
 <p>Debian has a first-class package manager which other distributions and
 operating systems have a hard time competing with.  In my personal
 opinion, anyway.  Lots of python packages can be installed using
-<tt class="docutils literal"><span class="pre">apt-get</span></tt>, but some of them are outdated.  Use <tt class="docutils literal"><span class="pre">apt-get</span></tt> for python
-pacakges at your own discretion (read: risk).  Pip handles python packages
-very well, so I&#8217;ll give some instructions using Pip.</p>
+<tt class="docutils literal"><span class="pre">apt-get</span></tt>, but some of them might be outdated, depending on the age of
+your distribution.  Use <tt class="docutils literal"><span class="pre">apt-get</span></tt> for python pacakges at your own
+discretion (read: risk).  Pip handles python packages very well, so I&#8217;ll
+give some instructions using Pip.</p>
 <p>As of this writing, several of the dependencies listed by SAPPHiRE do not
 have their own dependencies listed in a way that pip (or other tools, for
 that matter) know how to handle.  Furthermore, matplotlib needs to be
 installed all by itself, and its dependencies must be installed before it.</p>
+<p>You need to install some development libraries:</p>
+<div class="highlight-python"><pre>$ sudo apt-get install gfortran
+$ sudo apt-get install python-dev
+$ sudo apt-get install libfreetype6-dev
+$ sudo apt-get install libpng-dev
+$ sudo apt-get install libatlas-base-dev
+$ sudo apt-get install libhdf5-dev</pre>
+</div>
 <p>After trial and error, this is the magic incantation which works on my
 system:</p>
-<div class="highlight-python"><pre>$ pip install numpy
-$ pip install numexpr
-$ pip install cython
-$ pip install matplotlib</pre>
+<div class="highlight-python"><pre>$ sudo pip install numpy
+$ sudo pip install numexpr
+$ sudo pip install cython
+$ sudo pip install matplotlib</pre>
 </div>
 <p>There are more prerequisites to be installed, but they are correctly
 handled by the python package management software.</p>
@@ -134,8 +143,63 @@ handled by the python package management software.</p>
 </div>
 <div class="section" id="installing-sapphire">
 <h2>1.2. Installing SAPPHiRE<a class="headerlink" href="#installing-sapphire" title="Permalink to this headline">¶</a></h2>
-<p>Like so:</p>
+<p>When SAPPHiRE reaches 1.0, we will upload it to <a class="reference external" href="http://pypi.python.org">PyPI</a> so that Pip knows where to find it.  That is
+currently, however, not the case.</p>
+<p>There are two scenarios for installing SAPPHiRE: with or without
+fetching the code.</p>
+<div class="section" id="just-let-me-get-to-work">
+<h3>1.2.1. Just let me get to work!<a class="headerlink" href="#just-let-me-get-to-work" title="Permalink to this headline">¶</a></h3>
+<p>This scenario does not involve fetching the code.  It will just install
+SAPPHiRE, so that you can get to work.  Quickly, issue:</p>
+<blockquote>
+<div>$ pip install <a class="reference external" href="https://github.com/hisparc/sapphire/zipball/master">https://github.com/hisparc/sapphire/zipball/master</a></div></blockquote>
+<p>Done.  Now get to work.</p>
+</div>
+<div class="section" id="let-me-see-the-code">
+<h3>1.2.2. Let me see the code!<a class="headerlink" href="#let-me-see-the-code" title="Permalink to this headline">¶</a></h3>
+<p>You want to see the code so that you can change it, or follow the progress
+of SAPPHiRE.  If you&#8217;re interested in the development of SAPPHiRE, you
+can either go to the <a class="reference external" href="https://github.com/hisparc/sapphire/">GitHub page</a>
+or install the version control system (we use <a class="reference external" href="http://git-scm.com">Git</a>
+yourself.  For that, please see the <a class="reference external" href="https://help.github.com/articles/set-up-git">GitHub Help pages</a>.</p>
+<p>To just download the code and install SAPPHiRE, first go to
+<a class="reference external" href="https://github.com/hisparc/sapphire/">https://github.com/hisparc/sapphire/</a>.  Then, click on the <em>Zip</em> button
+(see image below).  This will start a download of all the code bundled in
+a zip file.</p>
+<img alt="_images/github-zipball.png" src="_images/github-zipball.png" />
+<p>Uncompress the zip file, open a terminal and navigate to the top-level
+directory containing the code.  Then issue:</p>
 <div class="highlight-python"><pre>$ python setup.py install</pre>
+</div>
+<p>This takes care of installing the missing dependencies and SAPPHiRE
+itself.</p>
+</div>
+</div>
+<div class="section" id="checking-that-sapphire-is-installed-correctly">
+<h2>1.3. Checking that SAPPHiRE is installed correctly<a class="headerlink" href="#checking-that-sapphire-is-installed-correctly" title="Permalink to this headline">¶</a></h2>
+<p>First off, the following is not an exhaustive check.  But it will tell you
+if SAPPHiRE is, in fact, installed on your system and that Python knows
+how to find it.</p>
+<p>Start a Python session.  You can use a launcher of some type (e.g. the one
+from Python(x,y)), or open a terminal and type:</p>
+<div class="highlight-python"><pre>$ python</pre>
+</div>
+<p>Or, if you prefer, <a class="reference external" href="http://ipython.org">IPython</a>:</p>
+<div class="highlight-python"><pre>$ ipython</pre>
+</div>
+<p>In fact, we recommend using IPython for interactive use.  Then, try to
+import SAPPHiRE:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sapphire</span>
+</pre></div>
+</div>
+<p>If this returns without an error message, all is well and SAPPHiRE is
+correctly installed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When you run this check from <em>inside the |sapphire| code
+directory</em>, it will always return successfully.  The reason for
+this is that Python also checks the current working directory
+for packges.  So, run this check from e.g. your home directory.</p>
 </div>
 </div>
 </div>
@@ -155,7 +219,12 @@ handled by the python package management software.</p>
 <li><a class="reference internal" href="#debian-and-derivatives-like-ubuntu">1.1.3. Debian and derivatives (like Ubuntu)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#installing-sapphire">1.2. Installing SAPPHiRE</a></li>
+<li><a class="reference internal" href="#installing-sapphire">1.2. Installing SAPPHiRE</a><ul>
+<li><a class="reference internal" href="#just-let-me-get-to-work">1.2.1. Just let me get to work!</a></li>
+<li><a class="reference internal" href="#let-me-see-the-code">1.2.2. Let me see the code!</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#checking-that-sapphire-is-installed-correctly">1.3. Checking that SAPPHiRE is installed correctly</a></li>
 </ul>
 </li>
 </ul>
