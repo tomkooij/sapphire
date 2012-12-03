@@ -98,7 +98,7 @@ handled by the Python package management software.</p>
 <div class="section" id="windows">
 <h3>1.1.2. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
 <p>While Python follows a <em>batteries included</em> philosophy with an extensive
-standard library, the unix philosophy favors minimalism.  Therefore, it is
+standard library, the Unix philosophy favors minimalism.  Therefore, it is
 custom to install Python and then continue to install additional packages
 as needed.  Not so with Windows.  Windows does not have a package manager
 which can handle many software packages.  Instead, it favors installing
@@ -106,8 +106,36 @@ relatively few software packages encompassing lots of functionality.
 Installing a package requires running a separate installer.</p>
 <p>Luckily, the <a class="reference external" href="http://code.google.com/p/pythonxy/">Python(x,y)</a> project
 solves this problem by installing not only Python, but a complete
-scientific environment.  This means that all are prerequisites are
+scientific environment.  This means that all our prerequisites are
 automatically covered.  Please install Python(x,y).</p>
+<p>In a Unix environment it is common to use the <em>terminal</em> for management
+tasks.  It is a text-only environment that lets you basically do anything.
+In windows, people are accustomed to performing all kinds of tasks using
+graphical interfaces.  However, these graphical interfaces are much harder
+to write than text-only interfaces.  As a result, graphical interfaces are
+usually somewhat limited.  Luckily, there <em>is</em> a terminal-like environment
+in Windows, called the <em>command prompt</em>.  You can open a command prompt in
+the following ways:</p>
+<blockquote>
+<div><p><strong>Windows XP:</strong>  Click Start.  Click Run.  Type <tt class="docutils literal"><span class="pre">cmd</span></tt> and press
+<em>Enter</em>.</p>
+<p><strong>Windows Vista, 7:</strong>  Click Start.  Type <tt class="docutils literal"><span class="pre">cmd</span></tt> and press <em>Enter</em>.</p>
+<p><strong>Windows 8:</strong>  From the Start Screen, type <tt class="docutils literal"><span class="pre">cmd</span></tt> and press <em>Enter</em>.</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>In the rest of this document, we will follow the Unix convention of
+displaying a dollar sign ($) whenever we work from a terminal.  In
+Unix environments, the dollar sign signifies the <em>command prompt</em>.  In
+Windows, the command prompt is something like <tt class="docutils literal"><span class="pre">c:\&gt;</span></tt>.  Thus, whenever
+you see:</p>
+<div class="highlight-python"><pre>$ pip install foo</pre>
+</div>
+<p>we mean that you should open a command window, and then type <tt class="docutils literal"><span class="pre">pip</span>
+<span class="pre">install</span> <span class="pre">foo</span></tt> at the prompt.  In Windows, this looks something like:</p>
+<div class="last highlight-python"><pre>c:\&gt; pip install foo</pre>
+</div>
+</div>
 </div>
 <div class="section" id="debian-and-derivatives-like-ubuntu">
 <h3>1.1.3. Debian and derivatives (like Ubuntu)<a class="headerlink" href="#debian-and-derivatives-like-ubuntu" title="Permalink to this headline">¶</a></h3>
@@ -128,7 +156,8 @@ $ sudo apt-get install python-dev
 $ sudo apt-get install libfreetype6-dev
 $ sudo apt-get install libpng-dev
 $ sudo apt-get install libatlas-base-dev
-$ sudo apt-get install libhdf5-dev</pre>
+$ sudo apt-get install libhdf5-dev
+$ sudo apt-get install tk-dev</pre>
 </div>
 <p>After trial and error, this is the magic incantation which works on my
 system:</p>
@@ -167,8 +196,10 @@ yourself.  For that, please see the <a class="reference external" href="https://
 (see image below).  This will start a download of all the code bundled in
 a zip file.</p>
 <img alt="_images/github-zipball.png" src="_images/github-zipball.png" />
-<p>Uncompress the zip file, open a terminal and navigate to the top-level
-directory containing the code.  Then issue:</p>
+<p>You can also click the following link:
+<a class="reference external" href="https://github.com/hisparc/sapphire/zipball/master">https://github.com/hisparc/sapphire/zipball/master</a>.  Uncompress the zip
+file, open a terminal and navigate to the top-level directory containing
+the code.  Then issue:</p>
 <div class="highlight-python"><pre>$ python setup.py install</pre>
 </div>
 <p>This takes care of installing the missing dependencies and SAPPHiRE
@@ -180,6 +211,14 @@ itself.</p>
 <p>First off, the following is not an exhaustive check.  But it will tell you
 if SAPPHiRE is, in fact, installed on your system and that Python knows
 how to find it.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When you run this check from <em>inside</em> the top-level SAPPHiRE
+code directory, it will always return successfully.  The reason
+for this is that Python also checks the current working
+directory for packges.  <em>So, run this check from e.g. your home
+directory.</em></p>
+</div>
 <p>Start a Python session.  You can use a launcher of some type (e.g. the one
 from Python(x,y)), or open a terminal and type:</p>
 <div class="highlight-python"><pre>$ python</pre>
@@ -187,21 +226,13 @@ from Python(x,y)), or open a terminal and type:</p>
 <p>Or, if you prefer, <a class="reference external" href="http://ipython.org">IPython</a>:</p>
 <div class="highlight-python"><pre>$ ipython</pre>
 </div>
-<p>In fact, we recommend using IPython for interactive use.  Then, try to
-import SAPPHiRE:</p>
+<p>In fact, we recommend using IPython for interactive use (install IPython
+using <tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">ipython</span></tt>).  Then, try to import SAPPHiRE:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sapphire</span>
 </pre></div>
 </div>
 <p>If this returns without an error message, all is well and SAPPHiRE is
 correctly installed.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When you run this check from <em>inside</em> the top-level SAPPHiRE
-code directory, it will always return successfully.  The reason
-for this is that Python also checks the current working
-directory for packges.  So, run this check from e.g. your home
-directory.</p>
-</div>
 </div>
 </div>
 
