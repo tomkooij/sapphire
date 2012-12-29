@@ -56,7 +56,232 @@
             
   <div class="section" id="tutorial">
 <h1>2. Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
-<p>TODO</p>
+<p>SAPPHiRE simplifies data access, simulations and analysis for the <a class="reference external" href="http://www.hisparc.nl">HiSPARC</a> experiment.  In this tutorial, we&#8217;ll try to give
+you a feeling for the things you can <em>do</em> with SAPPHiRE.  How can you
+download data?  How can you analyze this data?  How can you produce
+pulseheight histograms?  How can you calculate the direction of cosmic
+rays?  This tutorial will only give you an overview of what&#8217;s possible
+with SAPPHiRE.  For details on all available classes and methods, please
+see the <a class="reference internal" href="sapphire.html"><em>SAPPHiRE Reference</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We&#8217;ll require you to know some basic Python.  If not, you can look at
+the official <a class="reference external" href="http://docs.python.org/2/tutorial/">Python tutorial</a>.
+If you know how to start a Python interpreter, you can probably start
+best with chapter 3 and ignore chapter 2.  Chapters 3 through 6 should
+give you some working knowledge of Python.</p>
+</div>
+<div class="section" id="first-steps">
+<h2>2.1. First steps<a class="headerlink" href="#first-steps" title="Permalink to this headline">¶</a></h2>
+<p>In a few examples, we will plot the data which we have produced.  We make
+use of pylab, which is included with matplotlib.  In OS X and Linux, you
+can start an IPython terminal with pylab using:</p>
+<div class="highlight-python"><pre>$ ipython --pylab</pre>
+</div>
+<p>On Windows, where you&#8217;re probably using Python(x,y), this should be the
+default mode.</p>
+<p>Whenever you see something like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;Hello, world&#39;</span>
+<span class="go">Hello, world</span>
+</pre></div>
+</div>
+<p>it means we&#8217;re typing in Python code.  The <tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></tt> is the Python <em>prompt</em>.
+It tells you that the Python interpreter is waiting for you to give it
+some instructions.  In the above example, we&#8217;ve typed in <tt class="docutils literal"><span class="pre">print</span> <span class="pre">'Hello,</span>
+<span class="pre">world'</span></tt>.  The interpreter subsequently executed the code and printed
+<em>Hello, world</em> on the screen.  Some further examples (try them, if you
+like!):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">*</span> <span class="n">a</span>
+<span class="go">12</span>
+</pre></div>
+</div>
+<p>The first thing we&#8217;ll have to do to start using SAPPHiRE is to <em>import</em>
+the SAPPHiRE module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sapphire</span>
+</pre></div>
+</div>
+<p>There will be no output if everything is succesful.  It is easy to get
+some help from inside the Python terminal.  Just say:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">sapphire</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and you&#8217;ll be presented with a basic help screen.  Instead of
+<tt class="docutils literal"><span class="pre">sapphire</span></tt>, you can throw in modules, packages, functions, classes,
+objects, etc.  Everything in Python has <em>some</em> help text associated with
+it.  Not all of it is very helpful to a newcomer, hence this tutorial.
+All help text is also available in the <a class="reference internal" href="sapphire.html"><em>SAPPHiRE Reference</em></a>.</p>
+</div>
+<div class="section" id="downloading-and-accessing-hisparc-data">
+<h2>2.2. Downloading and accessing HiSPARC data<a class="headerlink" href="#downloading-and-accessing-hisparc-data" title="Permalink to this headline">¶</a></h2>
+<p>The SAPPHiRE package comprises multiple modules and packages.  To access
+data from the public database, we&#8217;ll have to import the <tt class="docutils literal"><span class="pre">publicdb</span></tt>
+module.  Also, we need the <tt class="docutils literal"><span class="pre">tables</span></tt> module to actually store the data.
+<a class="reference external" href="pytables.org">PyTables</a> is based on the open HDF5 data format, which is
+used by <a class="reference external" href="http://www.hdfgroup.org/HDF5/users5.html">many (research) institutes</a>.  For example, it is used by
+the KNMI and by NASA.  To specify the date and time for which to download
+the data, we need the <tt class="docutils literal"><span class="pre">datetime</span></tt> module.  Thus, we have:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">tables</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sapphire.publicdb</span>
+</pre></div>
+</div>
+<p>Creating an empty data file, with the name <tt class="docutils literal"><span class="pre">mydata.h5</span></tt>, is done easily:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">openFile</span><span class="p">(</span><span class="s">&#39;mydata.h5&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">'w'</span></tt> means <em>write</em>, which creates a file for writing (and reading).
+Mind that this will create an empty file.  If there already was a file
+with that name, it will be overwritten!  Alternatively, you can say
+<tt class="docutils literal"><span class="pre">'a'</span></tt>, which means <em>append</em>, thus adding to an existing file without
+overwriting its contents.  Finally, you can specify <tt class="docutils literal"><span class="pre">'r'</span></tt> for
+<em>read-only</em>.</p>
+<div class="section" id="downloading-data">
+<h3>2.2.1. Downloading data<a class="headerlink" href="#downloading-data" title="Permalink to this headline">¶</a></h3>
+<p>To download data, we have to specify the date/time <em>range</em>.  If we want to
+download data from the December 1, 2012 all through December 2, 2012,
+we can specify this by typing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Mind that if we do not specify the hour of day, it is taken to be 00:00
+hours.  Thus, there is no data included from December 3.  Alternatively,
+we can download data from a two hour interval on December 14 by specifying
+the hour of day:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>which is from 19:00 to 21:00 hours.  It is important to realize that the
+we use a GPS clock, which equal to UTC (up to leap seconds).  So, if we
+download data for a station in the Netherlands, we have just said from
+20:00 to 22:00 local time.  You can specify the time up to the seconds.</p>
+<p>We have not actually done anything yet.  We have just stored our time
+window in two arbitrarily-named variables, <tt class="docutils literal"><span class="pre">start</span></tt> and <tt class="docutils literal"><span class="pre">end</span></tt>.  To
+download data from station 501 and store it in a group with name <tt class="docutils literal"><span class="pre">s501</span></tt>,
+we can use the <a class="reference internal" href="publicdb.html#sapphire.publicdb.download_data" title="sapphire.publicdb.download_data"><tt class="xref py py-func docutils literal"><span class="pre">sapphire.publicdb.download_data()</span></tt></a> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">publicdb</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/s501&#39;</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+<span class="go">INFO:hisparc.publicdb:2012-12-01 00:00:00 None</span>
+<span class="go">INFO:hisparc.publicdb:Getting server data URL (2012-12-01 00:00:00)</span>
+<span class="go">INFO:hisparc.publicdb:Downloading data...</span>
+<span class="go">INFO:hisparc.publicdb:Storing data...</span>
+<span class="go">INFO:hisparc.publicdb:Done.</span>
+<span class="go">INFO:hisparc.publicdb:2012-12-02 00:00:00 None</span>
+<span class="go">INFO:hisparc.publicdb:Getting server data URL (2012-12-02 00:00:00)</span>
+<span class="go">INFO:hisparc.publicdb:Downloading data...</span>
+<span class="go">INFO:hisparc.publicdb:Storing data...</span>
+<span class="go">INFO:hisparc.publicdb:Done.</span>
+</pre></div>
+</div>
+<p>As you can see in the reference documentation of
+<a class="reference internal" href="publicdb.html#sapphire.publicdb.download_data" title="sapphire.publicdb.download_data"><tt class="xref py py-func docutils literal"><span class="pre">sapphire.publicdb.download_data()</span></tt></a>, available by either clicking on
+the link or typing in <tt class="docutils literal"><span class="pre">help(sapphire.publicdb.download_data)</span></tt> in the
+interpreter, the function takes six arguments: <em>file, group, station_id,
+start, end</em> and <em>get_blobs</em>.  The last one has the default argument
+<em>False</em>, and may be omitted, as we have done here.  In our example, we
+have opened a file, <tt class="docutils literal"><span class="pre">mydata.h5</span></tt>, and have stored the file <em>handler</em> in
+the variable <tt class="docutils literal"><span class="pre">data</span></tt>.  So, we passed <tt class="docutils literal"><span class="pre">data</span></tt> to the function.  The group
+name is <tt class="docutils literal"><span class="pre">/s501</span></tt>.  Group names in PyTables are just like folders in a
+directory hierarchy.  So, we might have specified
+<tt class="docutils literal"><span class="pre">/path/to/my/hisparc/data/files/for_station/s501</span></tt>.  It is important to
+note that this has absolutely nothing to do with <em>files</em>.  Whatever path
+you specify, it is all contained <em>inside</em> your data file.  Since this is
+just a small data file, we have opted for a simple structure.  At the
+moment, just one group named <tt class="docutils literal"><span class="pre">s501</span></tt> at the root of the hierarchy.  Group
+names must start with a letter, hence the <tt class="docutils literal"><span class="pre">s</span></tt> for station.</p>
+<p>The <em>station_id</em> is simply the station number.  Here, we&#8217;ve chosen to
+download data for station 501, located at Nikhef.  The <em>start</em> and <em>end</em>
+parameters specify the date/time range.  Finally, <em>get_blobs</em> selects
+whether binary data should be downloaded.  This includes the traces of
+individual events, error messages, etc.  We&#8217;ve selected the default, which
+is <em>False</em>.  Binary data is often not neccessary, and will increase the
+data size tenfold.</p>
+</div>
+<div class="section" id="looking-around">
+<h3>2.2.2. Looking around<a class="headerlink" href="#looking-around" title="Permalink to this headline">¶</a></h3>
+<p>If you want to know what groups and tables are contained within the data
+file, just <tt class="docutils literal"><span class="pre">print</span></tt> it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">data</span>
+<span class="go">mydata.h5 (File) &#39;&#39;</span>
+<span class="go">Last modif.: &#39;Sat Dec 29 14:50:55 2012&#39;</span>
+<span class="go">Object Tree:</span>
+<span class="go">/ (RootGroup) &#39;&#39;</span>
+<span class="go">/s501 (Group) &#39;Data group&#39;</span>
+<span class="go">/s501/events (Table(137600,)) &#39;HiSPARC coincidences table&#39;</span>
+<span class="go">/s501/weather (Table(51513,)) &#39;HiSPARC weather data&#39;</span>
+</pre></div>
+</div>
+<p>The <em>object tree</em> gives an overview of all groups and tables.  As you can
+see, the <tt class="docutils literal"><span class="pre">/s501</span></tt> group contains two tables, <tt class="docutils literal"><span class="pre">events</span></tt> and <tt class="docutils literal"><span class="pre">weather</span></tt>.
+The events table contains the data from the HiSPARC scintillators, while
+the weather table contains data from the (optional) weather station.</p>
+<p>To directly access any object in the hierarchy, you can make use of the
+<tt class="docutils literal"><span class="pre">data.root</span></tt> object, which points to the root group.  Then, just specify
+the remaining path, with dots instead of slashes.  For example, to access
+the events table:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">data</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">s501</span><span class="o">.</span><span class="n">events</span>
+<span class="go">/s501/events (Table(137600,)) &#39;HiSPARC coincidences table&#39;</span>
+</pre></div>
+</div>
+<p>Of course, we&#8217;d like to get some more information.  You can drop the print
+statement, and just access the object directly.  PyTables is set up such
+that it will give more detailed information whenever you specify the
+object directly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">s501</span><span class="o">.</span><span class="n">events</span>
+<span class="go">/s501/events (Table(137600,)) &#39;HiSPARC coincidences table&#39;</span>
+<span class="go">  description := {</span>
+<span class="go">  &quot;event_id&quot;: UInt32Col(shape=(), dflt=0, pos=0),</span>
+<span class="go">  &quot;timestamp&quot;: Time32Col(shape=(), dflt=0, pos=1),</span>
+<span class="go">  &quot;nanoseconds&quot;: UInt32Col(shape=(), dflt=0, pos=2),</span>
+<span class="go">  &quot;ext_timestamp&quot;: UInt64Col(shape=(), dflt=0, pos=3),</span>
+<span class="go">  &quot;data_reduction&quot;: BoolCol(shape=(), dflt=False, pos=4),</span>
+<span class="go">  &quot;trigger_pattern&quot;: UInt32Col(shape=(), dflt=0, pos=5),</span>
+<span class="go">  &quot;baseline&quot;: Int16Col(shape=(4,), dflt=-1, pos=6),</span>
+<span class="go">  &quot;std_dev&quot;: Int16Col(shape=(4,), dflt=-1, pos=7),</span>
+<span class="go">  &quot;n_peaks&quot;: Int16Col(shape=(4,), dflt=-1, pos=8),</span>
+<span class="go">  &quot;pulseheights&quot;: Int16Col(shape=(4,), dflt=-1, pos=9),</span>
+<span class="go">  &quot;integrals&quot;: Int32Col(shape=(4,), dflt=-1, pos=10),</span>
+<span class="go">  &quot;traces&quot;: Int32Col(shape=(4,), dflt=-1, pos=11),</span>
+<span class="go">  &quot;event_rate&quot;: Float32Col(shape=(), dflt=0.0, pos=12)}</span>
+<span class="go">  byteorder := &#39;little&#39;</span>
+<span class="go">  chunkshape := (704,)</span>
+</pre></div>
+</div>
+<p>There you go!  But what does it all <em>mean</em>?  Well, if you want to get to
+the bottom of it, read the <a class="reference external" href="http://pytables.github.com/usersguide/index.html">PyTables documentation</a>.  We&#8217;ll give a quick
+overview here.</p>
+<p>First, this table contains 137600 rows.  In total, there are thirteen
+columns: <em>event_id, timestamp, nanoseconds, ext_timestamp, data_reduction,
+trigger_pattern, baseline, std_dev, n_peaks, pulseheights, integrals,
+traces</em> and <em>event_rate</em>.</p>
+<p>Each event has a unique <a class="footnote-reference" href="#event-id" id="id1">[1]</a> identifier, <tt class="docutils literal"><span class="pre">event_id</span></tt>.  Each event
+has a Unix timestamp in GPS time, <em>not</em> UTC.  The sub-second part of the
+timestamp is given in <tt class="docutils literal"><span class="pre">nanoseconds</span></tt>.  The <tt class="docutils literal"><span class="pre">ext_timestamp</span></tt> is the full
+timestamp in ns.  Since there cannot exist another event with the same
+timestamp, this field in combination with the station number uniquely
+identifies the event.  The <tt class="docutils literal"><span class="pre">data_reduction</span></tt> flag signifies whether the
+full PMT trace (<em>no</em> reduction) has been stored, or just the PMT pulse
+(<em>reduced</em>, or <em>zero suppression</em>).  The <tt class="docutils literal"><span class="pre">trigger_pattern</span></tt> is a binary
+value containing the exact trigger condition at the time of the event.
+The <tt class="docutils literal"><span class="pre">baseline</span></tt>, <tt class="docutils literal"><span class="pre">std_dev</span></tt>, <tt class="docutils literal"><span class="pre">n_peaks</span></tt>, <tt class="docutils literal"><span class="pre">pulseheights</span></tt> and
+<tt class="docutils literal"><span class="pre">integrals</span></tt> fields are values derived from the PMT traces.  Each field
+contains four values, one for each detector.  If a station only has two
+detectors, the last two values for each field are -1.  If the baseline
+cannot be determined, all these values are -999.  The <tt class="docutils literal"><span class="pre">event_rate</span></tt> is
+the trigger rate at the time of the event.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="event-id" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Unique in this table.  When data is downloaded for analysis and
+combined with other data into one table, the <tt class="docutils literal"><span class="pre">event_id</span></tt> will be
+different.  To uniquely define an event, use a station number /
+<tt class="docutils literal"><span class="pre">ext_timestamp</span></tt> combination.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 
 
@@ -65,6 +290,19 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Tutorial</a><ul>
+<li><a class="reference internal" href="#first-steps">2.1. First steps</a></li>
+<li><a class="reference internal" href="#downloading-and-accessing-hisparc-data">2.2. Downloading and accessing HiSPARC data</a><ul>
+<li><a class="reference internal" href="#downloading-data">2.2.1. Downloading data</a></li>
+<li><a class="reference internal" href="#looking-around">2.2.2. Looking around</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="installation.html"
                         title="previous chapter">1. Installation</a></p>

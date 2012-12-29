@@ -143,9 +143,9 @@ should be fetched</li>
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">tables</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datetime</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hisparc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sapphire.publicdb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">openFile</span><span class="p">(</span><span class="s">&#39;data.h5&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hisparc</span><span class="o">.</span><span class="n">publicdb</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/s501&#39;</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">publicdb</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/s501&#39;</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="go">INFO:hisparc.publicdb:2010-09-01 00:00:00 None</span>
 <span class="go">INFO:hisparc.publicdb:Getting server data URL (2010-09-01 00:00:00)</span>
 <span class="go">INFO:hisparc.publicdb:Downloading data...</span>
@@ -153,27 +153,6 @@ should be fetched</li>
 <span class="go">INFO:hisparc.publicdb:Done.</span>
 </pre></div>
 </div>
-</dd></dl>
-
-<dl class="function">
-<dt id="sapphire.publicdb.get_or_create_group">
-<tt class="descclassname">sapphire.publicdb.</tt><tt class="descname">get_or_create_group</tt><big>(</big><em>file</em>, <em>group</em><big>)</big><a class="headerlink" href="#sapphire.publicdb.get_or_create_group" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get or create a group in the datafile</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="sapphire.publicdb.get_or_create_node">
-<tt class="descclassname">sapphire.publicdb.</tt><tt class="descname">get_or_create_node</tt><big>(</big><em>file</em>, <em>group</em>, <em>src_node</em><big>)</big><a class="headerlink" href="#sapphire.publicdb.get_or_create_node" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get or create a node based on a source node</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="sapphire.publicdb.store_data">
-<tt class="descclassname">sapphire.publicdb.</tt><tt class="descname">store_data</tt><big>(</big><em>dst_file</em>, <em>dst_group</em>, <em>src_filename</em>, <em>t0</em>, <em>t1</em><big>)</big><a class="headerlink" href="#sapphire.publicdb.store_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy data from a temporary file to the destination file</p>
-<p>This function takes a file containing downloaded data and copies it to
-the destination file, based on start and end timestamps.</p>
-<p>This can be further optimized at the expense of spaghetti code.</p>
 </dd></dl>
 
 </div>
