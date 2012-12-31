@@ -428,9 +428,8 @@ time on December 2, 2012:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span> <span class="o">=</span> <span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span><span class="o">.</span><span class="n">gpstimestamp</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span>
 <span class="go">(1354449600, 1354453200)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sel_events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">readWhere</span><span class="p">(</span><span class="s">&#39;(t0 &lt;= timestamp) &amp; (timestamp &lt;</span><span class="gp">&gt;&gt;&gt; </span>
-<span class="n">t1</span><span class="p">)</span><span class="s">&#39;)</span><span class="gp">&gt;&gt;&gt; </span>
-<span class="nb">len</span><span class="p">(</span><span class="n">sel_events</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel_events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">readWhere</span><span class="p">(</span><span class="s">&#39;(t0 &lt;= timestamp) &amp; (timestamp &lt; t1)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">sel_events</span><span class="p">)</span>
 <span class="go">2817</span>
 </pre></div>
 </div>
