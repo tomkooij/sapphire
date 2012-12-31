@@ -68,6 +68,24 @@ bits of simulation logic need to be overridden.</p>
 <dd><p>Base class</p>
 <p>This class is intended to be subclassed.  It provides no functionality, but
 shows the interface you can expect from simulations.</p>
+<p>Simulation initialization</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cluster</strong> &#8211; BaseCluster (or derived) instance</li>
+<li><strong>data</strong> &#8211; the HDF5 file</li>
+<li><strong>output</strong> &#8211; name of the destination group to store results</li>
+<li><strong>R</strong> &#8211; maximum distance of shower to center of cluster</li>
+<li><strong>N</strong> &#8211; number of simulations to perform</li>
+<li><strong>force</strong> &#8211; if True, ignore pre-existing simulations; they will be
+overwritten!</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="sapphire.simulations.base.BaseSimulation.generate_positions">
 <tt class="descname">generate_positions</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.simulations.base.BaseSimulation.generate_positions" title="Permalink to this definition">¶</a></dt>

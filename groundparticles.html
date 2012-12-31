@@ -69,6 +69,26 @@ only bits of simulation logic need to be overridden.</p>
 <p>This class defines a detector simulation, taking a shower simulation
 as input.  This class can be overridden to, for example, parallelize
 the simulation.</p>
+<p>Simulation initialization</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cluster</strong> &#8211; BaseCluster (or derived) instance</li>
+<li><strong>data</strong> &#8211; the HDF5 file</li>
+<li><strong>grdpcles</strong> &#8211; name of the dataset containing the ground particles</li>
+<li><strong>output</strong> &#8211; name of the destination group to store results</li>
+<li><strong>R</strong> &#8211; maximum distance of shower to center of cluster</li>
+<li><strong>N</strong> &#8211; number of simulations to perform</li>
+<li><strong>force</strong> &#8211; if True, ignore initialization errors, due to
+missing ground particles or existing previous simulations.
+Only use this if you really know what you&#8217;re doing!</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="sapphire.simulations.groundparticles.GroundParticlesSimulation.generate_positions">
 <tt class="descname">generate_positions</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.GroundParticlesSimulation.generate_positions" title="Permalink to this definition">¶</a></dt>

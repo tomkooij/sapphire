@@ -159,7 +159,7 @@ download data for a station in the Netherlands, we have just said from
 20:00 to 22:00 local time.  You can specify the time up to the seconds.</p>
 <p>We have not actually done anything yet.  We have just stored our time
 window in two arbitrarily-named variables, <tt class="docutils literal"><span class="pre">start</span></tt> and <tt class="docutils literal"><span class="pre">end</span></tt>.  To
-download data from station 501 and store it in a group with name <tt class="docutils literal"><span class="pre">s501</span></tt>,
+download data from station 501 and store it in a group with name <tt class="docutils literal"><span class="pre">/s501</span></tt>,
 we can use the <a class="reference internal" href="publicdb.html#sapphire.publicdb.download_data" title="sapphire.publicdb.download_data"><tt class="xref py py-func docutils literal"><span class="pre">sapphire.publicdb.download_data()</span></tt></a> function:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">publicdb</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/s501&#39;</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
 <span class="go">INFO:hisparc.publicdb:2012-12-01 00:00:00 None</span>
@@ -252,24 +252,245 @@ object directly:</p>
 the bottom of it, read the <a class="reference external" href="http://pytables.github.com/usersguide/index.html">PyTables documentation</a>.  We&#8217;ll give a quick
 overview here.</p>
 <p>First, this table contains 137600 rows.  In total, there are thirteen
-columns: <em>event_id, timestamp, nanoseconds, ext_timestamp, data_reduction,
-trigger_pattern, baseline, std_dev, n_peaks, pulseheights, integrals,
-traces</em> and <em>event_rate</em>.</p>
+columns: <tt class="docutils literal"><span class="pre">event_id</span></tt>, <tt class="docutils literal"><span class="pre">timestamp</span></tt>, <tt class="docutils literal"><span class="pre">nanoseconds</span></tt>, <tt class="docutils literal"><span class="pre">ext_timestamp</span></tt>,
+<tt class="docutils literal"><span class="pre">data_reduction</span></tt>, <tt class="docutils literal"><span class="pre">trigger_pattern</span></tt>, <tt class="docutils literal"><span class="pre">baseline</span></tt>, <tt class="docutils literal"><span class="pre">std_dev</span></tt>,
+<tt class="docutils literal"><span class="pre">n_peaks</span></tt>, <tt class="docutils literal"><span class="pre">pulseheights</span></tt>, <tt class="docutils literal"><span class="pre">integrals</span></tt>, <tt class="docutils literal"><span class="pre">traces</span></tt> and
+<tt class="docutils literal"><span class="pre">event_rate</span></tt>.</p>
 <p>Each event has a unique <a class="footnote-reference" href="#event-id" id="id1">[1]</a> identifier, <tt class="docutils literal"><span class="pre">event_id</span></tt>.  Each event
-has a Unix timestamp in GPS time, <em>not</em> UTC.  The sub-second part of the
-timestamp is given in <tt class="docutils literal"><span class="pre">nanoseconds</span></tt>.  The <tt class="docutils literal"><span class="pre">ext_timestamp</span></tt> is the full
-timestamp in ns.  Since there cannot exist another event with the same
-timestamp, this field in combination with the station number uniquely
-identifies the event.  The <tt class="docutils literal"><span class="pre">data_reduction</span></tt> flag signifies whether the
-full PMT trace (<em>no</em> reduction) has been stored, or just the PMT pulse
-(<em>reduced</em>, or <em>zero suppression</em>).  The <tt class="docutils literal"><span class="pre">trigger_pattern</span></tt> is a binary
-value containing the exact trigger condition at the time of the event.
-The <tt class="docutils literal"><span class="pre">baseline</span></tt>, <tt class="docutils literal"><span class="pre">std_dev</span></tt>, <tt class="docutils literal"><span class="pre">n_peaks</span></tt>, <tt class="docutils literal"><span class="pre">pulseheights</span></tt> and
-<tt class="docutils literal"><span class="pre">integrals</span></tt> fields are values derived from the PMT traces.  Each field
-contains four values, one for each detector.  If a station only has two
-detectors, the last two values for each field are -1.  If the baseline
-cannot be determined, all these values are -999.  The <tt class="docutils literal"><span class="pre">event_rate</span></tt> is
-the trigger rate at the time of the event.</p>
+has a Unix timestamp in GPS time, <em>not</em> UTC.  A <a class="reference external" href="http://en.wikipedia.org/wiki/Unix_time">Unix timestamp</a> is the number of seconds that
+have passed since January 1, 1970.  The sub-second part of the timestamp
+is given in <tt class="docutils literal"><span class="pre">nanoseconds</span></tt>.  The <tt class="docutils literal"><span class="pre">ext_timestamp</span></tt> is the full timestamp
+in ns.  Since there cannot exist another event with the same timestamp,
+this field in combination with the station number uniquely identifies the
+event.  The <tt class="docutils literal"><span class="pre">data_reduction</span></tt> flag signifies whether the full PMT trace
+(<em>no</em> reduction) has been stored, or just the PMT pulse (<em>reduced</em>, or
+<em>zero suppression</em>).  The <tt class="docutils literal"><span class="pre">trigger_pattern</span></tt> is a binary value containing
+the exact trigger condition at the time of the event.  The <tt class="docutils literal"><span class="pre">baseline</span></tt>,
+<tt class="docutils literal"><span class="pre">std_dev</span></tt>, <tt class="docutils literal"><span class="pre">n_peaks</span></tt>, <tt class="docutils literal"><span class="pre">pulseheights</span></tt> and <tt class="docutils literal"><span class="pre">integrals</span></tt> fields are
+values derived from the PMT traces.  Each field contains four values, one
+for each detector.  If a station only has two detectors, the last two
+values for each field are -1.  If the baseline cannot be determined, all
+these values are -999.  The <tt class="docutils literal"><span class="pre">event_rate</span></tt> is the trigger rate at the time
+of the event.</p>
+<p>We&#8217;ll get to work with this data in a moment.  First, we&#8217;ll take a look at
+the weather table:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">s501</span><span class="o">.</span><span class="n">weather</span>
+<span class="go">/s501/weather (Table(51513,)) &#39;HiSPARC weather data&#39;</span>
+<span class="go">  description := {</span>
+<span class="go">  &quot;event_id&quot;: UInt32Col(shape=(), dflt=0, pos=0),</span>
+<span class="go">  &quot;timestamp&quot;: Time32Col(shape=(), dflt=0, pos=1),</span>
+<span class="go">  &quot;temp_inside&quot;: Float32Col(shape=(), dflt=0.0, pos=2),</span>
+<span class="go">  &quot;temp_outside&quot;: Float32Col(shape=(), dflt=0.0, pos=3),</span>
+<span class="go">  &quot;humidity_inside&quot;: Int16Col(shape=(), dflt=0, pos=4),</span>
+<span class="go">  &quot;humidity_outside&quot;: Int16Col(shape=(), dflt=0, pos=5),</span>
+<span class="go">  &quot;barometer&quot;: Float32Col(shape=(), dflt=0.0, pos=6),</span>
+<span class="go">  &quot;wind_dir&quot;: Int16Col(shape=(), dflt=0, pos=7),</span>
+<span class="go">  &quot;wind_speed&quot;: Int16Col(shape=(), dflt=0, pos=8),</span>
+<span class="go">  &quot;solar_rad&quot;: Int16Col(shape=(), dflt=0, pos=9),</span>
+<span class="go">  &quot;uv&quot;: Int16Col(shape=(), dflt=0, pos=10),</span>
+<span class="go">  &quot;evapotranspiration&quot;: Float32Col(shape=(), dflt=0.0, pos=11),</span>
+<span class="go">  &quot;rain_rate&quot;: Float32Col(shape=(), dflt=0.0, pos=12),</span>
+<span class="go">  &quot;heat_index&quot;: Int16Col(shape=(), dflt=0, pos=13),</span>
+<span class="go">  &quot;dew_point&quot;: Float32Col(shape=(), dflt=0.0, pos=14),</span>
+<span class="go">  &quot;wind_chill&quot;: Float32Col(shape=(), dflt=0.0, pos=15)}</span>
+<span class="go">  byteorder := &#39;little&#39;</span>
+<span class="go">  chunkshape := (1310,)</span>
+</pre></div>
+</div>
+<p>We&#8217;ll let these column names speak for themselves.</p>
+</div>
+<div class="section" id="accessing-the-data">
+<h3>2.2.3. Accessing the data<a class="headerlink" href="#accessing-the-data" title="Permalink to this headline">¶</a></h3>
+<p>We can access the data in several ways.  We can address the complete
+table, or just one or several rows from it.  We can read out a single
+column, or select data based on a query.  Before we do any of that, we&#8217;ll
+save us some typing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">events</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">s501</span><span class="o">.</span><span class="n">events</span>
+</pre></div>
+</div>
+<p>Now, we have stored a short-hand reference to the events table. Let&#8217;s get
+the first event:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">(1L, 1354320004, 670634817L, 1354320004670634817L, True, 196608L,</span>
+<span class="go">[195, 197, 197, 197], [658, 763, 646, 771], [1, 0, 1, 0], [173, 3,</span>
+<span class="go">407, 3], [1603, 0, 4019, 0], [0, 1, 2, 3], 0.9111111164093018)</span>
+</pre></div>
+</div>
+<p>That&#8217;s the first event!  It is not, however, immediately clear what
+numbers correspond to which columns.  They are in order, however, so you
+could find out.  It is often easier to specify the column you&#8217;re
+interested in:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;pulseheights&#39;</span><span class="p">]</span>
+<span class="go">array([173,   3, 407,   3], dtype=int16)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;n_peaks&#39;</span><span class="p">]</span>
+<span class="go">array([1, 0, 1, 0], dtype=int16)</span>
+</pre></div>
+</div>
+<p>Which gives us the pulseheights of the first event.  The pulseheights are
+16-bit integers (that&#8217;s the <tt class="docutils literal"><span class="pre">dtype=int16</span></tt>) and are determined after
+digitizing the events using an analog-digital converter (ADC).  Each unit
+corresponds to about -0.57 mV.  You can tell that the first and third
+detectors had relatively large pulseheights, and that they were registered
+as a significant <em>peak</em> in the signal (see the <tt class="docutils literal"><span class="pre">n_peaks</span></tt> column).</p>
+<p>If you&#8217;re interested in the pulseheights of <em>all</em> events, the fastest way
+to do it is to make use of the <tt class="xref py py-meth docutils literal"><span class="pre">Table.col()</span></tt>  method of the table:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">events</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s">&#39;pulseheights&#39;</span><span class="p">)</span>
+<span class="go">array([[173,   3, 407,   3],</span>
+<span class="go">       [  1,   2, 313, 756],</span>
+<span class="go">       [211,   2,   2, 268],</span>
+<span class="go">       ...,</span>
+<span class="go">       [  2,   2, 529, 327],</span>
+<span class="go">       [  7,   2, 318, 249],</span>
+<span class="go">       [  3, 250,  14, 416]], dtype=int16)</span>
+</pre></div>
+</div>
+<p>It is also possible to select the data based on a query.  For example, to
+select all events between timestamps 1354320000 and 1354323600 (a one-hour
+time span):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t0</span> <span class="o">=</span> <span class="mi">1354320000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span> <span class="o">=</span> <span class="n">t0</span> <span class="o">+</span> <span class="mi">3600</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel_events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">readWhere</span><span class="p">(</span><span class="s">&#39;(t0 &lt;= timestamp) &amp; (timestamp &lt; t1)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">sel_events</span><span class="p">)</span>
+<span class="go">2836</span>
+</pre></div>
+</div>
+<p>Thus, we have selected 2836 events.  The variable <tt class="docutils literal"><span class="pre">sel_events</span></tt> no longer
+points to a table.  We can no longer make use of the <tt class="xref py py-meth docutils literal"><span class="pre">Table.col()</span></tt>
+method, but we <em>can</em> access all pulseheights in the following way:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sel_events</span><span class="p">[</span><span class="s">&#39;pulseheights&#39;</span><span class="p">]</span>
+<span class="go">array([[173,   3, 407,   3],</span>
+<span class="go">       [  1,   2, 313, 756],</span>
+<span class="go">       [211,   2,   2, 268],</span>
+<span class="go">       ...,</span>
+<span class="go">       [328, 556, 255,  15],</span>
+<span class="go">       [  3, 325, 309,   3],</span>
+<span class="go">       [  2,   2, 271, 381]], dtype=int16)</span>
+</pre></div>
+</div>
+<p>This notation is possible for arrays, but not for tables.  So, for tables,
+use the <tt class="xref py py-meth docutils literal"><span class="pre">Table.col()</span></tt> method.  For arrays, use this special notation.</p>
+</div>
+<div class="section" id="the-sapphire-time-util-module">
+<h3>2.2.4. The <a class="reference internal" href="time_util.html#module-sapphire.time_util" title="sapphire.time_util"><tt class="xref py py-mod docutils literal"><span class="pre">sapphire.time_util</span></tt></a> module<a class="headerlink" href="#the-sapphire-time-util-module" title="Permalink to this headline">¶</a></h3>
+<p>SAPPHiRE includes a handy module: <a class="reference internal" href="time_util.html#module-sapphire.time_util" title="sapphire.time_util"><tt class="xref py py-mod docutils literal"><span class="pre">sapphire.time_util</span></tt></a>.  This saves
+you from the hassle of converting timestamps and confusing local time and
+GPS (or UTC) time.  It is important to realize that the HiSPARC station
+uses a GPS clock, and thus saves all timestamps in GPS time, which is
+certainly not local time!  You can look up <a class="reference external" href="http://en.wikipedia.org/wiki/Global_Positioning_System#Timekeeping">GPS time</a>,
+but suffice it to say that it is <em>almost</em> equal to UTC time.  The
+difference is the leap seconds introduced after 1980.  In January 2013,
+GPS time is ahead of UTC by 16 seconds.  We will not reference UTC or
+local time, but instead always reference GPS time!</p>
+<p>While you tell SAPPHiRE to download data using year, month, day, hour,
+minutes, seconds notation, the events table contains timestamps.  It is
+often hard to convert between the two.  For example, the correct
+conversion between a GPS date/time and a GPS timestamp is given by:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">calendar</span><span class="o">.</span><span class="n">timegm</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">utctimetuple</span><span class="p">())</span>
+<span class="go">1354320000</span>
+</pre></div>
+</div>
+<p>Which is, at best, cumbersome.  It is easy, however, to screw up and
+inadvertently convert to local time.  For your benefit, we have included
+the <a class="reference internal" href="time_util.html#sapphire.time_util.GPSTime" title="sapphire.time_util.GPSTime"><tt class="xref py py-class docutils literal"><span class="pre">sapphire.time_util.GPSTime</span></tt></a> class.  You instantiate the class
+by giving it a GPS time to work with.  It can either be in date/time
+notation, or as a timestamp.  For example, the exact same result is
+obtained by these two lines of code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;sapphire.time_util.GPSTime instance at 0x10b8021b8&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">1354320000</span><span class="p">)</span>
+<span class="go">&lt;sapphire.time_util.GPSTime instance at 0x10b802128&gt;</span>
+</pre></div>
+</div>
+<p>If you store the instance, you can then call several methods to convert
+the date/time to whatever you require:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span> <span class="o">=</span> <span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span><span class="o">.</span><span class="n">datetime</span><span class="p">()</span>
+<span class="go">datetime.datetime(2012, 12, 1, 0, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
+<span class="go">&#39;Sat Dec  1 00:00:00 2012&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span><span class="o">.</span><span class="n">gpstimestamp</span><span class="p">()</span>
+<span class="go">1354320000</span>
+</pre></div>
+</div>
+<p>Or, indeed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span> <span class="o">=</span> <span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">1354320000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span><span class="o">.</span><span class="n">datetime</span><span class="p">()</span>
+<span class="go">datetime.datetime(2012, 12, 1, 0, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
+<span class="go">&#39;Sat Dec  1 00:00:00 2012&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span><span class="o">.</span><span class="n">gpstimestamp</span><span class="p">()</span>
+<span class="go">1354320000</span>
+</pre></div>
+</div>
+<p>It is now easy to select events occuring between 12:00 and 13:00 hours GPS
+time on December 2, 2012:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t0</span> <span class="o">=</span> <span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">gpstimestamp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span> <span class="o">=</span> <span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span><span class="o">.</span><span class="n">gpstimestamp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span>
+<span class="go">(1354449600, 1354453200)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel_events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">readWhere</span><span class="p">(</span><span class="s">&#39;(t0 &lt;= timestamp) &amp; (timestamp &lt;</span><span class="gp">&gt;&gt;&gt; </span>
+<span class="n">t1</span><span class="p">)</span><span class="s">&#39;)</span><span class="gp">&gt;&gt;&gt; </span>
+<span class="nb">len</span><span class="p">(</span><span class="n">sel_events</span><span class="p">)</span>
+<span class="go">2817</span>
+</pre></div>
+</div>
+<p>And when did the tenth event occur?  Well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">sel_events</span><span class="p">[</span><span class="mi">9</span><span class="p">][</span><span class="s">&#39;timestamp&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span>
+<span class="go">1354449620</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
+<span class="go">&#39;Sun Dec  2 12:00:20 2012&#39;</span>
+</pre></div>
+</div>
+<p>To shorten the typing somewhat, remember that in Python you can import
+classes from modules into your own namespace:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sapphire.time_util</span> <span class="kn">import</span> <span class="n">GPSTime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">GPSTime</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
+<span class="go">&#39;Sun Dec  2 12:00:20 2012&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plotting-data">
+<h3>2.2.5. Plotting data<a class="headerlink" href="#plotting-data" title="Permalink to this headline">¶</a></h3>
+<p>Now that we can access the data, we want to visualize it.  Plotting data
+is a great way to do that.  And of course, the venerable histogram is
+still very useful to condense thousands of events into one display.  Pylab
+contains an easy function to do just that: <tt class="xref py py-func docutils literal"><span class="pre">hist()</span></tt>.  Let&#8217;s try to
+recreate a few graphs as seen on the HiSPARC <a class="reference external" href="http://data.hisparc.nl/django/show/stations/501/2012/12/1/">data display</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ph</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s">&#39;pulseheights&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hist</span><span class="p">(</span><span class="n">ph</span><span class="p">)</span>
+<span class="go">([array([114794,  17565,   3062,   1009,    502,    285,    170,     86,</span>
+<span class="go">           72,     55]), array([112813,  19028,   3339,   1246,    540,    295,    163,    100,</span>
+<span class="go">           66,     10]), array([109162,  21833,   4246,   1345,    579,    290,    113,     32,</span>
+<span class="go">            0,      0]), array([109996,  21283,   4028,   1285,    581,    251,    133,     43,</span>
+<span class="go">            0,      0])], array([  1.00000000e+00,   3.91100000e+02,   7.81200000e+02,</span>
+<span class="go">         1.17130000e+03,   1.56140000e+03,   1.95150000e+03,</span>
+<span class="go">         2.34160000e+03,   2.73170000e+03,   3.12180000e+03,</span>
+<span class="go">         3.51190000e+03,   3.90200000e+03]), &lt;a list of 4 Lists of Patches objects&gt;)</span>
+</pre></div>
+</div>
+<img alt="_images/tutorial-hist-simple.png" src="_images/tutorial-hist-simple.png" style="width: 500px;" />
+<p>This will not do.  Firstly, data from the four detectors is pictured as
+four side-by-side colored bars.  Secondly, the number of bins is very low;
+it is only ten.  Thirdly, the data range continues up to very high values
+with hardly any events.</p>
+<p>To fix this, we&#8217;ll make use of several arguments that can be passed to the
+<tt class="xref py py-func docutils literal"><span class="pre">hist()</span></tt> function.  We&#8217;ll also make use of some NumPy (<a class="reference external" href="http://docs.scipy.org/doc/numpy/user/">documentation</a>) functionality.  For Pylab
+documentation, see the <a class="reference external" href="http://matplotlib.org">Matplotlib site</a>
+(<a class="reference external" href="http://matplotlib.org/1.2.0/api/pyplot_summary.html">function reference</a>).  Try this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">bins</span> <span class="o">=</span> <span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2001</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hist</span><span class="p">(</span><span class="n">ph</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s">&#39;step&#39;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Pulseheight [ADC]&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;Counts&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Pulseheight histogram (log scale)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">arange()</span></tt> function returns an array with range from 0 to 2001 in
+steps of 20.  It is necessary to say 2001 (or 2002, 2000.1 or whatever)
+and not 2000, if you want the range to be inclusive.  The <tt class="xref py py-func docutils literal"><span class="pre">hist()</span></tt>
+function will then plot a <em>stepped</em> histogram with a log scale.  Finally,
+we add some labels and a title.  This is the result:</p>
+<img alt="_images/tutorial-hist-better.png" src="_images/tutorial-hist-better.png" style="width: 500px;" />
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="event-id" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -297,6 +518,9 @@ different.  To uniquely define an event, use a station number /
 <li><a class="reference internal" href="#downloading-and-accessing-hisparc-data">2.2. Downloading and accessing HiSPARC data</a><ul>
 <li><a class="reference internal" href="#downloading-data">2.2.1. Downloading data</a></li>
 <li><a class="reference internal" href="#looking-around">2.2.2. Looking around</a></li>
+<li><a class="reference internal" href="#accessing-the-data">2.2.3. Accessing the data</a></li>
+<li><a class="reference internal" href="#the-sapphire-time-util-module">2.2.4. The <tt class="docutils literal"><span class="pre">sapphire.time_util</span></tt> module</a></li>
+<li><a class="reference internal" href="#plotting-data">2.2.5. Plotting data</a></li>
 </ul>
 </li>
 </ul>

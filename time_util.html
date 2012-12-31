@@ -1,0 +1,181 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.8. GPS date/time utility functions &mdash; SAPPHiRE 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
+    <link rel="up" title="3. SAPPHiRE Reference" href="sapphire.html" />
+    <link rel="next" title="3.9. Geographic coordinate transformations" href="transformations.html" />
+    <link rel="prev" title="3.7. Low-level storage constructs" href="storage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="transformations.html" title="3.9. Geographic coordinate transformations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="storage.html" title="3.7. Low-level storage constructs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="sapphire.html" accesskey="U">3. SAPPHiRE Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-sapphire.time_util">
+<span id="gps-date-time-utility-functions"></span><h1>3.8. GPS date/time utility functions<a class="headerlink" href="#module-sapphire.time_util" title="Permalink to this headline">¶</a></h1>
+<p>Time utility class</p>
+<p>The class in this module is intended to save you from typing trainwrecks
+just to convert GPS timestamps to GPS date/time and vice versa.
+Trainwrecks invite typos and thus many are easily confused about
+UTC/GPS/local time.  No more!</p>
+<dl class="class">
+<dt id="sapphire.time_util.GPSTime">
+<em class="property">class </em><tt class="descclassname">sapphire.time_util.</tt><tt class="descname">GPSTime</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#sapphire.time_util.GPSTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Date/time utility class.</p>
+<p>Instantiate the class.</p>
+<p>The arguments to the __init__ method can take different forms.
+First, it can take year, month, day, hour, minutes, seconds
+arguments.  The year, month and day are mandatory, while hour,
+minutes, seconds default to zero.</p>
+<p>If the argument is a single number, this is interpreted as a
+Unix-like timestamp, in GPS time.</p>
+<p>Examples specifying the exact same time:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">1354320000</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="sapphire.time_util.GPSTime.datetime">
+<tt class="descname">datetime</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.time_util.GPSTime.datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the GPS date/time as a <tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt>
+instance.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span> <span class="o">=</span> <span class="n">GPSTime</span><span class="p">(</span><span class="mi">1354320000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span><span class="o">.</span><span class="n">datetime</span><span class="p">()</span>
+<span class="go">datetime.datetime(2012, 12, 1, 0, 0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.time_util.GPSTime.description">
+<tt class="descname">description</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.time_util.GPSTime.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the GPS date/time as a string.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span> <span class="o">=</span> <span class="n">GPSTime</span><span class="p">(</span><span class="mi">1354320000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
+<span class="go">&#39;Sat Dec  1 00:00:00 2012&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.time_util.GPSTime.gpstimestamp">
+<tt class="descname">gpstimestamp</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.time_util.GPSTime.gpstimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the GPS date/time as a timestamp.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span> <span class="o">=</span> <span class="n">GPSTime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gpstime</span><span class="o">.</span><span class="n">gpstimestamp</span><span class="p">()</span>
+<span class="go">1354320000</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="storage.html"
+                        title="previous chapter">3.7. Low-level storage constructs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="transformations.html"
+                        title="next chapter">3.9. Geographic coordinate transformations</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/time_util.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="transformations.html" title="3.9. Geographic coordinate transformations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="storage.html" title="3.7. Low-level storage constructs"
+             >previous</a> |</li>
+        <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, David Fokkema.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

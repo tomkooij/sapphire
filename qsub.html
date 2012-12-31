@@ -64,6 +64,24 @@
 <em class="property">class </em><tt class="descclassname">sapphire.simulations.qsub.</tt><tt class="descname">QSubChild</tt><big>(</big><em>data</em>, <em>hash</em><big>)</big><a class="headerlink" href="#sapphire.simulations.qsub.QSubChild" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accept a job from QSubSimulation and run it</p>
 <p>This class accepts a job submitted through QSubSimulation and runs it.</p>
+<p>Initialize the simulation</p>
+<p>This is a bit different from a regular simulation in that we have
+one shower data file (read-only) and several job-specific data
+files.  The job-specific data file (identified by the hash)
+contains several simulation parameters as attributes on the root
+group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; job HDF5 file</li>
+<li><strong>hash</strong> &#8211; job hash</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="sapphire.simulations.qsub.QSubChild.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.simulations.qsub.QSubChild.run" title="Permalink to this definition">¶</a></dt>
@@ -80,6 +98,24 @@ simulation</p>
 <dd><p>Submit a simulation in multiple jobs</p>
 <p>This class splits up the simulation in several jobs.  Each job is
 submitted through qsub and the results are collected.</p>
+<p>Initialize the simulation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cluster</strong> &#8211; BaseCluster (or derived) instance</li>
+<li><strong>data</strong> &#8211; the HDF5 file</li>
+<li><strong>grdpcles</strong> &#8211; name of the dataset containing the ground particles</li>
+<li><strong>output</strong> &#8211; name of the destination group to store results</li>
+<li><strong>R</strong> &#8211; maximum distance of shower to center of cluster</li>
+<li><strong>N</strong> &#8211; number of simulations to perform</li>
+<li><strong>N_cores</strong> &#8211; number of cores to run on</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="sapphire.simulations.qsub.QSubSimulation.collect_jobs">
 <tt class="descname">collect_jobs</tt><big>(</big><em>hashes</em><big>)</big><a class="headerlink" href="#sapphire.simulations.qsub.QSubSimulation.collect_jobs" title="Permalink to this definition">¶</a></dt>

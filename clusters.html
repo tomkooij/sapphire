@@ -66,6 +66,7 @@ consisting of one or more detectors.</p>
 <dt id="sapphire.clusters.BaseCluster">
 <em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">BaseCluster</tt><big>(</big><em>position=(0.0</em>, <em>0.0)</em>, <em>angle=0.0</em><big>)</big><a class="headerlink" href="#sapphire.clusters.BaseCluster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for HiSPARC clusters</p>
+<p>Override this function to build your cluster</p>
 <dl class="method">
 <dt id="sapphire.clusters.BaseCluster.calc_r_and_phi_for_stations">
 <tt class="descname">calc_r_and_phi_for_stations</tt><big>(</big><em>s1</em>, <em>s2</em><big>)</big><a class="headerlink" href="#sapphire.clusters.BaseCluster.calc_r_and_phi_for_stations" title="Permalink to this definition">¶</a></dt>
@@ -78,6 +79,23 @@ consisting of one or more detectors.</p>
 <dt id="sapphire.clusters.Detector">
 <em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">Detector</tt><big>(</big><em>station</em>, <em>x</em>, <em>y</em>, <em>orientation</em><big>)</big><a class="headerlink" href="#sapphire.clusters.Detector" title="Permalink to this definition">¶</a></dt>
 <dd><p>A HiSPARC detector</p>
+<p>Initialize detector</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>station</strong> &#8211; station instance this detector is part of</li>
+<li><strong>y, orientation</strong> (<em>x,</em>) &#8211; x and y are x and y positions of the
+center of the detectors relative to the station center.
+Orientation is either &#8216;UD&#8217; or &#8216;LR&#8217; meaning an up-down or
+left-right orientation of the long side of the detector
+respectively.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="sapphire.clusters.Detector.get_corners">
 <tt class="descname">get_corners</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.clusters.Detector.get_corners" title="Permalink to this definition">¶</a></dt>
@@ -100,18 +118,41 @@ consisting of one or more detectors.</p>
 <dt id="sapphire.clusters.SimpleCluster">
 <em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">SimpleCluster</tt><big>(</big><em>size=250</em><big>)</big><a class="headerlink" href="#sapphire.clusters.SimpleCluster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Define a simple cluster containing four stations</p>
+<p>Build the cluster</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="sapphire.clusters.SingleStation">
 <em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">SingleStation</tt><big>(</big><em>station_size=10</em><big>)</big><a class="headerlink" href="#sapphire.clusters.SingleStation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Define a cluster containing a single station</p>
+<p>Build the cluster</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="sapphire.clusters.Station">
 <em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">Station</tt><big>(</big><em>cluster</em>, <em>station_id</em>, <em>position</em>, <em>angle</em>, <em>detectors=None</em><big>)</big><a class="headerlink" href="#sapphire.clusters.Station" title="Permalink to this definition">¶</a></dt>
 <dd><p>A HiSPARC station</p>
+<p>Initialize station</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cluster</strong> &#8211; cluster this station is a part of</li>
+<li><strong>station_id</strong> &#8211; int (unique identifier)</li>
+<li><strong>position</strong> &#8211; tuple of (x, y) values</li>
+<li><strong>angle</strong> &#8211; angle of rotation of the station in radians</li>
+<li><strong>detectors</strong> &#8211; list of tuples.  Each tuple consists of (dx, dy,
+orientation) where dx and dy are x and y positions of the
+center of the detectors relative to the station center.
+Orientation is either &#8216;UD&#8217; or &#8216;LR&#8217; meaning an up-down or
+left-right orientation of the long side of the detector
+respectively.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="sapphire.clusters.Station.calc_r_and_phi_for_detectors">
 <tt class="descname">calc_r_and_phi_for_detectors</tt><big>(</big><em>s1</em>, <em>s2</em><big>)</big><a class="headerlink" href="#sapphire.clusters.Station.calc_r_and_phi_for_detectors" title="Permalink to this definition">¶</a></dt>
