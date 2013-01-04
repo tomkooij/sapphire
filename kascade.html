@@ -58,6 +58,58 @@
             
   <div class="section" id="module-sapphire.kascade">
 <span id="working-with-kascade-data"></span><h1>3.4. Working with KASCADE data<a class="headerlink" href="#module-sapphire.kascade" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sapphire.kascade.KascadeCoincidences">
+<em class="property">class </em><tt class="descclassname">sapphire.kascade.</tt><tt class="descname">KascadeCoincidences</tt><big>(</big><em>data</em>, <em>hisparc_group</em>, <em>kascade_group</em>, <em>overwrite=False</em>, <em>ignore_existing=False</em><big>)</big><a class="headerlink" href="#sapphire.kascade.KascadeCoincidences" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.kascade.KascadeCoincidences.search_coincidences">
+<tt class="descname">search_coincidences</tt><big>(</big><em>timeshift=0</em>, <em>dtlimit=None</em>, <em>limit=None</em><big>)</big><a class="headerlink" href="#sapphire.kascade.KascadeCoincidences.search_coincidences" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for coincidences</p>
+<p>This function does the actual searching of coincidences. It uses a
+timeshift to shift the HiSPARC data (we know that these employ GPS
+time, so not taking UTC leap seconds into account). The shift will also
+compensate for delays in the experimental setup.</p>
+<p>The coincidences are stored as an instance variable (self.coincidences).
+Final storage can be done by calling <a class="reference internal" href="#sapphire.kascade.KascadeCoincidences.store_coincidences" title="sapphire.kascade.KascadeCoincidences.store_coincidences"><tt class="xref py py-meth docutils literal"><span class="pre">store_coincidences()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>timeshift</strong> &#8211; the amount of time the HiSPARC data are shifted (in
+seconds).  Default: 0.</li>
+<li><strong>dtlimit</strong> &#8211; limit on the time difference between hisparc and
+kascade events in seconds.  If this limit is exceeded,
+coincidences are not stored.  Default: None.</li>
+<li><strong>limit</strong> &#8211; limit on the number of KASCADE events investigated.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.kascade.KascadeCoincidences.store_coincidences">
+<tt class="descname">store_coincidences</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.kascade.KascadeCoincidences.store_coincidences" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.kascade.StoreKascadeData">
+<em class="property">class </em><tt class="descclassname">sapphire.kascade.</tt><tt class="descname">StoreKascadeData</tt><big>(</big><em>data</em>, <em>hisparc_path</em>, <em>kascade_path</em>, <em>kascade_filename</em>, <em>force=False</em><big>)</big><a class="headerlink" href="#sapphire.kascade.StoreKascadeData" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.kascade.StoreKascadeData.read_and_store_data">
+<tt class="descname">read_and_store_data</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.kascade.StoreKascadeData.read_and_store_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read and store KASCADE data matching HiSPARC data</p>
+<p>This function looks at the HiSPARC event data in the specified datafile
+and then processes and adds KASCADE data surrounding those events, for
+later coincidence processing.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

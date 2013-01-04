@@ -59,63 +59,91 @@
             
   <div class="section" id="module-sapphire.analysis.direction_reconstruction">
 <span id="reconstruction-of-eas-direction"></span><h1>3.1.2. Reconstruction of EAS direction<a class="headerlink" href="#module-sapphire.analysis.direction_reconstruction" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="sapphire.analysis.direction_reconstruction.uniform">
-<tt class="descclassname">sapphire.analysis.direction_reconstruction.</tt><tt class="descname">uniform</tt><big>(</big><em>low=0.0</em>, <em>high=1.0</em>, <em>size=1</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.uniform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draw samples from a uniform distribution.</p>
-<p>Samples are uniformly distributed over the half-open interval
-<tt class="docutils literal"><span class="pre">[low,</span> <span class="pre">high)</span></tt> (includes low, but excludes high).  In other words,
-any value within the given interval is equally likely to be drawn
-by <cite>uniform</cite>.</p>
-<dl class="docutils">
-<dt>low <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span></dt>
-<dd>Lower boundary of the output interval.  All values generated will be
-greater than or equal to low.  The default value is 0.</dd>
-<dt>high <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>Upper boundary of the output interval.  All values generated will be
-less than high.  The default value is 1.0.</dd>
-<dt>size <span class="classifier-delimiter">:</span> <span class="classifier">int or tuple of ints, optional</span></dt>
-<dd>Shape of output.  If the given size is, for example, (m,n,k),
-m*n*k samples are generated.  If no shape is specified, a single sample
-is returned.</dd>
-</dl>
-<dl class="docutils">
-<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
-<dd>Drawn samples, with shape <cite>size</cite>.</dd>
-</dl>
-<p>randint : Discrete uniform distribution, yielding integers.
-random_integers : Discrete uniform distribution over the closed</p>
-<blockquote>
-<div>interval <tt class="docutils literal"><span class="pre">[low,</span> <span class="pre">high]</span></tt>.</div></blockquote>
-<p>random_sample : Floats uniformly distributed over <tt class="docutils literal"><span class="pre">[0,</span> <span class="pre">1)</span></tt>.
-random : Alias for <cite>random_sample</cite>.
-rand : Convenience function that accepts dimensions as input, e.g.,</p>
-<blockquote>
-<div><tt class="docutils literal"><span class="pre">rand(2,2)</span></tt> would generate a 2-by-2 array of floats,
-uniformly distributed over <tt class="docutils literal"><span class="pre">[0,</span> <span class="pre">1)</span></tt>.</div></blockquote>
-<p>The probability density function of the uniform distribution is</p>
-<div class="math">
-\[p(x) = \frac{1}{b - a}\]</div>
-<p>anywhere within the interval <tt class="docutils literal"><span class="pre">[a,</span> <span class="pre">b)</span></tt>, and zero elsewhere.</p>
-<p>Draw samples from the distribution:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>All values are within the given interval:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<p>Display the histogram of the samples, along with the
-probability density function:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">count</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">ignored</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">bins</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
+<dl class="class">
+<dt id="sapphire.analysis.direction_reconstruction.BinnedDirectionReconstruction">
+<em class="property">class </em><tt class="descclassname">sapphire.analysis.direction_reconstruction.</tt><tt class="descname">BinnedDirectionReconstruction</tt><big>(</big><em>datafile</em>, <em>results_table</em>, <em>min_n134=1.0</em>, <em>binning=2.5</em>, <em>randomize_binning=False</em>, <em>N=None</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.BinnedDirectionReconstruction" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.analysis.direction_reconstruction.BinnedDirectionReconstruction.reconstruct_angle">
+<tt class="descname">reconstruct_angle</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.BinnedDirectionReconstruction.reconstruct_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction">
+<em class="property">class </em><tt class="descclassname">sapphire.analysis.direction_reconstruction.</tt><tt class="descname">DirectionReconstruction</tt><big>(</big><em>datafile</em>, <em>results_table=None</em>, <em>min_n134=1.0</em>, <em>N=None</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.create_empty_output_table">
+<tt class="descname">create_empty_output_table</tt><big>(</big><em>table_path</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.create_empty_output_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.dphi_dt0">
+<em class="property">static </em><tt class="descname">dphi_dt0</tt><big>(</big><em>theta</em>, <em>phi</em>, <em>phi1</em>, <em>phi2</em>, <em>r1=10</em>, <em>r2=10</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.dphi_dt0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.dphi_dt1">
+<em class="property">static </em><tt class="descname">dphi_dt1</tt><big>(</big><em>theta</em>, <em>phi</em>, <em>phi1</em>, <em>phi2</em>, <em>r1=10</em>, <em>r2=10</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.dphi_dt1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.dphi_dt2">
+<em class="property">static </em><tt class="descname">dphi_dt2</tt><big>(</big><em>theta</em>, <em>phi</em>, <em>phi1</em>, <em>phi2</em>, <em>r1=10</em>, <em>r2=10</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.dphi_dt2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.reconstruct_angle">
+<tt class="descname">reconstruct_angle</tt><big>(</big><em>event</em>, <em>offsets=None</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.reconstruct_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reconstruct angles from a single event</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.reconstruct_angles">
+<tt class="descname">reconstruct_angles</tt><big>(</big><em>shower</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.reconstruct_angles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.reconstruct_angles_for_shower_group">
+<tt class="descname">reconstruct_angles_for_shower_group</tt><big>(</big><em>groupname</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.reconstruct_angles_for_shower_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reconstruct angles from simulation for minimum particle density</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.rel_phi_errorsq">
+<em class="property">static </em><tt class="descname">rel_phi_errorsq</tt><big>(</big><em>theta</em>, <em>phi</em>, <em>phi1</em>, <em>phi2</em>, <em>r1=10</em>, <em>r2=10</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.rel_phi_errorsq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.rel_theta1_errorsq">
+<em class="property">classmethod </em><tt class="descname">rel_theta1_errorsq</tt><big>(</big><em>theta</em>, <em>phi</em>, <em>phi1</em>, <em>phi2</em>, <em>r1=10</em>, <em>r2=10</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.rel_theta1_errorsq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.rel_theta2_errorsq">
+<em class="property">classmethod </em><tt class="descname">rel_theta2_errorsq</tt><big>(</big><em>theta</em>, <em>phi</em>, <em>phi1</em>, <em>phi2</em>, <em>r1=10</em>, <em>r2=10</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.rel_theta2_errorsq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.analysis.direction_reconstruction.DirectionReconstruction.store_reconstructed_event">
+<tt class="descname">store_reconstructed_event</tt><big>(</big><em>coincidence</em>, <em>event</em>, <em>reconstructed_theta</em>, <em>reconstructed_phi</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.DirectionReconstruction.store_reconstructed_event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.analysis.direction_reconstruction.KascadeDirectionReconstruction">
+<em class="property">class </em><tt class="descclassname">sapphire.analysis.direction_reconstruction.</tt><tt class="descname">KascadeDirectionReconstruction</tt><big>(</big><em>datafile</em>, <em>results_table=None</em>, <em>min_n134=1.0</em>, <em>N=None</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.KascadeDirectionReconstruction" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.analysis.direction_reconstruction.KascadeDirectionReconstruction.reconstruct_angles">
+<tt class="descname">reconstruct_angles</tt><big>(</big><em>hisparc_group</em>, <em>kascade_group</em>, <em>hisparc_table='events'</em>, <em>offsets=None</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.KascadeDirectionReconstruction.reconstruct_angles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.analysis.direction_reconstruction.KascadeDirectionReconstruction.store_reconstructed_event">
+<tt class="descname">store_reconstructed_event</tt><big>(</big><em>hisparc_event</em>, <em>kascade_event</em>, <em>reconstructed_theta</em>, <em>reconstructed_phi</em><big>)</big><a class="headerlink" href="#sapphire.analysis.direction_reconstruction.KascadeDirectionReconstruction.store_reconstructed_event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>

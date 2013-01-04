@@ -73,6 +73,31 @@ consisting of one or more detectors.</p>
 <dd><p>Calculate angle between detectors (phi1, phi2)</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="sapphire.clusters.BaseCluster.get_rphialpha_coordinates">
+<tt class="descname">get_rphialpha_coordinates</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.clusters.BaseCluster.get_rphialpha_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.clusters.BaseCluster.get_xyalpha_coordinates">
+<tt class="descname">get_xyalpha_coordinates</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.clusters.BaseCluster.get_xyalpha_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.clusters.BaseCluster.set_rphialpha_coordinates">
+<tt class="descname">set_rphialpha_coordinates</tt><big>(</big><em>r</em>, <em>phi</em>, <em>alpha</em><big>)</big><a class="headerlink" href="#sapphire.clusters.BaseCluster.set_rphialpha_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.clusters.BaseCluster.set_xyalpha_coordinates">
+<tt class="descname">set_xyalpha_coordinates</tt><big>(</big><em>x</em>, <em>y</em>, <em>alpha</em><big>)</big><a class="headerlink" href="#sapphire.clusters.BaseCluster.set_xyalpha_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sapphire.clusters.BaseCluster.stations">
+<tt class="descname">stations</tt><a class="headerlink" href="#sapphire.clusters.BaseCluster.stations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -96,6 +121,16 @@ respectively.</li>
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt id="sapphire.clusters.Detector.detector_size">
+<tt class="descname">detector_size</tt><a class="headerlink" href="#sapphire.clusters.Detector.detector_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.clusters.Detector.get_area">
+<tt class="descname">get_area</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.clusters.Detector.get_area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="sapphire.clusters.Detector.get_corners">
 <tt class="descname">get_corners</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.clusters.Detector.get_corners" title="Permalink to this definition">¶</a></dt>
@@ -111,6 +146,26 @@ respectively.</li>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="sapphire.clusters.Detector.get_xy_coordinates">
+<tt class="descname">get_xy_coordinates</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.clusters.Detector.get_xy_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.clusters.ScienceParkCluster">
+<em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">ScienceParkCluster</tt><big>(</big><em>stations=[501, 502, 503, 504, 505, 506]</em><big>)</big><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="sapphire.clusters.ScienceParkCluster.gps_coordinates">
+<tt class="descname">gps_coordinates</tt><em class="property"> = {501: (52.355924173294305, 4.951144021644267, 56.10234594158828), 502: (52.35529334489592, 4.95010470838127, 55.95436700992286), 503: (52.35625473512756, 4.952943744559833, 51.58264170307666), 504: (52.35717877791028, 4.954383885217556, 54.62268843315542), 505: (52.357251580629246, 4.948400756470689, 47.7309954026714), 506: (52.3571787512, 4.95198605591, 43.8700314863)}</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.gps_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sapphire.clusters.ScienceParkCluster.station_rotations">
+<tt class="descname">station_rotations</tt><em class="property"> = {501: 135, 502: -15, 503: 45, 504: 175, 505: 86, 506: 267}</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.station_rotations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -158,6 +213,16 @@ respectively.</li>
 <tt class="descname">calc_r_and_phi_for_detectors</tt><big>(</big><em>s1</em>, <em>s2</em><big>)</big><a class="headerlink" href="#sapphire.clusters.Station.calc_r_and_phi_for_detectors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate angle between detectors (phi1, phi2)</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="sapphire.clusters.Station.detectors">
+<tt class="descname">detectors</tt><a class="headerlink" href="#sapphire.clusters.Station.detectors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.clusters.Station.get_rphialpha_coordinates">
+<tt class="descname">get_rphialpha_coordinates</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.clusters.Station.get_rphialpha_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="sapphire.clusters.Station.get_xyalpha_coordinates">

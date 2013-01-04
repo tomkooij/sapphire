@@ -484,12 +484,18 @@ documentation, see the <a class="reference external" href="http://matplotlib.org
 <span class="gp">&gt;&gt;&gt; </span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Pulseheight histogram (log scale)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <tt class="xref py py-func docutils literal"><span class="pre">arange()</span></tt> function returns an array with range from 0 to 2001 in
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">arange()</span></tt> function returns an array with range from 0 to 2000 in
 steps of 20.  It is necessary to say 2001 (or 2002, 2000.1 or whatever)
 and not 2000, if you want the range to be inclusive.  The <tt class="xref py py-func docutils literal"><span class="pre">hist()</span></tt>
 function will then plot a <em>stepped</em> histogram with a log scale.  Finally,
 we add some labels and a title.  This is the result:</p>
 <img alt="_images/tutorial-hist-better.png" src="_images/tutorial-hist-better.png" style="width: 500px;" />
+<p>In this plot, the gamma and charged particle part of the spectrum are easy
+to distinguish.  The cut at 123 ADC is due to the trigger.  The bump at
+approximately 300 ADC is the so-called MIP (minimum ionizing particle)
+peak.  For an explanation of this plot and the features of the pulseheight
+histogram, see <a class="reference external" href="http://www.nikhef.nl/pub/services/biblio/theses_pdf/thesis_D_Fokkema.pdf">David&#8217;s thesis</a>,
+page 44–45, and 49–51.</p>
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="event-id" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
