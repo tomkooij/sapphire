@@ -496,6 +496,270 @@ approximately 300 ADC is the so-called MIP (minimum ionizing particle)
 peak.  For an explanation of this plot and the features of the pulseheight
 histogram, see <a class="reference external" href="http://www.nikhef.nl/pub/services/biblio/theses_pdf/thesis_D_Fokkema.pdf">David&#8217;s thesis</a>,
 page 44–45, and 49–51.</p>
+</div>
+</div>
+<div class="section" id="searching-for-coincidences">
+<h2>2.3. Searching for coincidences<a class="headerlink" href="#searching-for-coincidences" title="Permalink to this headline">¶</a></h2>
+<p>If you work with HiSPARC data, invariably you&#8217;ll be interested in
+<em>coincidences</em> between HiSPARC stations.  That is, are there showers
+which have been observed by multiple stations?  To find out, we&#8217;ll make
+use of the <a class="reference internal" href="coincidences.html#module-sapphire.analysis.coincidences" title="sapphire.analysis.coincidences"><tt class="xref py py-mod docutils literal"><span class="pre">sapphire.analysis.coincidences</span></tt></a> module.</p>
+<div class="section" id="performing-the-search">
+<h3>2.3.1. Performing the search<a class="headerlink" href="#performing-the-search" title="Permalink to this headline">¶</a></h3>
+<p>Consider the following script, which you can hopefully understand by now
+(note that the prompt (&gt;&gt;&gt;) is absent, since this is a <em>script</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">tables</span>
+
+<span class="kn">from</span> <span class="nn">sapphire.publicdb</span> <span class="kn">import</span> <span class="n">download_data</span>
+<span class="kn">from</span> <span class="nn">sapphire.analysis</span> <span class="kn">import</span> <span class="n">coincidences</span>
+
+
+<span class="n">STATIONS</span> <span class="o">=</span> <span class="p">[</span><span class="mi">501</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">506</span><span class="p">]</span>
+<span class="n">START</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">END</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">station_groups</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;/s</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">STATIONS</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">openFile</span><span class="p">(</span><span class="s">&#39;data.h5&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">STATIONS</span><span class="p">,</span> <span class="n">station_groups</span><span class="p">):</span>
+        <span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">station</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At this point, we have downloaded data for three stations.  Note that we
+didn&#8217;t specify <tt class="docutils literal"><span class="pre">get_blobs=True</span></tt> in the
+<a class="reference internal" href="publicdb.html#sapphire.publicdb.download_data" title="sapphire.publicdb.download_data"><tt class="xref py py-func docutils literal"><span class="pre">sapphire.publicdb.download_data()</span></tt></a> function.  Thus, we have no traces
+and the download is quick.  Let&#8217;s see what the datafile now contains:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">data</span>
+<span class="go">data.h5 (File) &#39;&#39;</span>
+<span class="go">Last modif.: &#39;Mon Jan 14 17:34:39 2013&#39;</span>
+<span class="go">Object Tree:</span>
+<span class="go">/ (RootGroup) &#39;&#39;</span>
+<span class="go">/s501 (Group) &#39;Data group&#39;</span>
+<span class="go">/s501/events (Table(70643,)) &#39;HiSPARC coincidences table&#39;</span>
+<span class="go">/s501/weather (Table(25199,)) &#39;HiSPARC weather data&#39;</span>
+<span class="go">/s503 (Group) &#39;Data group&#39;</span>
+<span class="go">/s503/events (Table(34937,)) &#39;HiSPARC coincidences table&#39;</span>
+<span class="go">/s506 (Group) &#39;Data group&#39;</span>
+<span class="go">/s506/events (Table(68365,)) &#39;HiSPARC coincidences table&#39;</span>
+</pre></div>
+</div>
+<p>It contains three groups, one for each station.  To search for
+coincidences between these stations, we first initialize the
+<a class="reference internal" href="coincidences.html#sapphire.analysis.coincidences.Coincidences" title="sapphire.analysis.coincidences.Coincidences"><tt class="xref py py-class docutils literal"><span class="pre">sapphire.analysis.coincidences.Coincidences</span></tt></a> class like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">coincidences</span> <span class="o">=</span> <span class="n">coincidences</span><span class="o">.</span><span class="n">Coincidences</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/coincidences&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                         <span class="n">station_groups</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>From the documentation (click on the class above the example to go to the
+documentation) it is clear that we have to specify the datafile
+(<tt class="docutils literal"><span class="pre">data</span></tt>), the destination group (<tt class="docutils literal"><span class="pre">/coincidences</span></tt>) and the groups
+containing the station data (<tt class="docutils literal"><span class="pre">station_groups</span></tt>).  Once that&#8217;s done, there
+is an easy way to search for coincidences, process the events making up
+the coincidences, and store them in the destination group:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">coincidences</span><span class="o">.</span><span class="n">search_and_store_coincidences</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you want to tweak the process using non-default parameters, see the
+module documentation (<a class="reference internal" href="coincidences.html#module-sapphire.analysis.coincidences" title="sapphire.analysis.coincidences"><tt class="xref py py-mod docutils literal"><span class="pre">sapphire.analysis.coincidences</span></tt></a>).  For now,
+let us turn to the results:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">data</span>
+<span class="go">data.h5 (File) &#39;&#39;</span>
+<span class="go">Last modif.: &#39;Mon Jan 14 17:46:23 2013&#39;</span>
+<span class="go">Object Tree:</span>
+<span class="go">/ (RootGroup) &#39;&#39;</span>
+<span class="go">/coincidences (Group) &#39;&#39;</span>
+<span class="go">/coincidences/_src_c_index (VLArray(4976,)) &#39;&#39;</span>
+<span class="go">/coincidences/_src_timestamps (Array(173945, 3)) &#39;&#39;</span>
+<span class="go">/coincidences/c_index (VLArray(4976,)) &#39;&#39;</span>
+<span class="go">/coincidences/coincidences (Table(4976,)) &#39;&#39;</span>
+<span class="go">/coincidences/observables (Table(10479,)) &#39;&#39;</span>
+<span class="go">/s501 (Group) &#39;Data group&#39;</span>
+<span class="go">/s501/_events (Table(70643,)) &#39;HiSPARC coincidences table&#39;</span>
+<span class="go">/s501/events (Table(70643,)) &#39;&#39;</span>
+<span class="go">/s501/weather (Table(25199,)) &#39;HiSPARC weather data&#39;</span>
+<span class="go">/s503 (Group) &#39;Data group&#39;</span>
+<span class="go">/s503/_events (Table(34937,)) &#39;HiSPARC coincidences table&#39;</span>
+<span class="go">/s503/events (Table(34937,)) &#39;&#39;</span>
+<span class="go">/s506 (Group) &#39;Data group&#39;</span>
+<span class="go">/s506/_events (Table(68365,)) &#39;HiSPARC coincidences table&#39;</span>
+<span class="go">/s506/events (Table(68365,)) &#39;&#39;</span>
+</pre></div>
+</div>
+<p>The new addition is the <tt class="docutils literal"><span class="pre">/coincidences</span></tt> group.  It contains two more or
+less private members: <tt class="docutils literal"><span class="pre">_src_c_index</span></tt> and <tt class="docutils literal"><span class="pre">_src_timestamps</span></tt>.  We won&#8217;t
+cover them here.  The public tables are <tt class="docutils literal"><span class="pre">c_index</span></tt>, <tt class="docutils literal"><span class="pre">coincidences</span></tt> and
+<tt class="docutils literal"><span class="pre">observables</span></tt>.  Information about the coincidences is stored in the
+<tt class="docutils literal"><span class="pre">coincidences</span></tt> table.  Let&#8217;s look at the columns:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">column</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>id</td>
+<td>an index number identifying the coincidence</td>
+</tr>
+<tr class="row-odd"><td>N</td>
+<td>the number of stations taking part in the coincidence</td>
+</tr>
+<tr class="row-even"><td>timestamp</td>
+<td>the unix timestamp</td>
+</tr>
+<tr class="row-odd"><td>nanoseconds</td>
+<td>the nanosecond part of the timestamp</td>
+</tr>
+<tr class="row-even"><td>ext_timestamp</td>
+<td>the timestamp in nanoseconds</td>
+</tr>
+<tr class="row-odd"><td>r</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-even"><td>phi</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-odd"><td>x</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-even"><td>y</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-odd"><td>shower_size</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-even"><td>shower_theta</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-odd"><td>shower_phi</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+</tbody>
+</table>
+<p>The columns included for compatibility reasons are used by the event
+simulation code.  In that case, the <tt class="docutils literal"><span class="pre">r</span></tt>, <tt class="docutils literal"><span class="pre">phi</span></tt> describe the location
+of the shower core in polar coordinates.  Similarly, the <tt class="docutils literal"><span class="pre">x</span></tt>, <tt class="docutils literal"><span class="pre">y</span></tt>
+columns give the position in cartesian coordinates.  Furthermore, the
+<tt class="docutils literal"><span class="pre">shower_size</span></tt> gives the so-called <em>shower size</em>, and <tt class="docutils literal"><span class="pre">shower_theta</span></tt>
+and <tt class="docutils literal"><span class="pre">shower_phi</span></tt> contain the direction of the (simulated) shower.  These
+are not known for certain when working with HiSPARC data, but are
+included nonetheless.  These columns are all set to 0.0.</p>
+<p>The <tt class="docutils literal"><span class="pre">c_index</span></tt> array is used as an index to look up the individual events
+making up a coincidence.  The fifth coincidence is accessed by:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">coincidences</span><span class="o">.</span><span class="n">coincidences</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Remember, the indexes are zero-based.  The coincidence id is also 4:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">coincidences</span><span class="o">.</span><span class="n">coincidences</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="s">&#39;id&#39;</span><span class="p">]</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<p>and the number of stations participating is 2:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">coincidences</span><span class="o">.</span><span class="n">coincidences</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="s">&#39;N&#39;</span><span class="p">]</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>To lookup the indexes of the events taking part in this coincidence,
+access the <tt class="docutils literal"><span class="pre">c_index</span></tt> array using the same id:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">coincidences</span><span class="o">.</span><span class="n">c_index</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+<span class="go">array([8, 9], dtype=uint32)</span>
+</pre></div>
+</div>
+<p>That is, event ids 8 and 9 are part of this coincidence.  The event
+observables are then stored in the <tt class="docutils literal"><span class="pre">observables</span></tt> table, and can be
+accessed using these ids:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">coincidences</span><span class="o">.</span><span class="n">observables</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+<span class="go">(2, 0.0, 1356998421116183027L, 8L, 0.6368421316146851,</span>
+<span class="go">0.005263158120214939, 0.005263158120214939, 1.0394736528396606,</span>
+<span class="go">116183027L, 0.0, 0.0, 2, -1.0, -1.0, -1.0, -1.0, 1356998421, 0.0, 0.0)</span>
+</pre></div>
+</div>
+<p>The columns in this table are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">column</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>id</td>
+<td>an index number identifying the event</td>
+</tr>
+<tr class="row-odd"><td>station_id</td>
+<td>an index number identifying the station</td>
+</tr>
+<tr class="row-even"><td>N</td>
+<td>the number of detectors with particles</td>
+</tr>
+<tr class="row-odd"><td>timestamp</td>
+<td>the unix timestamp</td>
+</tr>
+<tr class="row-even"><td>nanoseconds</td>
+<td>the nanosecond part of the timestamp</td>
+</tr>
+<tr class="row-odd"><td>ext_timestamp</td>
+<td>the timestamp in nanoseconds</td>
+</tr>
+<tr class="row-even"><td>n1</td>
+<td>the number of particles in detector 1</td>
+</tr>
+<tr class="row-odd"><td>n2</td>
+<td>the number of particles in detector 2</td>
+</tr>
+<tr class="row-even"><td>n3</td>
+<td>the number of particles in detector 3</td>
+</tr>
+<tr class="row-odd"><td>n4</td>
+<td>the number of particles in detector 4</td>
+</tr>
+<tr class="row-even"><td>t1</td>
+<td>the particle arrival time in detector 1</td>
+</tr>
+<tr class="row-odd"><td>t2</td>
+<td>the particle arrival time in detector 2</td>
+</tr>
+<tr class="row-even"><td>t3</td>
+<td>the particle arrival time in detector 3</td>
+</tr>
+<tr class="row-odd"><td>t4</td>
+<td>the particle arrival time in detector 4</td>
+</tr>
+<tr class="row-even"><td>r</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-odd"><td>phi</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-even"><td>x</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-odd"><td>y</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+<tr class="row-even"><td>alpha</td>
+<td><em>compatibility reasons</em></td>
+</tr>
+</tbody>
+</table>
+<p>The columns included for compatibility reasons are again used by the event
+simulation code.  In that case, the <tt class="docutils literal"><span class="pre">r</span></tt>, <tt class="docutils literal"><span class="pre">phi</span></tt>, <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt>
+coordinates refer to the position of the <em>station</em>, not the shower.  In
+some types of simulation, the position of the station is changed from
+event to event.  The <tt class="docutils literal"><span class="pre">alpha</span></tt> column refers to the <em>orientation</em> of the
+station in those cases.</p>
+<p>The station id is an index into the <tt class="docutils literal"><span class="pre">station_groups</span></tt> list which was used
+when searching for coincidences.  So, an id of 2 refers to <tt class="docutils literal"><span class="pre">/s506</span></tt>.</p>
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="event-id" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -526,6 +790,10 @@ different.  To uniquely define an event, use a station number /
 <li><a class="reference internal" href="#accessing-the-data">2.2.3. Accessing the data</a></li>
 <li><a class="reference internal" href="#the-sapphire-time-util-module">2.2.4. The <tt class="docutils literal"><span class="pre">sapphire.time_util</span></tt> module</a></li>
 <li><a class="reference internal" href="#plotting-data">2.2.5. Plotting data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#searching-for-coincidences">2.3. Searching for coincidences</a><ul>
+<li><a class="reference internal" href="#performing-the-search">2.3.1. Performing the search</a></li>
 </ul>
 </li>
 </ul>
