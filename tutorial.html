@@ -147,10 +147,10 @@ we can specify this by typing:</p>
 </div>
 <p>Mind that if we do not specify the hour of day, it is taken to be 00:00
 hours.  Thus, there is no data included from December 3.  Alternatively,
-we can download data from a two hour interval on December 14 by specifying
+we can download data from a two hour interval on October 17 by specifying
 the hour of day:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>which is from 19:00 to 21:00 hours.  It is important to realize that the
@@ -395,7 +395,8 @@ the <a class="reference internal" href="time_util.html#sapphire.time_util.GPSTim
 by giving it a GPS time to work with.  It can either be in date/time
 notation, or as a timestamp.  For example, the exact same result is
 obtained by these two lines of code:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sapphire.time_util</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">&lt;sapphire.time_util.GPSTime instance at 0x10b8021b8&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">time_util</span><span class="o">.</span><span class="n">GPSTime</span><span class="p">(</span><span class="mi">1354320000</span><span class="p">)</span>
 <span class="go">&lt;sapphire.time_util.GPSTime instance at 0x10b802128&gt;</span>
@@ -455,7 +456,7 @@ classes from modules into your own namespace:</p>
 is a great way to do that.  And of course, the venerable histogram is
 still very useful to condense thousands of events into one display.  Pylab
 contains an easy function to do just that: <tt class="xref py py-func docutils literal"><span class="pre">hist()</span></tt>.  Let&#8217;s try to
-recreate a few graphs as seen on the HiSPARC <a class="reference external" href="http://data.hisparc.nl/django/show/stations/501/2012/12/1/">data display</a>:</p>
+recreate a few graphs as seen on the HiSPARC <a class="reference external" href="http://data.hisparc.nl/show/stations/501/2012/12/1/">data display</a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ph</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s">&#39;pulseheights&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hist</span><span class="p">(</span><span class="n">ph</span><span class="p">)</span>
 <span class="go">([array([114794,  17565,   3062,   1009,    502,    285,    170,     86,</span>

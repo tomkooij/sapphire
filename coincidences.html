@@ -126,9 +126,21 @@ group.</li>
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt id="sapphire.analysis.coincidences.Coincidences.ProcessWithTraces">
+<tt class="descname">ProcessWithTraces</tt><a class="headerlink" href="#sapphire.analysis.coincidences.Coincidences.ProcessWithTraces" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">ProcessIndexedEventsWithLINT</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sapphire.analysis.coincidences.Coincidences.ProcessWithoutTraces">
+<tt class="descname">ProcessWithoutTraces</tt><a class="headerlink" href="#sapphire.analysis.coincidences.Coincidences.ProcessWithoutTraces" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">ProcessIndexedEventsWithoutTraces</span></tt></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="sapphire.analysis.coincidences.Coincidences.process_events">
-<tt class="descname">process_events</tt><big>(</big><em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.coincidences.Coincidences.process_events" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">process_events</tt><big>(</big><em>overwrite=None</em><big>)</big><a class="headerlink" href="#sapphire.analysis.coincidences.Coincidences.process_events" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process events using <a class="reference internal" href="process_events.html#module-sapphire.analysis.process_events" title="sapphire.analysis.process_events"><tt class="xref py py-mod docutils literal"><span class="pre">sapphire.analysis.process_events</span></tt></a></p>
 <p>Events making up the coincidences are processed to obtain
 observables like number of particles and particle arrival times.</p>
@@ -145,7 +157,7 @@ station groups.</td>
 
 <dl class="method">
 <dt id="sapphire.analysis.coincidences.Coincidences.search_and_store_coincidences">
-<tt class="descname">search_and_store_coincidences</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.analysis.coincidences.Coincidences.search_and_store_coincidences" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">search_and_store_coincidences</tt><big>(</big><em>cluster=None</em><big>)</big><a class="headerlink" href="#sapphire.analysis.coincidences.Coincidences.search_and_store_coincidences" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search, process and store coincidences.</p>
 <p>This is a semi-automatic method to search for coincidences,
 process the events making up the coincidences and then store the

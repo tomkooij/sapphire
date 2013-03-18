@@ -126,10 +126,10 @@
 
 <dl class="class">
 <dt id="sapphire.analysis.core_reconstruction.CoreReconstruction">
-<em class="property">class </em><tt class="descclassname">sapphire.analysis.core_reconstruction.</tt><tt class="descname">CoreReconstruction</tt><big>(</big><em>data</em>, <em>results_table=None</em>, <em>solver=None</em>, <em>N=None</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.core_reconstruction.CoreReconstruction" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">sapphire.analysis.core_reconstruction.</tt><tt class="descname">CoreReconstruction</tt><big>(</big><em>data</em>, <em>stations</em>, <em>results_group=None</em>, <em>solver=None</em>, <em>N=None</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.core_reconstruction.CoreReconstruction" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="sapphire.analysis.core_reconstruction.CoreReconstruction.create_empty_output_table">
-<tt class="descname">create_empty_output_table</tt><big>(</big><em>table_path</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.core_reconstruction.CoreReconstruction.create_empty_output_table" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">create_empty_output_table</tt><big>(</big><em>group_path</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.core_reconstruction.CoreReconstruction.create_empty_output_table" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -145,6 +145,16 @@
 <dl class="method">
 <dt id="sapphire.analysis.core_reconstruction.CoreReconstruction.reconstruct_core_positions">
 <tt class="descname">reconstruct_core_positions</tt><big>(</big><em>source</em><big>)</big><a class="headerlink" href="#sapphire.analysis.core_reconstruction.CoreReconstruction.reconstruct_core_positions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sapphire.analysis.core_reconstruction.CoreReconstruction.reconstruction_description">
+<tt class="descname">reconstruction_description</tt><em class="property"> = {'reconstructed_core_pos': Float32Col(shape=(2,), dflt=0.0, pos=None), 'min_n134': Float32Col(shape=(), dflt=0.0, pos=None), 'reconstructed_shower_size': Float32Col(shape=(), dflt=0.0, pos=None), 'coinc_id': UInt32Col(shape=(), dflt=0, pos=None), 'N': UInt8Col(shape=(), dflt=0, pos=None)}</em><a class="headerlink" href="#sapphire.analysis.core_reconstruction.CoreReconstruction.reconstruction_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.analysis.core_reconstruction.CoreReconstruction.store_reconstructed_coincidence">
+<tt class="descname">store_reconstructed_coincidence</tt><big>(</big><em>coincidence</em>, <em>reconstructed_core_x</em>, <em>reconstructed_core_y</em>, <em>reconstructed_shower_size</em><big>)</big><a class="headerlink" href="#sapphire.analysis.core_reconstruction.CoreReconstruction.store_reconstructed_coincidence" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -166,7 +176,7 @@
 
 <dl class="class">
 <dt id="sapphire.analysis.core_reconstruction.PlotCoreReconstruction">
-<em class="property">class </em><tt class="descclassname">sapphire.analysis.core_reconstruction.</tt><tt class="descname">PlotCoreReconstruction</tt><big>(</big><em>data</em>, <em>results_table=None</em>, <em>solver=None</em>, <em>N=None</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.core_reconstruction.PlotCoreReconstruction" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">sapphire.analysis.core_reconstruction.</tt><tt class="descname">PlotCoreReconstruction</tt><big>(</big><em>data</em>, <em>stations</em>, <em>results_group=None</em>, <em>solver=None</em>, <em>N=None</em>, <em>overwrite=False</em><big>)</big><a class="headerlink" href="#sapphire.analysis.core_reconstruction.PlotCoreReconstruction" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="sapphire.analysis.core_reconstruction.PlotCoreReconstruction.draw_cluster">
 <tt class="descname">draw_cluster</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.analysis.core_reconstruction.PlotCoreReconstruction.draw_cluster" title="Permalink to this definition">¶</a></dt>
