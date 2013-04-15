@@ -504,7 +504,7 @@ page 44–45, and 49–51.</p>
 <p>If you work with HiSPARC data, invariably you&#8217;ll be interested in
 <em>coincidences</em> between HiSPARC stations.  That is, are there showers
 which have been observed by multiple stations?  To find out, we&#8217;ll make
-use of the <a class="reference internal" href="coincidences.html#module-sapphire.analysis.coincidences" title="sapphire.analysis.coincidences"><tt class="xref py py-mod docutils literal"><span class="pre">sapphire.analysis.coincidences</span></tt></a> module.</p>
+use of the <tt class="xref py py-mod docutils literal"><span class="pre">sapphire.analysis.coincidences</span></tt> module.</p>
 <div class="section" id="performing-the-search">
 <h3>2.3.1. Performing the search<a class="headerlink" href="#performing-the-search" title="Permalink to this headline">¶</a></h3>
 <p>Consider the following script, which you can hopefully understand by now
@@ -550,7 +550,7 @@ and the download is quick.  Let&#8217;s see what the datafile now contains:</p>
 </div>
 <p>It contains three groups, one for each station.  To search for
 coincidences between these stations, we first initialize the
-<a class="reference internal" href="coincidences.html#sapphire.analysis.coincidences.Coincidences" title="sapphire.analysis.coincidences.Coincidences"><tt class="xref py py-class docutils literal"><span class="pre">sapphire.analysis.coincidences.Coincidences</span></tt></a> class like so:</p>
+<tt class="xref py py-class docutils literal"><span class="pre">sapphire.analysis.coincidences.Coincidences</span></tt> class like so:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">coincidences</span> <span class="o">=</span> <span class="n">coincidences</span><span class="o">.</span><span class="n">Coincidences</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/coincidences&#39;</span><span class="p">,</span>
 <span class="gp">... </span>                                         <span class="n">station_groups</span><span class="p">)</span>
 </pre></div>
@@ -565,7 +565,7 @@ the coincidences, and store them in the destination group:</p>
 </pre></div>
 </div>
 <p>If you want to tweak the process using non-default parameters, see the
-module documentation (<a class="reference internal" href="coincidences.html#module-sapphire.analysis.coincidences" title="sapphire.analysis.coincidences"><tt class="xref py py-mod docutils literal"><span class="pre">sapphire.analysis.coincidences</span></tt></a>).  For now,
+module documentation (<tt class="xref py py-mod docutils literal"><span class="pre">sapphire.analysis.coincidences</span></tt>).  For now,
 let us turn to the results:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">data</span>
 <span class="go">data.h5 (File) &#39;&#39;</span>
