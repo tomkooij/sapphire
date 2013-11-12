@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -7,14 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.6.4. Use the Stoomboot cluster at Nikhef for batch jobs &mdash; SAPPHiRE 0.9 documentation</title>
+    <title>3.8.4. Use the Stoomboot cluster at Nikhef for batch jobs &mdash; SAPPHiRE 0.9 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/hisparc_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '0.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -25,10 +25,11 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
-    <link rel="up" title="3.6. Performing simulations" href="simulations.html" />
-    <link rel="next" title="3.7. Low-level storage constructs" href="storage.html" />
-    <link rel="prev" title="3.6.3. Simulations based on theoretical models of EAS lateral distributions" href="ldf.html" /> 
+    <link rel="up" title="3.8. Performing simulations" href="simulations.html" />
+    <link rel="next" title="3.9. Low-level storage constructs" href="storage.html" />
+    <link rel="prev" title="3.8.3. Simulations based on theoretical models of EAS lateral distributions" href="ldf.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,14 +42,14 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="storage.html" title="3.7. Low-level storage constructs"
+          <a href="storage.html" title="3.9. Low-level storage constructs"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="ldf.html" title="3.6.3. Simulations based on theoretical models of EAS lateral distributions"
+          <a href="ldf.html" title="3.8.3. Simulations based on theoretical models of EAS lateral distributions"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
-          <li><a href="simulations.html" accesskey="U">3.6. Performing simulations</a> &raquo;</li> 
+          <li><a href="simulations.html" accesskey="U">3.8. Performing simulations</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,8 +58,91 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="use-the-stoomboot-cluster-at-nikhef-for-batch-jobs">
-<h1>3.6.4. Use the Stoomboot cluster at Nikhef for batch jobs<a class="headerlink" href="#use-the-stoomboot-cluster-at-nikhef-for-batch-jobs" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-sapphire.simulations.qsub">
+<span id="use-the-stoomboot-cluster-at-nikhef-for-batch-jobs"></span><h1>3.8.4. Use the Stoomboot cluster at Nikhef for batch jobs<a class="headerlink" href="#module-sapphire.simulations.qsub" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sapphire.simulations.qsub.QSubChild">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.qsub.</tt><tt class="descname">QSubChild</tt><big>(</big><em>data</em>, <em>hash</em><big>)</big><a class="headerlink" href="#sapphire.simulations.qsub.QSubChild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accept a job from QSubSimulation and run it</p>
+<p>This class accepts a job submitted through QSubSimulation and runs it.</p>
+<p>Initialize the simulation</p>
+<p>This is a bit different from a regular simulation in that we have
+one shower data file (read-only) and several job-specific data
+files.  The job-specific data file (identified by the hash)
+contains several simulation parameters as attributes on the root
+group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; job HDF5 file</li>
+<li><strong>hash</strong> &#8211; job hash</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="sapphire.simulations.qsub.QSubChild.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.simulations.qsub.QSubChild.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the simulation</p>
+<p>Fetch the positions to be simulated from the data file and run the
+simulation</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.simulations.qsub.QSubSimulation">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.qsub.</tt><tt class="descname">QSubSimulation</tt><big>(</big><em>cluster</em>, <em>data</em>, <em>grdpcles</em>, <em>output</em>, <em>R</em>, <em>N</em>, <em>N_cores=2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sapphire.simulations.qsub.QSubSimulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit a simulation in multiple jobs</p>
+<p>This class splits up the simulation in several jobs.  Each job is
+submitted through qsub and the results are collected.</p>
+<p>Initialize the simulation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cluster</strong> &#8211; BaseCluster (or derived) instance</li>
+<li><strong>data</strong> &#8211; the HDF5 file</li>
+<li><strong>grdpcles</strong> &#8211; name of the dataset containing the ground particles</li>
+<li><strong>output</strong> &#8211; name of the destination group to store results</li>
+<li><strong>R</strong> &#8211; maximum distance of shower to center of cluster</li>
+<li><strong>N</strong> &#8211; number of simulations to perform</li>
+<li><strong>N_cores</strong> &#8211; number of cores to run on</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="sapphire.simulations.qsub.QSubSimulation.collect_jobs">
+<tt class="descname">collect_jobs</tt><big>(</big><em>hashes</em><big>)</big><a class="headerlink" href="#sapphire.simulations.qsub.QSubSimulation.collect_jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect all submitted jobs and print status messages</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.qsub.QSubSimulation.collect_results">
+<tt class="descname">collect_results</tt><big>(</big><em>hashes</em><big>)</big><a class="headerlink" href="#sapphire.simulations.qsub.QSubSimulation.collect_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect all results into main HDF5 file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.qsub.QSubSimulation.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.simulations.qsub.QSubSimulation.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a simulation</p>
+<p>Perform a simulation by initializing and submitting a set of qsub
+jobs.  When all jobs are done, collect all data and store it.</p>
+<p>Note that the simulation is split into N_cores jobs if, and only
+if, N divided by N_cores is an integer.  If not, the simulation is
+split into N_cores + 1 jobs, with the last job containing the
+remainder of events.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -67,12 +151,15 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/header.png" alt="Logo"/>
+            </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="ldf.html"
-                        title="previous chapter">3.6.3. Simulations based on theoretical models of EAS lateral distributions</a></p>
+                        title="previous chapter">3.8.3. Simulations based on theoretical models of EAS lateral distributions</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="storage.html"
-                        title="next chapter">3.7. Low-level storage constructs</a></p>
+                        title="next chapter">3.9. Low-level storage constructs</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/qsub.txt"
@@ -105,19 +192,19 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="storage.html" title="3.7. Low-level storage constructs"
+          <a href="storage.html" title="3.9. Low-level storage constructs"
              >next</a> |</li>
         <li class="right" >
-          <a href="ldf.html" title="3.6.3. Simulations based on theoretical models of EAS lateral distributions"
+          <a href="ldf.html" title="3.8.3. Simulations based on theoretical models of EAS lateral distributions"
              >previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
-          <li><a href="simulations.html" >3.6. Performing simulations</a> &raquo;</li> 
+          <li><a href="simulations.html" >3.8. Performing simulations</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, David Fokkema.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

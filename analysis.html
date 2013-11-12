@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -11,10 +10,11 @@
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/hisparc_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '0.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
     <link rel="up" title="3. SAPPHiRE Reference" href="sapphire.html" />
     <link rel="next" title="3.1.1. Search for coincidences between HiSPARC stations" href="coincidences.html" />
@@ -56,8 +57,22 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="data-analysis">
-<h1>3.1. Data analysis<a class="headerlink" href="#data-analysis" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-sapphire.analysis">
+<span id="data-analysis"></span><h1>3.1. Data analysis<a class="headerlink" href="#module-sapphire.analysis" title="Permalink to this headline">¶</a></h1>
+<p>Data analysis</p>
+<p>This package contains modules for performing various analysis tasks:</p>
+<dl class="docutils">
+<dt><a class="reference internal" href="coincidences.html#module-sapphire.analysis.coincidences" title="sapphire.analysis.coincidences"><tt class="xref py py-mod docutils literal"><span class="pre">coincidences</span></tt></a></dt>
+<dd>Search for coincidences between HiSPARC stations</dd>
+<dt><a class="reference internal" href="core_reconstruction.html#module-sapphire.analysis.core_reconstruction" title="sapphire.analysis.core_reconstruction"><tt class="xref py py-mod docutils literal"><span class="pre">core_reconstruction</span></tt></a></dt>
+<dd>Shower core and shower size reconstruction</dd>
+<dt><a class="reference internal" href="direction_reconstruction.html#module-sapphire.analysis.direction_reconstruction" title="sapphire.analysis.direction_reconstruction"><tt class="xref py py-mod docutils literal"><span class="pre">direction_reconstruction</span></tt></a></dt>
+<dd>EAS direction reconstruction</dd>
+<dt><a class="reference internal" href="landau.html#module-sapphire.analysis.landau" title="sapphire.analysis.landau"><tt class="xref py py-mod docutils literal"><span class="pre">landau</span></tt></a></dt>
+<dd>Landau distribution</dd>
+<dt><a class="reference internal" href="process_events.html#module-sapphire.analysis.process_events" title="sapphire.analysis.process_events"><tt class="xref py py-mod docutils literal"><span class="pre">process_events</span></tt></a></dt>
+<dd>Process HiSPARC events</dd>
+</dl>
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
@@ -76,6 +91,9 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/header.png" alt="Logo"/>
+            </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="sapphire.html"
                         title="previous chapter">3. SAPPHiRE Reference</a></p>
@@ -125,7 +143,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2012, David Fokkema.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -11,10 +10,11 @@
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/hisparc_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '0.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
     <link rel="next" title="2. Tutorial" href="tutorial.html" />
     <link rel="prev" title="Welcome to SAPPHiRE’s documentation!" href="index.html" /> 
@@ -58,7 +59,7 @@
 <h1>1. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>In theory, installing a Python package should be as easy as py.  Er, pie.
 Using <a class="reference external" href="http://www.pip-installer.org/">Pip</a>.  Like so:</p>
-<div class="highlight-python"><pre>$ pip install sapphire</pre>
+<div class="highlight-python"><pre>$ pip install hisparc-sapphire</pre>
 </div>
 <p>Then, the Python package called <tt class="docutils literal"><span class="pre">sapphire</span></tt> would be retrieved from the
 internet.  It would have its dependencies listed and <tt class="docutils literal"><span class="pre">pip</span></tt> would pull
@@ -188,17 +189,22 @@ handled by the Python package management software.</p>
 </div>
 <div class="section" id="installing-sapphire">
 <h2>1.2. Installing SAPPHiRE<a class="headerlink" href="#installing-sapphire" title="Permalink to this headline">¶</a></h2>
-<p>When SAPPHiRE reaches 1.0, we will upload it to <a class="reference external" href="http://pypi.python.org">PyPI</a> so that Pip knows where to find it.  That is
-currently, however, not the case.</p>
-<p>There are two scenarios for installing SAPPHiRE: with or without
-fetching the code.</p>
+<p>The SAPPHiRE package has been uploaded to <a class="reference external" href="http://pypi.python.org">PyPI</a> so that Pip knows where to find it.</p>
+<p>There are now several scenarios for installing SAPPHiRE: let Pip
+install the release or development version or download the source code
+and use setup.py to install it.</p>
 <div class="section" id="just-let-me-get-to-work">
 <h3>1.2.1. Just let me get to work!<a class="headerlink" href="#just-let-me-get-to-work" title="Permalink to this headline">¶</a></h3>
-<p>This scenario does not involve fetching the code.  It will just install
-SAPPHiRE, so that you can get to work.  Quickly, issue:</p>
-<blockquote>
-<div>$ pip install <a class="reference external" href="https://github.com/hisparc/sapphire/zipball/master">https://github.com/hisparc/sapphire/zipball/master</a></div></blockquote>
+<p>These scenarios do not involve fetching the code.  They will just
+install SAPPHiRE, so that you can get to work.  To get the latest
+stable release version, simply issue:</p>
+<div class="highlight-python"><pre>$ pip install hisparc-sapphire</pre>
+</div>
 <p>Done.  Now get to work.</p>
+<p>If you like living on the edge with a possibly broken version of
+SAPPHiRE, get the latest development version:</p>
+<div class="highlight-python"><pre>$ pip install https://github.com/hisparc/sapphire/zipball/master</pre>
+</div>
 </div>
 <div class="section" id="let-me-see-the-code">
 <h3>1.2.2. Let me see the code!<a class="headerlink" href="#let-me-see-the-code" title="Permalink to this headline">¶</a></h3>
@@ -208,9 +214,9 @@ can either go to the <a class="reference external" href="https://github.com/hisp
 or install the version control system (we use <a class="reference external" href="http://git-scm.com">Git</a>
 yourself.  For that, please see the <a class="reference external" href="https://help.github.com/articles/set-up-git">GitHub Help pages</a>.</p>
 <p>To just download the code and install SAPPHiRE, first go to
-<a class="reference external" href="https://github.com/hisparc/sapphire/">https://github.com/hisparc/sapphire/</a>.  Then, click on the <em>Zip</em> button
-(see image below).  This will start a download of all the code bundled in
-a zip file.</p>
+<a class="reference external" href="https://github.com/hisparc/sapphire/">https://github.com/hisparc/sapphire/</a>.  Then, click on the <em>Download ZIP</em>
+button (see image below).  This will start a download of all the code
+bundled in a zip file.</p>
 <img alt="_images/github-zipball.png" src="_images/github-zipball.png" />
 <p>You can also click the following link:
 <a class="reference external" href="https://github.com/hisparc/sapphire/zipball/master">https://github.com/hisparc/sapphire/zipball/master</a>.  Uncompress the zip
@@ -258,6 +264,9 @@ correctly installed.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/header.png" alt="Logo"/>
+            </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">1. Installation</a><ul>
@@ -325,7 +334,7 @@ correctly installed.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2012, David Fokkema.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

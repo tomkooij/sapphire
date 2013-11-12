@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -7,14 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.2. HiSPARC clusters &mdash; SAPPHiRE 0.9 documentation</title>
+    <title>3.3. HiSPARC clusters &mdash; SAPPHiRE 0.9 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/hisparc_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '0.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -25,10 +25,11 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
     <link rel="up" title="3. SAPPHiRE Reference" href="sapphire.html" />
-    <link rel="next" title="3.3. GPS / UTC time functions" href="gpstime.html" />
-    <link rel="prev" title="3.1.5. Processing of HiSPARC events" href="process_events.html" /> 
+    <link rel="next" title="3.4. Corsika Reader Documentation" href="corsika.html" />
+    <link rel="prev" title="3.2. HiSPARC API" href="api.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,10 +42,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="gpstime.html" title="3.3. GPS / UTC time functions"
+          <a href="corsika.html" title="3.4. Corsika Reader Documentation"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="process_events.html" title="3.1.5. Processing of HiSPARC events"
+          <a href="api.html" title="3.2. HiSPARC API"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" accesskey="U">3. SAPPHiRE Reference</a> &raquo;</li> 
@@ -57,7 +58,7 @@
           <div class="body">
             
   <div class="section" id="module-sapphire.clusters">
-<span id="hisparc-clusters"></span><h1>3.2. HiSPARC clusters<a class="headerlink" href="#module-sapphire.clusters" title="Permalink to this headline">¶</a></h1>
+<span id="hisparc-clusters"></span><h1>3.3. HiSPARC clusters<a class="headerlink" href="#module-sapphire.clusters" title="Permalink to this headline">¶</a></h1>
 <p>HiSPARC cluster definitions</p>
 <p>The BaseCluster class defines a HiSPARC cluster consisting of one or
 more stations.  The Station class defines a HiSPARC station,
@@ -71,6 +72,21 @@ consisting of one or more detectors.</p>
 <dt id="sapphire.clusters.BaseCluster.calc_r_and_phi_for_stations">
 <tt class="descname">calc_r_and_phi_for_stations</tt><big>(</big><em>s1</em>, <em>s2</em><big>)</big><a class="headerlink" href="#sapphire.clusters.BaseCluster.calc_r_and_phi_for_stations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate angle between detectors (phi1, phi2)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.clusters.BaseCluster.calc_xy_center_of_mass_coordinates">
+<tt class="descname">calc_xy_center_of_mass_coordinates</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.clusters.BaseCluster.calc_xy_center_of_mass_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate center of mass coordinates of all detectors in cluster</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">x, y; coordinates of cluster center relative to
+absolute coordinate system</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -158,13 +174,33 @@ respectively.</li>
 <dt id="sapphire.clusters.ScienceParkCluster">
 <em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">ScienceParkCluster</tt><big>(</big><em>stations=[501, 502, 503, 504, 505, 506]</em><big>)</big><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="attribute">
+<dt id="sapphire.clusters.ScienceParkCluster.coordinates">
+<tt class="descname">coordinates</tt><em class="property"> = {'latitude': 52.3545582682, 'altitude': 59.9428099859506, 'longitude': 4.95569730394001}</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="sapphire.clusters.ScienceParkCluster.gps_coordinates">
-<tt class="descname">gps_coordinates</tt><em class="property"> = {501: (52.355924173294305, 4.951144021644267, 56.10234594158828), 502: (52.35529334489592, 4.95010470838127, 55.95436700992286), 503: (52.35625473512756, 4.952943744559833, 51.58264170307666), 504: (52.35717877791028, 4.954383885217556, 54.62268843315542), 505: (52.357251580629246, 4.948400756470689, 47.7309954026714), 506: (52.3571787512, 4.95198605591, 43.8700314863)}</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.gps_coordinates" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">gps_coordinates</tt><em class="property"> = {501: (52.355928561847, 4.95114426883556, 54.9677912024781), 502: (52.3552939664603, 4.95009211145321, 57.5165005521849), 503: (52.3562599596, 4.95294402001001, 51.4433050034568), 504: (52.3571852096689, 4.95438206699017, 54.7881894111633), 505: (52.3572523744515, 4.94838503036866, 47.5990685038269), 506: (52.3571869092237, 4.95198066585001, 45.4731753673404), 507: (52.3560055098817, 4.95147879159059, 56.7735242238268), 508: (52.3563513341382, 4.95070840123504, 52.5109110400081), 509: (52.3545582682, 4.95569730394001, 59.9428099859506)}</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.gps_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sapphire.clusters.ScienceParkCluster.network">
+<tt class="descname">network</tt><em class="property"> = &lt;sapphire.api.Network object at 0x10cfc4310&gt;</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.network" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sapphire.clusters.ScienceParkCluster.sp_stations">
+<tt class="descname">sp_stations</tt><em class="property"> = [{u'name': u'Nikhef', u'number': 501}, {u'name': u'Sterrenkundig Instituut Anton Pannekoek', u'number': 502}, {u'name': u'SARA', u'number': 503}, {u'name': u'SURFsara (Matrix)', u'number': 504}, {u'name': u'PiMu', u'number': 505}, {u'name': u'Telecity', u'number': 506}, {u'name': u'Nikhef (receptie)', u'number': 507}, {u'name': u'Nikhef', u'number': 508}, {u'name': u'Amstel Instituut', u'number': 509}]</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.sp_stations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sapphire.clusters.ScienceParkCluster.station">
+<tt class="descname">station</tt><em class="property"> = {u'name': u'Amstel Instituut', u'number': 509}</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.station" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sapphire.clusters.ScienceParkCluster.station_rotations">
-<tt class="descname">station_rotations</tt><em class="property"> = {501: 135, 502: -15, 503: 45, 504: 175, 505: 86, 506: 267}</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.station_rotations" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">station_rotations</tt><em class="property"> = {501: 135, 502: -15, 503: 45, 504: 175, 505: 86, 506: 267, 507: 0, 508: -135, 509: 135}</em><a class="headerlink" href="#sapphire.clusters.ScienceParkCluster.station_rotations" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -177,10 +213,25 @@ respectively.</li>
 </dd></dl>
 
 <dl class="class">
+<dt id="sapphire.clusters.SingleDiamondStation">
+<em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">SingleDiamondStation</tt><a class="headerlink" href="#sapphire.clusters.SingleDiamondStation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a cluster containing a single diamond shaped station</p>
+<p>Detectors 1, 3 and 4 are in the usual position for a 4 detector
+layout, detector 2 is moved out of the center and positioned to
+create a second equilateral triangle with detectors 1, 2 and 4.</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="sapphire.clusters.SingleStation">
-<em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">SingleStation</tt><big>(</big><em>station_size=10</em><big>)</big><a class="headerlink" href="#sapphire.clusters.SingleStation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">SingleStation</tt><a class="headerlink" href="#sapphire.clusters.SingleStation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Define a cluster containing a single station</p>
 <p>Build the cluster</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.clusters.SingleTwoDetectorStation">
+<em class="property">class </em><tt class="descclassname">sapphire.clusters.</tt><tt class="descname">SingleTwoDetectorStation</tt><a class="headerlink" href="#sapphire.clusters.SingleTwoDetectorStation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a cluster containing a single 2 detector station</p>
 </dd></dl>
 
 <dl class="class">
@@ -212,6 +263,21 @@ respectively.</li>
 <dt id="sapphire.clusters.Station.calc_r_and_phi_for_detectors">
 <tt class="descname">calc_r_and_phi_for_detectors</tt><big>(</big><em>s1</em>, <em>s2</em><big>)</big><a class="headerlink" href="#sapphire.clusters.Station.calc_r_and_phi_for_detectors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate angle between detectors (phi1, phi2)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.clusters.Station.calc_xy_center_of_mass_coordinates">
+<tt class="descname">calc_xy_center_of_mass_coordinates</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.clusters.Station.calc_xy_center_of_mass_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate center of mass coordinates of detectors in station</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">x, y; coordinates of station center relative to
+absolute coordinate system</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -249,12 +315,15 @@ absolute coordinate system</td>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/header.png" alt="Logo"/>
+            </a></p>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="process_events.html"
-                        title="previous chapter">3.1.5. Processing of HiSPARC events</a></p>
+  <p class="topless"><a href="api.html"
+                        title="previous chapter">3.2. HiSPARC API</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="gpstime.html"
-                        title="next chapter">3.3. GPS / UTC time functions</a></p>
+  <p class="topless"><a href="corsika.html"
+                        title="next chapter">3.4. Corsika Reader Documentation</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/clusters.txt"
@@ -287,10 +356,10 @@ absolute coordinate system</td>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="gpstime.html" title="3.3. GPS / UTC time functions"
+          <a href="corsika.html" title="3.4. Corsika Reader Documentation"
              >next</a> |</li>
         <li class="right" >
-          <a href="process_events.html" title="3.1.5. Processing of HiSPARC events"
+          <a href="api.html" title="3.2. HiSPARC API"
              >previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li> 
@@ -298,7 +367,7 @@ absolute coordinate system</td>
     </div>
     <div class="footer">
         &copy; Copyright 2012, David Fokkema.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

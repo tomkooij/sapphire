@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -7,14 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.6.3. Simulations based on theoretical models of EAS lateral distributions &mdash; SAPPHiRE 0.9 documentation</title>
+    <title>3.8.3. Simulations based on theoretical models of EAS lateral distributions &mdash; SAPPHiRE 0.9 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/hisparc_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '0.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -25,10 +25,11 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
-    <link rel="up" title="3.6. Performing simulations" href="simulations.html" />
-    <link rel="next" title="3.6.4. Use the Stoomboot cluster at Nikhef for batch jobs" href="qsub.html" />
-    <link rel="prev" title="3.6.2. Simulations based on Monte Carlo EAS ground particle data" href="groundparticles.html" /> 
+    <link rel="up" title="3.8. Performing simulations" href="simulations.html" />
+    <link rel="next" title="3.8.4. Use the Stoomboot cluster at Nikhef for batch jobs" href="qsub.html" />
+    <link rel="prev" title="3.8.2. Simulations based on Monte Carlo EAS ground particle data" href="groundparticles.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,14 +42,14 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="qsub.html" title="3.6.4. Use the Stoomboot cluster at Nikhef for batch jobs"
+          <a href="qsub.html" title="3.8.4. Use the Stoomboot cluster at Nikhef for batch jobs"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="groundparticles.html" title="3.6.2. Simulations based on Monte Carlo EAS ground particle data"
+          <a href="groundparticles.html" title="3.8.2. Simulations based on Monte Carlo EAS ground particle data"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
-          <li><a href="simulations.html" accesskey="U">3.6. Performing simulations</a> &raquo;</li> 
+          <li><a href="simulations.html" accesskey="U">3.8. Performing simulations</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,8 +58,147 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="simulations-based-on-theoretical-models-of-eas-lateral-distributions">
-<h1>3.6.3. Simulations based on theoretical models of EAS lateral distributions<a class="headerlink" href="#simulations-based-on-theoretical-models-of-eas-lateral-distributions" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-sapphire.simulations.ldf">
+<span id="simulations-based-on-theoretical-models-of-eas-lateral-distributions"></span><h1>3.8.3. Simulations based on theoretical models of EAS lateral distributions<a class="headerlink" href="#module-sapphire.simulations.ldf" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sapphire.simulations.ldf.BaseLdf">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.ldf.</tt><tt class="descname">BaseLdf</tt><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdf" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdf.calculate_core_distance_from_coordinates_and_direction">
+<tt class="descname">calculate_core_distance_from_coordinates_and_direction</tt><big>(</big><em>x0</em>, <em>y0</em>, <em>x1</em>, <em>y1</em>, <em>theta</em>, <em>phi</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdf.calculate_core_distance_from_coordinates_and_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate core distance</p>
+<p>The core distance is the distance of the detector to the shower core,
+measured <em>on the shower front</em>.  For derivations, see logbook.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.ldf.</tt><tt class="descname">BaseLdfSimulation</tt><big>(</big><em>cluster</em>, <em>data</em>, <em>output</em>, <em>R</em>, <em>N</em>, <em>shower_size=63095.7344480193</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulation using a lateral distribution function as a model</p>
+<p>Not using an EAS simulation but rather a lateral distribution function
+as the model for the detector simulation considerably speeds up the
+complete process.  However, we will have to validate the use of an LDF.</p>
+<p>This is the base class, so there is no LDF defined.  Override
+calculate_ldf_value to complete an implementation.</p>
+<dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation.calculate_core_distance">
+<tt class="descname">calculate_core_distance</tt><big>(</big><em>detector</em>, <em>event</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation.calculate_core_distance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation.calculate_ldf_value">
+<tt class="descname">calculate_ldf_value</tt><big>(</big><em>R</em>, <em>shower_size</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation.calculate_ldf_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation.generate_shower_theta_and_phi">
+<tt class="descname">generate_shower_theta_and_phi</tt><big>(</big><em>max_theta=None</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation.generate_shower_theta_and_phi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation.run">
+<tt class="descname">run</tt><big>(</big><em>positions=None</em>, <em>max_theta=None</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a simulation</p>
+<p>This is the code which performs the simulation.  It creates a list
+of positions, creates all necessary tables and performs the
+simulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>positions</strong> &#8211; if given, use these coordinates instead of
+generating new ones</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation.simulate_detector_observables">
+<tt class="descname">simulate_detector_observables</tt><big>(</big><em>detector</em>, <em>event</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation.simulate_detector_observables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation.simulate_event">
+<tt class="descname">simulate_event</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation.simulate_event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation.simulate_station_observables_and_return_has_triggered_and_eventid">
+<tt class="descname">simulate_station_observables_and_return_has_triggered_and_eventid</tt><big>(</big><em>station</em>, <em>event</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation.simulate_station_observables_and_return_has_triggered_and_eventid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation.write_coincidence">
+<tt class="descname">write_coincidence</tt><big>(</big><em>event</em>, <em>N</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation.write_coincidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write coincidence information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event</strong> &#8211; simulated shower event information</li>
+<li><strong>N</strong> &#8211; number of stations which triggered</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdfSimulation.write_observables_and_return_id">
+<tt class="descname">write_observables_and_return_id</tt><big>(</big><em>station</em>, <em>event</em>, <em>num_particles</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdfSimulation.write_observables_and_return_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write observables from a single event</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>station</strong> &#8211; Station instance</li>
+<li><strong>n2, n3, n4</strong> (<em>n1,</em>) &#8211; number of particles detected for each detector
+1, 2, 3 and 4</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.simulations.ldf.KascadeLdf">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.ldf.</tt><tt class="descname">KascadeLdf</tt><big>(</big><em>Ne=None</em>, <em>s=None</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdf" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.simulations.ldf.KascadeLdf.calculate_ldf_value">
+<tt class="descname">calculate_ldf_value</tt><big>(</big><em>r</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdf.calculate_ldf_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.KascadeLdf.get_ldf_value_for_size">
+<tt class="descname">get_ldf_value_for_size</tt><big>(</big><em>r</em>, <em>Ne</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdf.get_ldf_value_for_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.KascadeLdf.get_ldf_value_for_size_and_shape">
+<tt class="descname">get_ldf_value_for_size_and_shape</tt><big>(</big><em>r</em>, <em>Ne</em>, <em>s</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdf.get_ldf_value_for_size_and_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.simulations.ldf.KascadeLdfSimulation">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.ldf.</tt><tt class="descname">KascadeLdfSimulation</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdfSimulation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.simulations.ldf.KascadeLdfSimulation.calculate_ldf_value">
+<tt class="descname">calculate_ldf_value</tt><big>(</big><em>r</em>, <em>shower_size</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdfSimulation.calculate_ldf_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -67,12 +207,15 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/header.png" alt="Logo"/>
+            </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="groundparticles.html"
-                        title="previous chapter">3.6.2. Simulations based on Monte Carlo EAS ground particle data</a></p>
+                        title="previous chapter">3.8.2. Simulations based on Monte Carlo EAS ground particle data</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="qsub.html"
-                        title="next chapter">3.6.4. Use the Stoomboot cluster at Nikhef for batch jobs</a></p>
+                        title="next chapter">3.8.4. Use the Stoomboot cluster at Nikhef for batch jobs</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/ldf.txt"
@@ -105,19 +248,19 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="qsub.html" title="3.6.4. Use the Stoomboot cluster at Nikhef for batch jobs"
+          <a href="qsub.html" title="3.8.4. Use the Stoomboot cluster at Nikhef for batch jobs"
              >next</a> |</li>
         <li class="right" >
-          <a href="groundparticles.html" title="3.6.2. Simulations based on Monte Carlo EAS ground particle data"
+          <a href="groundparticles.html" title="3.8.2. Simulations based on Monte Carlo EAS ground particle data"
              >previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
-          <li><a href="simulations.html" >3.6. Performing simulations</a> &raquo;</li> 
+          <li><a href="simulations.html" >3.8. Performing simulations</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, David Fokkema.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

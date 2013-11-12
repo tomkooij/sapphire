@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.4. Corsika Reader Documentation &mdash; SAPPHiRE 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/hisparc_style.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
+    <link rel="up" title="3. SAPPHiRE Reference" href="sapphire.html" />
+    <link rel="next" title="3.4.2.1. Corsika Reader" href="corsika_reader.html" />
+    <link rel="prev" title="3.3. HiSPARC clusters" href="clusters.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="corsika_reader.html" title="3.4.2.1. Corsika Reader"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="clusters.html" title="3.3. HiSPARC clusters"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="sapphire.html" accesskey="U">3. SAPPHiRE Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="corsika-reader-documentation">
+<h1>3.4. Corsika Reader Documentation<a class="headerlink" href="#corsika-reader-documentation" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://www-ik.fzk.de/~corsika/">CORSIKA</a> is an Air Shower
+Simulation Program. To be used for detailed simulation of
+extensive air showers initiated by high-energy cosmic-ray particles.</p>
+<p>This module makes it easy to work with CORSIKA output, it was
+original written by <a class="reference external" href="http://www-ik.fzk.de/~jgonzalez/corsika/">Javier Gonzalez</a> and adapted for <a class="reference external" href="www.hisparc.nl">HiSPARC</a> by Arne de Laat.</p>
+<p>The <a class="reference internal" href="#corsikamodule"><em>Corsika Module</em></a> provides functionality to read CORSIKA output
+files with <a class="reference external" href="www.python.org">Python</a>. It provides the following main
+classes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="xref py py-class docutils literal"><span class="pre">corsika.reader.CorsikaFile</span></tt>: The file class provides a
+generator over all events in the file.</li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">corsika.reader.CorsikaEvent</span></tt>: The event class that
+provides a generator over all particles at ground.</li>
+</ul>
+</div></blockquote>
+<p>This documentation sometimes refers to the CORSIKA users manual, this
+users manual can be found here <a class="reference external" href="http://www-ik.fzk.de/~corsika/usersguide/corsika_tech.html">CORSIKA User&#8217;s Guide</a></p>
+<p>In addition to reading CORSIKA output, functionally is provided to
+easily submit many CORSIKA jobs to the Nikhef batch facility
+(Stoomboot).</p>
+<div class="section" id="module-sapphire.corsika">
+<span id="corsika-module"></span><span id="corsikamodule"></span><h2>3.4.1. Corsika Module<a class="headerlink" href="#module-sapphire.corsika" title="Permalink to this headline">¶</a></h2>
+<p>This module provides the functionality to read CORSIKA files.</p>
+<p>It provides the following main classes:</p>
+<ul class="simple">
+<li><a class="reference internal" href="corsika_reader.html#sapphire.corsika.reader.CorsikaFile" title="sapphire.corsika.reader.CorsikaFile"><tt class="xref py py-class docutils literal"><span class="pre">reader.CorsikaFile</span></tt></a>: The file class provides a generator over all events
+in the file.</li>
+<li><a class="reference internal" href="corsika_reader.html#sapphire.corsika.reader.CorsikaEvent" title="sapphire.corsika.reader.CorsikaEvent"><tt class="xref py py-class docutils literal"><span class="pre">reader.CorsikaEvent</span></tt></a>: The event class that provides a generator over all
+particles at ground.</li>
+</ul>
+<p>and the following classes that correspond to the sub-blocks defined in
+the CORSIKA manual:</p>
+<ul class="simple">
+<li><a class="reference internal" href="corsika_blocks.html#sapphire.corsika.blocks.RunHeader" title="sapphire.corsika.blocks.RunHeader"><tt class="xref py py-class docutils literal"><span class="pre">blocks.RunHeader</span></tt></a></li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">blocks.RunTrailer</span></tt></li>
+<li><a class="reference internal" href="corsika_blocks.html#sapphire.corsika.blocks.EventHeader" title="sapphire.corsika.blocks.EventHeader"><tt class="xref py py-class docutils literal"><span class="pre">blocks.EventHeader</span></tt></a></li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">blocks.EventTrailer</span></tt></li>
+<li><a class="reference internal" href="corsika_blocks.html#sapphire.corsika.blocks.ParticleData" title="sapphire.corsika.blocks.ParticleData"><tt class="xref py py-class docutils literal"><span class="pre">blocks.ParticleData</span></tt></a></li>
+<li><a class="reference internal" href="corsika_blocks.html#sapphire.corsika.blocks.CherenkovData" title="sapphire.corsika.blocks.CherenkovData"><tt class="xref py py-class docutils literal"><span class="pre">blocks.CherenkovData</span></tt></a></li>
+</ul>
+<p>Additionally version for thinned showers are available:</p>
+<ul class="simple">
+<li><a class="reference internal" href="corsika_reader.html#sapphire.corsika.reader.CorsikaFileThin" title="sapphire.corsika.reader.CorsikaFileThin"><tt class="xref py py-class docutils literal"><span class="pre">reader.CorsikaFileThin</span></tt></a></li>
+<li><a class="reference internal" href="corsika_blocks.html#sapphire.corsika.blocks.ParticleDataThin" title="sapphire.corsika.blocks.ParticleDataThin"><tt class="xref py py-class docutils literal"><span class="pre">blocks.ParticleDataThin</span></tt></a></li>
+<li><a class="reference internal" href="corsika_blocks.html#sapphire.corsika.blocks.CherenkovDataThin" title="sapphire.corsika.blocks.CherenkovDataThin"><tt class="xref py py-class docutils literal"><span class="pre">blocks.CherenkovDataThin</span></tt></a></li>
+</ul>
+<div class="section" id="issues">
+<h3>3.4.1.1. Issues<a class="headerlink" href="#issues" title="Permalink to this headline">¶</a></h3>
+<p>This module does not handle platform dependent issues such as byte
+ordering (endianness) and field size. This was the result of an
+afternoon hack and has only been tested with files generated using 32
+bit CORSIKA files on a linux system compiled with gfortran.</p>
+<ul class="simple">
+<li><strong>Field Size</strong>: According to the Corsika user manual section 10.2
+all quantities are written as single precision real numbers
+independently of 32-bit or 64-bit, so each field in the file
+should be 4 bytes long.</li>
+<li><strong>Endianness</strong>: There is no check for byte ordering. It can be added using
+Python&#8217;s <a class="reference external" href="http://docs.python.org/library/struct.html#struct-alignment">struct module</a>.</li>
+<li><strong>Memory mapping</strong>: This module reads the entire CORSIKA file and stores
+it in memory. This might be a problem with large files and can be solved
+by using a memory-mapped file.</li>
+<li><strong>Thinning</strong>: This module can handle thinned showers with the
+special ..Thin subclasses.</li>
+<li><strong>Special Particles</strong>: This module currently ignores all special
+(book-keeping) particles like for muon additional information and history.</li>
+</ul>
+</div>
+<div class="section" id="more-info">
+<h3>3.4.1.2. More Info<a class="headerlink" href="#more-info" title="Permalink to this headline">¶</a></h3>
+<p>For short information on fortran unformatted binary files, take a look
+at <a class="reference external" href="http://paulbourke.net/dataformats/reading/">http://paulbourke.net/dataformats/reading/</a></p>
+<p>For detailed information on the CORSIKA format, check the &#8216;Outputs&#8217;
+chapter in the CORSIKA user manual. In particular, check the &#8216;Normal
+Particle Output&#8217; section.</p>
+</div>
+<div class="section" id="authors">
+<h3>3.4.1.3. Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Javier Gonzalez &lt;<a class="reference external" href="mailto:jgonzalez&#37;&#52;&#48;ik&#46;fzk&#46;de">jgonzalez<span>&#64;</span>ik<span>&#46;</span>fzk<span>&#46;</span>de</a>&gt;</li>
+<li>Arne de Laat &lt;<a class="reference external" href="mailto:adelaat&#37;&#52;&#48;nikhef&#46;nl">adelaat<span>&#64;</span>nikhef<span>&#46;</span>nl</a>&gt;</li>
+</ul>
+</div>
+</div>
+<div class="section" id="contents">
+<h2>3.4.2. Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="corsika_reader.html">3.4.2.1. Corsika Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corsika_blocks.html">3.4.2.2. Corsika Blocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corsika_units.html">3.4.2.3. Corsika Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corsika_particles.html">3.4.2.4. Corsika Particles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corsika_qsub.html">3.4.2.5. Submit CORSIKA jobs to Stoomboot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corsika_qsub.html#module-sapphire.corsika.qsub">3.4.2.6. Corsika qsub Module</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/header.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.4. Corsika Reader Documentation</a><ul>
+<li><a class="reference internal" href="#module-sapphire.corsika">3.4.1. Corsika Module</a><ul>
+<li><a class="reference internal" href="#issues">3.4.1.1. Issues</a></li>
+<li><a class="reference internal" href="#more-info">3.4.1.2. More Info</a></li>
+<li><a class="reference internal" href="#authors">3.4.1.3. Authors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#contents">3.4.2. Contents</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="clusters.html"
+                        title="previous chapter">3.3. HiSPARC clusters</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="corsika_reader.html"
+                        title="next chapter">3.4.2.1. Corsika Reader</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/corsika.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="corsika_reader.html" title="3.4.2.1. Corsika Reader"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="clusters.html" title="3.3. HiSPARC clusters"
+             >previous</a> |</li>
+        <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, David Fokkema.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

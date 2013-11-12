@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -11,10 +10,11 @@
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/hisparc_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '0.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
     <link rel="next" title="3.1. Data analysis" href="analysis.html" />
     <link rel="prev" title="2. Tutorial" href="tutorial.html" /> 
@@ -63,17 +64,21 @@ combination of the old framework and the collection of simulation and
 analysis scripts developed by David Fokkema for his PhD thesis work.</p>
 <p>The following packages and modules are included:</p>
 <dl class="docutils">
-<dt><tt class="xref py py-mod docutils literal"><span class="pre">analysis</span></tt></dt>
+<dt><a class="reference internal" href="analysis.html#module-sapphire.analysis" title="sapphire.analysis"><tt class="xref py py-mod docutils literal"><span class="pre">analysis</span></tt></a></dt>
 <dd>package containing analysis-related modules</dd>
+<dt><a class="reference internal" href="api.html#module-sapphire.api" title="sapphire.api"><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt></a></dt>
+<dd>publicdb api interface</dd>
 <dt><a class="reference internal" href="clusters.html#module-sapphire.clusters" title="sapphire.clusters"><tt class="xref py py-mod docutils literal"><span class="pre">clusters</span></tt></a></dt>
 <dd>definitions for HiSPARC detectors, stations and clusters</dd>
+<dt><a class="reference internal" href="corsika.html#module-sapphire.corsika" title="sapphire.corsika"><tt class="xref py py-mod docutils literal"><span class="pre">corsika</span></tt></a></dt>
+<dd>package containing CORSIKA simulation related modules</dd>
 <dt><a class="reference internal" href="gpstime.html#module-sapphire.gpstime" title="sapphire.gpstime"><tt class="xref py py-mod docutils literal"><span class="pre">gpstime</span></tt></a></dt>
 <dd>conversion functions for converting GPS time to UTC and vice versa</dd>
 <dt><a class="reference internal" href="kascade.html#module-sapphire.kascade" title="sapphire.kascade"><tt class="xref py py-mod docutils literal"><span class="pre">kascade</span></tt></a></dt>
 <dd>work on KASCADE data</dd>
 <dt><a class="reference internal" href="publicdb.html#module-sapphire.publicdb" title="sapphire.publicdb"><tt class="xref py py-mod docutils literal"><span class="pre">publicdb</span></tt></a></dt>
 <dd>public data access</dd>
-<dt><tt class="xref py py-mod docutils literal"><span class="pre">simulations</span></tt></dt>
+<dt><a class="reference internal" href="simulations.html#module-sapphire.simulations" title="sapphire.simulations"><tt class="xref py py-mod docutils literal"><span class="pre">simulations</span></tt></a></dt>
 <dd>package containing simulation-related modules</dd>
 <dt><a class="reference internal" href="storage.html#module-sapphire.storage" title="sapphire.storage"><tt class="xref py py-mod docutils literal"><span class="pre">storage</span></tt></a></dt>
 <dd>storage-related definitions</dd>
@@ -93,20 +98,39 @@ analysis scripts developed by David Fokkema for his PhD thesis work.</p>
 <li class="toctree-l2"><a class="reference internal" href="process_events.html">3.1.5. Processing of HiSPARC events</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="clusters.html">3.2. HiSPARC clusters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gpstime.html">3.3. GPS / UTC time functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="kascade.html">3.4. Working with KASCADE data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="publicdb.html">3.5. Public data access</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simulations.html">3.6. Performing simulations</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="base.html">3.6.1. Simulation base classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="groundparticles.html">3.6.2. Simulations based on Monte Carlo EAS ground particle data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ldf.html">3.6.3. Simulations based on theoretical models of EAS lateral distributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="qsub.html">3.6.4. Use the Stoomboot cluster at Nikhef for batch jobs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">3.2. HiSPARC API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusters.html">3.3. HiSPARC clusters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corsika.html">3.4. Corsika Reader Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="corsika.html#module-sapphire.corsika">3.4.1. Corsika Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="corsika.html#issues">3.4.1.1. Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="corsika.html#more-info">3.4.1.2. More Info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="corsika.html#authors">3.4.1.3. Authors</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="storage.html">3.7. Low-level storage constructs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="time_util.html">3.8. GPS date/time utility functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transformations.html">3.9. Geographic coordinate transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="corsika.html#contents">3.4.2. Contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="corsika_reader.html">3.4.2.1. Corsika Reader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="corsika_blocks.html">3.4.2.2. Corsika Blocks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="corsika_units.html">3.4.2.3. Corsika Units</a></li>
+<li class="toctree-l3"><a class="reference internal" href="corsika_particles.html">3.4.2.4. Corsika Particles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="corsika_qsub.html">3.4.2.5. Submit CORSIKA jobs to Stoomboot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="corsika_qsub.html#module-sapphire.corsika.qsub">3.4.2.6. Corsika qsub Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gpstime.html">3.5. GPS / UTC time functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kascade.html">3.6. Working with KASCADE data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publicdb.html">3.7. Public data access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulations.html">3.8. Performing simulations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="base.html">3.8.1. Simulation base classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="groundparticles.html">3.8.2. Simulations based on Monte Carlo EAS ground particle data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ldf.html">3.8.3. Simulations based on theoretical models of EAS lateral distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qsub.html">3.8.4. Use the Stoomboot cluster at Nikhef for batch jobs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="storage.html">3.9. Low-level storage constructs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time_util.html">3.10. GPS date/time utility functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformations.html">3.11. Geographic coordinate transformations</a></li>
 </ul>
 </div>
 </div>
@@ -117,6 +141,9 @@ analysis scripts developed by David Fokkema for his PhD thesis work.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/header.png" alt="Logo"/>
+            </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="tutorial.html"
                         title="previous chapter">2. Tutorial</a></p>
@@ -165,7 +192,7 @@ analysis scripts developed by David Fokkema for his PhD thesis work.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2012, David Fokkema.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

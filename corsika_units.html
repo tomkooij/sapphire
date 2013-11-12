@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.5. GPS / UTC time functions &mdash; SAPPHiRE 0.9 documentation</title>
+    <title>3.4.2.3. Corsika Units &mdash; SAPPHiRE 0.9 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,9 +27,9 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
-    <link rel="up" title="3. SAPPHiRE Reference" href="sapphire.html" />
-    <link rel="next" title="3.6. Working with KASCADE data" href="kascade.html" />
-    <link rel="prev" title="3.4.2.5. Submit CORSIKA jobs to Stoomboot" href="corsika_qsub.html" /> 
+    <link rel="up" title="3.4. Corsika Reader Documentation" href="corsika.html" />
+    <link rel="next" title="3.4.2.4. Corsika Particles" href="corsika_particles.html" />
+    <link rel="prev" title="3.4.2.2. Corsika Blocks" href="corsika_blocks.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,13 +42,14 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="kascade.html" title="3.6. Working with KASCADE data"
+          <a href="corsika_particles.html" title="3.4.2.4. Corsika Particles"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="corsika_qsub.html" title="3.4.2.5. Submit CORSIKA jobs to Stoomboot"
+          <a href="corsika_blocks.html" title="3.4.2.2. Corsika Blocks"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
-          <li><a href="sapphire.html" accesskey="U">3. SAPPHiRE Reference</a> &raquo;</li> 
+          <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
+          <li><a href="corsika.html" accesskey="U">3.4. Corsika Reader Documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,36 +58,52 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-sapphire.gpstime">
-<span id="gps-utc-time-functions"></span><h1>3.5. GPS / UTC time functions<a class="headerlink" href="#module-sapphire.gpstime" title="Permalink to this headline">¶</a></h1>
-<p>GPS time module</p>
-<p>This module provides some conversion functions for converting GPS to
-UTC times and vice versa</p>
-<p>FIXME: This has never been intended as a clean implementation</p>
-<dl class="function">
-<dt id="sapphire.gpstime.gps_from_string">
-<tt class="descclassname">sapphire.gpstime.</tt><tt class="descname">gps_from_string</tt><big>(</big><em>date</em><big>)</big><a class="headerlink" href="#sapphire.gpstime.gps_from_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a date string to GPS time</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="sapphire.gpstime.gps_to_utc">
-<tt class="descclassname">sapphire.gpstime.</tt><tt class="descname">gps_to_utc</tt><big>(</big><em>timestamp</em><big>)</big><a class="headerlink" href="#sapphire.gpstime.gps_to_utc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert GPS time to UTC</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="sapphire.gpstime.utc_from_string">
-<tt class="descclassname">sapphire.gpstime.</tt><tt class="descname">utc_from_string</tt><big>(</big><em>date</em><big>)</big><a class="headerlink" href="#sapphire.gpstime.utc_from_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a date string to UTC</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="sapphire.gpstime.utc_to_gps">
-<tt class="descclassname">sapphire.gpstime.</tt><tt class="descname">utc_to_gps</tt><big>(</big><em>timestamp</em><big>)</big><a class="headerlink" href="#sapphire.gpstime.utc_to_gps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert UTC to GPS time</p>
-</dd></dl>
-
+  <div class="section" id="module-sapphire.corsika.units">
+<span id="corsika-units"></span><h1>3.4.2.3. Corsika Units<a class="headerlink" href="#module-sapphire.corsika.units" title="Permalink to this headline">¶</a></h1>
+<p>Defines units in terms of HiSPARC standard units</p>
+<p>You should use the units defined in this file whenever you
+have a dimensional quantity in your code.  For example:</p>
+<p>Do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">km</span>
+</pre></div>
+</div>
+<p>Don&#8217;t:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span> <span class="o">=</span> <span class="mf">1.5</span>  <span class="c"># don&#39;t forget this is in km!</span>
+</pre></div>
+</div>
+<p>The conversion factors defined in this file
+convert your data into HiSPARC base units, so that
+all dimensional quantities in the code are in a
+single system of units!  You can also
+use the conversions defined here to, for example,
+display data with the unit of your choice.  For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&quot;s = </span><span class="si">%f</span><span class="s"> mm&quot;</span> <span class="o">%</span>  <span class="n">s</span> <span class="o">/</span> <span class="n">mm</span>
+<span class="go">1500000 mm</span>
+</pre></div>
+</div>
+<p>The base units are:</p>
+<ul class="simple">
+<li>meter (meter)</li>
+<li>nanosecond (nanosecond)</li>
+<li>electron Volt (eV)</li>
+<li>positron charge (eplus)</li>
+<li>degree Kelvin (kelvin)</li>
+<li>the amount of substance (mole)</li>
+<li>luminous intensity (candela)</li>
+<li>radian (radian)</li>
+<li>steradian (steradian)</li>
+</ul>
+<p>The SI numerical value of the positron charge is defined here,
+as it is needed for conversion factor: positron charge = eSI (coulomb)</p>
+<p>This is a slightly modified version of the units definitions
+written by the Geant4 collaboration.</p>
+<p>Authors:</p>
+<ul class="simple">
+<li>M Maire</li>
+<li>S Giani</li>
+<li>T Paul (modifications for Auger)</li>
+<li>Arne de Laat &lt;<a class="reference external" href="mailto:adelaat&#37;&#52;&#48;nikhef&#46;nl">adelaat<span>&#64;</span>nikhef<span>&#46;</span>nl</a>&gt;</li>
+</ul>
 </div>
 
 
@@ -99,14 +116,14 @@ UTC times and vice versa</p>
               <img class="logo" src="_static/header.png" alt="Logo"/>
             </a></p>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="corsika_qsub.html"
-                        title="previous chapter">3.4.2.5. Submit CORSIKA jobs to Stoomboot</a></p>
+  <p class="topless"><a href="corsika_blocks.html"
+                        title="previous chapter">3.4.2.2. Corsika Blocks</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="kascade.html"
-                        title="next chapter">3.6. Working with KASCADE data</a></p>
+  <p class="topless"><a href="corsika_particles.html"
+                        title="next chapter">3.4.2.4. Corsika Particles</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/gpstime.txt"
+    <li><a href="_sources/corsika_units.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -136,13 +153,14 @@ UTC times and vice versa</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="kascade.html" title="3.6. Working with KASCADE data"
+          <a href="corsika_particles.html" title="3.4.2.4. Corsika Particles"
              >next</a> |</li>
         <li class="right" >
-          <a href="corsika_qsub.html" title="3.4.2.5. Submit CORSIKA jobs to Stoomboot"
+          <a href="corsika_blocks.html" title="3.4.2.2. Corsika Blocks"
              >previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
-          <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li> 
+          <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
+          <li><a href="corsika.html" >3.4. Corsika Reader Documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
