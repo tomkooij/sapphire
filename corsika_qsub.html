@@ -84,7 +84,7 @@ default CORSIKA configuration:</p>
 <span id="corsika-qsub-module"></span><span id="corsikaqsubmodule"></span><h1>3.4.2.6. Corsika qsub Module<a class="headerlink" href="#module-sapphire.corsika.qsub" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="sapphire.corsika.qsub.CorsikaBatch">
-<em class="property">class </em><tt class="descclassname">sapphire.corsika.qsub.</tt><tt class="descname">CorsikaBatch</tt><big>(</big><em>energy=7</em>, <em>particle='proton'</em>, <em>queue='stbcq'</em>, <em>corsika='corsika74000Linux_QGSII_gheisha'</em><big>)</big><a class="headerlink" href="#sapphire.corsika.qsub.CorsikaBatch" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">sapphire.corsika.qsub.</tt><tt class="descname">CorsikaBatch</tt><big>(</big><em>energy=7</em>, <em>particle='proton'</em>, <em>theta=22.5</em>, <em>queue='stbcq'</em>, <em>corsika='corsika74000Linux_QGSII_gheisha'</em><big>)</big><a class="headerlink" href="#sapphire.corsika.qsub.CorsikaBatch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run many simultaneous CORSIKA simulations using Stoomboot</p>
 <p>Stoomboot is the Nikhef computer cluster.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -92,12 +92,15 @@ default CORSIKA configuration:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>energy</strong> &#8211; the energy of the primary particle in log10(GeV)</li>
-<li><strong>particle</strong> &#8211; string name of primary particle as given in particles</li>
+<li><strong>energy</strong> &#8211; the energy of the primary particle in log10(GeV),
+so an energy of 7 corresponds to 10**6 eV.</li>
+<li><strong>particle</strong> &#8211; name of primary particle, e.g. proton, gamma or iron</li>
+<li><strong>theta</strong> &#8211; zenith angle of the primary particle (in degrees),
+common choices: 0, 7.5, 15, 22.5, 30, 37.5 and 45.</li>
 <li><strong>queue</strong> &#8211; choose a queue to sumbit the job to:
-short - max 4 hours, ...
-stbcq - max 8 hours, 1000 jobs, 240 cpus
-qlong - max 48 hours, 80 jobs</li>
+short - max 4 hours, max 1000 jobs
+stbcq - max 8 hours, max 1000 jobs
+qlong - max 48 hours, max 500 jobs, max 64 running</li>
 <li><strong>corsika</strong> &#8211; name of the compiled CORSIKA executable to use:
 corsika74000Linux_QGSII_gheisha
 corsika74000Linux_EPOS_gheisha</li>
@@ -179,9 +182,30 @@ the PWD. So we create symlinks to all files in the run dir.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="sapphire.corsika.qsub.check_queue">
+<tt class="descclassname">sapphire.corsika.qsub.</tt><tt class="descname">check_queue</tt><big>(</big><em>queue</em><big>)</big><a class="headerlink" href="#sapphire.corsika.qsub.check_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check for available job slots on the selected queue for current user</p>
+<dl class="docutils">
+<dt>Caveat: also counts completed jobs still listed in qstat,</dt>
+<dd>add <cite>grep [RQ]</cite> to fix.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>queue</strong> &#8211; queue name for which to check current number of job
+slots in use.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean, True if slots are available, False otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="sapphire.corsika.qsub.multiple_jobs">
-<tt class="descclassname">sapphire.corsika.qsub.</tt><tt class="descname">multiple_jobs</tt><big>(</big><em>n</em>, <em>E</em>, <em>p</em>, <em>q</em><big>)</big><a class="headerlink" href="#sapphire.corsika.qsub.multiple_jobs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use this to sumbit multiple jobs to stoomboot</p>
+<tt class="descclassname">sapphire.corsika.qsub.</tt><tt class="descname">multiple_jobs</tt><big>(</big><em>n</em>, <em>E</em>, <em>p</em>, <em>T</em>, <em>q</em>, <em>c</em><big>)</big><a class="headerlink" href="#sapphire.corsika.qsub.multiple_jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this to sumbit multiple jobs to Stoomboot</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -189,8 +213,10 @@ the PWD. So we create symlinks to all files in the run dir.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>n</strong> &#8211; Number of jobs to submit</li>
 <li><strong>E</strong> &#8211; log10(GeV) energy of primary particle</li>
-<li><strong>p</strong> &#8211; particle kind (as string, see particles for possibilities)</li>
+<li><strong>p</strong> &#8211; Particle kind (as string, see particles.py for possibilities)</li>
+<li><strong>T</strong> &#8211; Zenith angle in degrees of the primary particle</li>
 <li><strong>q</strong> &#8211; Stoomboot queue to submit to</li>
+<li><strong>c</strong> &#8211; Name of the CORSIKA executable to use</li>
 </ul>
 </td>
 </tr>

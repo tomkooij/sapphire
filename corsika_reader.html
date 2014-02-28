@@ -97,6 +97,11 @@
 <dt id="sapphire.corsika.reader.CorsikaEvent.get_particles">
 <tt class="descname">get_particles</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.corsika.reader.CorsikaEvent.get_particles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generator over particles in the event.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This generator filters out additional muon information and
+all particles at observation levels other than 1.</p>
+</div>
 <p>Use like this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">get_particles</span><span class="p">():</span>
     <span class="k">pass</span>

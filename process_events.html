@@ -60,6 +60,34 @@
             
   <div class="section" id="module-sapphire.analysis.process_events">
 <span id="processing-of-hisparc-events"></span><h1>3.1.5. Processing of HiSPARC events<a class="headerlink" href="#module-sapphire.analysis.process_events" title="Permalink to this headline">¶</a></h1>
+<p>Process HiSPARC events</p>
+<p>This module can be used analyse data to get observables like arrival
+times and particle count in each detector for each event.</p>
+<p>Example usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">tables</span>
+
+<span class="kn">from</span> <span class="nn">sapphire.publicdb</span> <span class="kn">import</span> <span class="n">download_data</span>
+<span class="kn">from</span> <span class="nn">sapphire.analysis</span> <span class="kn">import</span> <span class="n">process_events</span>
+
+
+<span class="n">STATIONS</span> <span class="o">=</span> <span class="p">[</span><span class="mi">501</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">506</span><span class="p">]</span>
+<span class="n">START</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">END</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">station_groups</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;/s</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">STATIONS</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">openFile</span><span class="p">(</span><span class="s">&#39;data.h5&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">STATIONS</span><span class="p">,</span> <span class="n">station_groups</span><span class="p">):</span>
+        <span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">station</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">END</span><span class="p">,</span> <span class="n">get_blobs</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">proc</span> <span class="o">=</span> <span class="n">process_events</span><span class="o">.</span><span class="n">ProcessEvents</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
+        <span class="n">proc</span><span class="o">.</span><span class="n">process_and_store_results</span><span class="p">()</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
 <dl class="class">
 <dt id="sapphire.analysis.process_events.ProcessEvents">
 <em class="property">class </em><tt class="descclassname">sapphire.analysis.process_events.</tt><tt class="descname">ProcessEvents</tt><big>(</big><em>data</em>, <em>group</em>, <em>source=None</em><big>)</big><a class="headerlink" href="#sapphire.analysis.process_events.ProcessEvents" title="Permalink to this definition">¶</a></dt>
@@ -148,6 +176,11 @@ The default, None, corresponds to no limit.</li>
 <dd><p>Process traces to yield pulse timing information.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="sapphire.analysis.process_events.ProcessEvents.processed_events_description">
+<tt class="descname">processed_events_description</tt><em class="property"> = {'baseline': Int16Col(shape=(4,), dflt=-1, pos=6), 'n_peaks': Int16Col(shape=(4,), dflt=-1, pos=8), 'event_id': UInt32Col(shape=(), dflt=0, pos=0), 'timestamp': Time32Col(shape=(), dflt=0, pos=1), 'nanoseconds': UInt32Col(shape=(), dflt=0, pos=2), 'event_rate': Float32Col(shape=(), dflt=0.0, pos=12), 't2': Float32Col(shape=(), dflt=-1.0, pos=14), 't3': Float32Col(shape=(), dflt=-1.0, pos=15), 't1': Float32Col(shape=(), dflt=-1.0, pos=13), 'ext_timestamp': UInt64Col(shape=(), dflt=0, pos=3), 'n1': Float32Col(shape=(), dflt=-1.0, pos=17), 'std_dev': Int16Col(shape=(4,), dflt=-1, pos=7), 'n4': Float32Col(shape=(), dflt=-1.0, pos=20), 'integrals': Int32Col(shape=(4,), dflt=-1, pos=10), 'pulseheights': Int16Col(shape=(4,), dflt=-1, pos=9), 'data_reduction': BoolCol(shape=(), dflt=False, pos=4), 'trigger_pattern': UInt32Col(shape=(), dflt=0, pos=5), 'n2': Float32Col(shape=(), dflt=-1.0, pos=18), 'n3': Float32Col(shape=(), dflt=-1.0, pos=19), 'traces': Int32Col(shape=(4,), dflt=-1, pos=11), 't4': Float32Col(shape=(), dflt=-1.0, pos=16)}</em><a class="headerlink" href="#sapphire.analysis.process_events.ProcessEvents.processed_events_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -172,6 +205,12 @@ meaning the default name &#8216;events&#8217;.</li>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.analysis.process_events.ProcessEventsWithTriggerOffset">
+<em class="property">class </em><tt class="descclassname">sapphire.analysis.process_events.</tt><tt class="descname">ProcessEventsWithTriggerOffset</tt><big>(</big><em>data</em>, <em>group</em>, <em>source=None</em><big>)</big><a class="headerlink" href="#sapphire.analysis.process_events.ProcessEventsWithTriggerOffset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process events and reconstruct trigger time from traces</p>
 </dd></dl>
 
 <dl class="class">

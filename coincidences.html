@@ -84,9 +84,9 @@ HiSPARC stations.</p>
     <span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">STATIONS</span><span class="p">,</span> <span class="n">station_groups</span><span class="p">):</span>
         <span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">station</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
 
-    <span class="n">coincidences</span> <span class="o">=</span> <span class="n">coincidences</span><span class="o">.</span><span class="n">Coincidences</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/coincidences&#39;</span><span class="p">,</span>
-                                             <span class="n">station_groups</span><span class="p">)</span>
-    <span class="n">coincidences</span><span class="o">.</span><span class="n">search_and_store_coincidences</span><span class="p">()</span>
+    <span class="n">coin</span> <span class="o">=</span> <span class="n">coincidences</span><span class="o">.</span><span class="n">Coincidences</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/coincidences&#39;</span><span class="p">,</span>
+                                     <span class="n">station_groups</span><span class="p">)</span>
+    <span class="n">coin</span><span class="o">.</span><span class="n">search_and_store_coincidences</span><span class="p">()</span>
 </pre></div>
 </div>
 <dl class="class">
@@ -232,7 +232,7 @@ coincidences group for future reference.</td>
 <dd><p>Store coincidences differently for the ESD</p>
 <p>This subclass stores the paths to the station_groups that where
 used to look for coincidences in a lookup-table, and also
-stores the original event_id and station info for each coincidence.</p>
+stores the original station info and event_id for each coincidence.</p>
 <p>Initialize the class.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
