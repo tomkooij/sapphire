@@ -29,7 +29,7 @@
     <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
     <link rel="up" title="3. SAPPHiRE Reference" href="sapphire.html" />
     <link rel="next" title="3.3. HiSPARC clusters" href="clusters.html" />
-    <link rel="prev" title="3.1.5. Processing of HiSPARC events" href="process_events.html" /> 
+    <link rel="prev" title="3.1.7. Processing of HiSPARC events" href="analysis/process_events.html" /> 
   </head>
   <body>
     <div class="related">
@@ -45,7 +45,7 @@
           <a href="clusters.html" title="3.3. HiSPARC clusters"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="process_events.html" title="3.1.5. Processing of HiSPARC events"
+          <a href="analysis/process_events.html" title="3.1.7. Processing of HiSPARC events"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" accesskey="U">3. SAPPHiRE Reference</a> &raquo;</li> 
@@ -80,14 +80,47 @@ from JSON to Python dictionaries.</p>
 </pre></div>
 </div>
 <dl class="class">
+<dt id="sapphire.api.API">
+<em class="property">class </em><tt class="descclassname">sapphire.api.</tt><tt class="descname">API</tt><a class="headerlink" href="#sapphire.api.API" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base API class</p>
+<p>This provided the methods to retrieve data from the API.
+Also converts JSON data to Python objects (dict/list/etc..).</p>
+<dl class="staticmethod">
+<dt id="sapphire.api.API.check_connection">
+<em class="property">static </em><tt class="descname">check_connection</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.api.API.check_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the API man page URL to test the connection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">boolean indicating the internet status</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sapphire.api.API.urls">
+<tt class="descname">urls</tt><em class="property"> = {'stations_in_subcluster': 'subclusters/{subcluster_number}/', 'event_trace': 'station/{station_number}/trace/{ext_timestamp}/', 'subclusters_in_cluster': 'clusters/{cluster_number}/', 'pulseheight_drift': 'station/{station_number}/plate/{plate_number}/pulseheight/drift/{year}/{month}/{day}/{number_of_days}/', 'stations': 'stations/', 'clusters_in_country': 'countries/{country_number}/', 'station_info': 'station/{station_number}/{year}/{month}/{day}/', 'countries': 'countries/', 'subclusters': 'subclusters/', 'pulseheight_fit': 'station/{station_number}/plate/{plate_number}/pulseheight/fit/{year}/{month}/{day}/', 'stations_with_data': 'stations/data/{year}/{month}/{day}/', 'number_of_events': 'station/{station_number}/num_events/{year}/{month}/{day}/{hour}/', 'clusters': 'clusters/', 'configuration': 'station/{station_number}/config/{year}/{month}/{day}/', 'has_weather': 'station/{station_number}/weather/{year}/{month}/{day}/', 'stations_with_weather': 'stations/weather/{year}/{month}/{day}/', 'has_data': 'station/{station_number}/data/{year}/{month}/{day}/'}</em><a class="headerlink" href="#sapphire.api.API.urls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="sapphire.api.Network">
 <em class="property">class </em><tt class="descclassname">sapphire.api.</tt><tt class="descname">Network</tt><a class="headerlink" href="#sapphire.api.Network" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get info about the network (countries/clusters/subclusters/stations)</p>
 <p>Initialize network</p>
 <dl class="method">
+<dt id="sapphire.api.Network.cluster_numbers">
+<tt class="descname">cluster_numbers</tt><big>(</big><em>country=None</em><big>)</big><a class="headerlink" href="#sapphire.api.Network.cluster_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as clusters but only retuns a list of cluster numbers</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="sapphire.api.Network.clusters">
 <tt class="descname">clusters</tt><big>(</big><em>country=None</em><big>)</big><a class="headerlink" href="#sapphire.api.Network.clusters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a list of stations</p>
+<dd><p>Get a list of clusters</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -99,6 +132,26 @@ clusters.</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.api.Network.countries">
+<tt class="descname">countries</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.api.Network.countries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of countries</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">all countries in the region</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.api.Network.country_numbers">
+<tt class="descname">country_numbers</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.api.Network.country_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as countries but only retuns a list of country numbers</p>
 </dd></dl>
 
 <dl class="method">
@@ -123,6 +176,52 @@ be specified.</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.api.Network.stations_numbers">
+<tt class="descname">stations_numbers</tt><big>(</big><em>country=None</em>, <em>cluster=None</em>, <em>subcluster=None</em><big>)</big><a class="headerlink" href="#sapphire.api.Network.stations_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as stations but only retuns a list of station numbers</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sapphire.api.Network.stations_with_data">
+<em class="property">classmethod </em><tt class="descname">stations_with_data</tt><big>(</big><em>year=''</em>, <em>month=''</em>, <em>day=''</em><big>)</big><a class="headerlink" href="#sapphire.api.Network.stations_with_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of stations with data on the specified date</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>year,month,day</strong> &#8211; the date for which to check. It is
+possible to be less specific.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">all stations with data.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sapphire.api.Network.stations_with_weather">
+<em class="property">classmethod </em><tt class="descname">stations_with_weather</tt><big>(</big><em>year=''</em>, <em>month=''</em>, <em>day=''</em><big>)</big><a class="headerlink" href="#sapphire.api.Network.stations_with_weather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of stations with weather data on the specified date</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>year,month,day</strong> &#8211; the date for which to check. It is
+possible to be less specific.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">all stations with weather data.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.api.Network.subcluster_numbers">
+<tt class="descname">subcluster_numbers</tt><big>(</big><em>country=None</em>, <em>cluster=None</em><big>)</big><a class="headerlink" href="#sapphire.api.Network.subcluster_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as subclusters but only retuns a list of subcluster numbers</p>
 </dd></dl>
 
 <dl class="method">
@@ -321,8 +420,8 @@ get the number. It is possible to be less specific.</td>
               <img class="logo" src="_static/header.png" alt="Logo"/>
             </a></p>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="process_events.html"
-                        title="previous chapter">3.1.5. Processing of HiSPARC events</a></p>
+  <p class="topless"><a href="analysis/process_events.html"
+                        title="previous chapter">3.1.7. Processing of HiSPARC events</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="clusters.html"
                         title="next chapter">3.3. HiSPARC clusters</a></p>
@@ -361,7 +460,7 @@ get the number. It is possible to be less specific.</td>
           <a href="clusters.html" title="3.3. HiSPARC clusters"
              >next</a> |</li>
         <li class="right" >
-          <a href="process_events.html" title="3.1.5. Processing of HiSPARC events"
+          <a href="analysis/process_events.html" title="3.1.7. Processing of HiSPARC events"
              >previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li> 

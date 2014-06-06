@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.5. Module for downloading HiSPARC Event Summary Data &mdash; SAPPHiRE 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/hisparc_style.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
+    <link rel="up" title="3. SAPPHiRE Reference" href="sapphire.html" />
+    <link rel="next" title="3.6. GPS / UTC time functions" href="gpstime.html" />
+    <link rel="prev" title="3.4.2.5. Submit CORSIKA jobs to Stoomboot" href="corsika/qsub.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gpstime.html" title="3.6. GPS / UTC time functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="corsika/qsub.html" title="3.4.2.5. Submit CORSIKA jobs to Stoomboot"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="sapphire.html" accesskey="U">3. SAPPHiRE Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-sapphire.esd">
+<span id="module-for-downloading-hisparc-event-summary-data"></span><h1>3.5. Module for downloading HiSPARC Event Summary Data<a class="headerlink" href="#module-sapphire.esd" title="Permalink to this headline">¶</a></h1>
+<p>Fetch events and other data from the event summary data (ESD)</p>
+<p>This module enables you to access the event summary data.</p>
+<p>For convenience, you&#8217;ll want the <a class="reference internal" href="#sapphire.esd.download_data" title="sapphire.esd.download_data"><tt class="xref py py-func docutils literal"><span class="pre">download_data()</span></tt></a> function.</p>
+<dl class="function">
+<dt id="sapphire.esd.create_table">
+<tt class="descclassname">sapphire.esd.</tt><tt class="descname">create_table</tt><big>(</big><em>file</em>, <em>group</em><big>)</big><a class="headerlink" href="#sapphire.esd.create_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create event table in PyTables file</p>
+<p>Create an event table containing the ESD data columns which are
+available in the CSV download.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> &#8211; PyTables file</li>
+<li><strong>group</strong> &#8211; the group to contain the events table, which need not
+exist</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sapphire.esd.create_weather_table">
+<tt class="descclassname">sapphire.esd.</tt><tt class="descname">create_weather_table</tt><big>(</big><em>file</em>, <em>group</em><big>)</big><a class="headerlink" href="#sapphire.esd.create_weather_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create weather table in PyTables file</p>
+<p>Create a weather table containing the ESD weather columns which are
+available in the CSV download.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> &#8211; PyTables file</li>
+<li><strong>group</strong> &#8211; the group to contain the weather table, which need not
+exist</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sapphire.esd.download_data">
+<tt class="descclassname">sapphire.esd.</tt><tt class="descname">download_data</tt><big>(</big><em>file</em>, <em>group</em>, <em>station_number</em>, <em>start</em>, <em>end</em>, <em>type='events'</em><big>)</big><a class="headerlink" href="#sapphire.esd.download_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download event summary data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> &#8211; The PyTables datafile handler</li>
+<li><strong>group</strong> &#8211; The PyTables destination group, which need not exist</li>
+<li><strong>station_number</strong> &#8211; The HiSPARC station number for which to get data</li>
+<li><strong>start</strong> &#8211; a datetime instance defining the start of the search
+interval</li>
+<li><strong>end</strong> &#8211; a datetime instance defining the end of the search
+interval</li>
+<li><strong>type</strong> &#8211; the datatype to download, either &#8216;events&#8217; or &#8216;weather&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">tables</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sapphire.esd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="s">&#39;data.h5&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">esd</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/s501&#39;</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sapphire.esd.read_line_and_store_event">
+<tt class="descclassname">sapphire.esd.</tt><tt class="descname">read_line_and_store_event</tt><big>(</big><em>line</em>, <em>table</em><big>)</big><a class="headerlink" href="#sapphire.esd.read_line_and_store_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read CSV line and store event</p>
+<p>Read a line from the CSV download and store event.  Return the event
+timestamp to keep track of the progress.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>line</strong> &#8211; text line from the CSV file</li>
+<li><strong>table</strong> &#8211; pytables table for event storage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">event timestamp</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sapphire.esd.read_line_and_store_weather">
+<tt class="descclassname">sapphire.esd.</tt><tt class="descname">read_line_and_store_weather</tt><big>(</big><em>line</em>, <em>table</em><big>)</big><a class="headerlink" href="#sapphire.esd.read_line_and_store_weather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read CSV line and store weather data</p>
+<p>Read a line from the CSV download and store weather.  Return the
+weather timestamp to keep track of the progress.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>line</strong> &#8211; text line from the CSV file</li>
+<li><strong>table</strong> &#8211; pytables table for weather storage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">weather timestamp</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/header.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="corsika/qsub.html"
+                        title="previous chapter">3.4.2.5. Submit CORSIKA jobs to Stoomboot</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gpstime.html"
+                        title="next chapter">3.6. GPS / UTC time functions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/esd.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gpstime.html" title="3.6. GPS / UTC time functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="corsika/qsub.html" title="3.4.2.5. Submit CORSIKA jobs to Stoomboot"
+             >previous</a> |</li>
+        <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, David Fokkema.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

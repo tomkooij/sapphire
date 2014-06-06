@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.9.3. Simulations based on theoretical models of EAS lateral distributions &mdash; SAPPHiRE 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/hisparc_style.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="SAPPHiRE 0.9 documentation" href="../index.html" />
+    <link rel="up" title="3.9. Performing simulations" href="../simulations.html" />
+    <link rel="next" title="3.10. Low-level storage constructs" href="../storage.html" />
+    <link rel="prev" title="3.9.2. Simulations based on Monte Carlo EAS ground particle data" href="groundparticles.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../storage.html" title="3.10. Low-level storage constructs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="groundparticles.html" title="3.9.2. Simulations based on Monte Carlo EAS ground particle data"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="../sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
+          <li><a href="../simulations.html" accesskey="U">3.9. Performing simulations</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-sapphire.simulations.ldf">
+<span id="simulations-based-on-theoretical-models-of-eas-lateral-distributions"></span><h1>3.9.3. Simulations based on theoretical models of EAS lateral distributions<a class="headerlink" href="#module-sapphire.simulations.ldf" title="Permalink to this headline">¶</a></h1>
+<p>Lateral distribution functions that can be used for simulating particle
+densities and for fitting to data.</p>
+<dl class="class">
+<dt id="sapphire.simulations.ldf.BaseLdf">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.ldf.</tt><tt class="descname">BaseLdf</tt><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdf" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.simulations.ldf.BaseLdf.calculate_core_distance_from_coordinates_and_direction">
+<tt class="descname">calculate_core_distance_from_coordinates_and_direction</tt><big>(</big><em>x0</em>, <em>y0</em>, <em>x1</em>, <em>y1</em>, <em>theta</em>, <em>phi</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.BaseLdf.calculate_core_distance_from_coordinates_and_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate core distance</p>
+<p>The core distance is the distance of the detector to the shower core,
+measured <em>on the shower front</em>.  For derivations, see logbook.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.simulations.ldf.KascadeLdf">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.ldf.</tt><tt class="descname">KascadeLdf</tt><big>(</big><em>Ne=None</em>, <em>s=None</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdf" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.simulations.ldf.KascadeLdf.calculate_ldf_value">
+<tt class="descname">calculate_ldf_value</tt><big>(</big><em>r</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdf.calculate_ldf_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.KascadeLdf.get_ldf_value_for_size">
+<tt class="descname">get_ldf_value_for_size</tt><big>(</big><em>r</em>, <em>Ne</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdf.get_ldf_value_for_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.ldf.KascadeLdf.get_ldf_value_for_size_and_shape">
+<tt class="descname">get_ldf_value_for_size_and_shape</tt><big>(</big><em>r</em>, <em>Ne</em>, <em>s</em><big>)</big><a class="headerlink" href="#sapphire.simulations.ldf.KascadeLdf.get_ldf_value_for_size_and_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/header.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="groundparticles.html"
+                        title="previous chapter">3.9.2. Simulations based on Monte Carlo EAS ground particle data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../storage.html"
+                        title="next chapter">3.10. Low-level storage constructs</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/simulations/ldf.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../storage.html" title="3.10. Low-level storage constructs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="groundparticles.html" title="3.9.2. Simulations based on Monte Carlo EAS ground particle data"
+             >previous</a> |</li>
+        <li><a href="../index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="../sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
+          <li><a href="../simulations.html" >3.9. Performing simulations</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, David Fokkema.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

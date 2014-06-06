@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.9.2. Simulations based on Monte Carlo EAS ground particle data &mdash; SAPPHiRE 0.9 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/hisparc_style.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="SAPPHiRE 0.9 documentation" href="../index.html" />
+    <link rel="up" title="3.9. Performing simulations" href="../simulations.html" />
+    <link rel="next" title="3.9.3. Simulations based on theoretical models of EAS lateral distributions" href="ldf.html" />
+    <link rel="prev" title="3.9.1. Simulation base classes" href="base.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldf.html" title="3.9.3. Simulations based on theoretical models of EAS lateral distributions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="base.html" title="3.9.1. Simulation base classes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="../sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
+          <li><a href="../simulations.html" accesskey="U">3.9. Performing simulations</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-sapphire.simulations.groundparticles">
+<span id="simulations-based-on-monte-carlo-eas-ground-particle-data"></span><h1>3.9.2. Simulations based on Monte Carlo EAS ground particle data<a class="headerlink" href="#module-sapphire.simulations.groundparticles" title="Permalink to this headline">¶</a></h1>
+<p>Perform simulations of CORSIKA air showers on a cluster of stations</p>
+<p>This simulation uses a HDF5 file created from a CORSIKA simulation with
+the <cite>store_corsika_data</cite> script. The shower is &#8216;thrown&#8217; on the cluster
+with random core positions and azimuth angles.</p>
+<p>Example usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tables</span>
+
+<span class="kn">from</span> <span class="nn">sapphire.simulations.groundparticles</span> <span class="kn">import</span> <span class="n">GroundParticlesSimulation</span>
+<span class="kn">from</span> <span class="nn">sapphire.clusters</span> <span class="kn">import</span> <span class="n">ScienceParkCluster</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="s">&#39;/tmp/test_groundparticle_simulation.h5&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">ScienceParkCluster</span><span class="p">()</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">GroundParticlesSimulation</span><span class="p">(</span><span class="s">&#39;corsika.h5&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="sapphire.simulations.groundparticles.DetectorBoundarySimulation">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.groundparticles.</tt><tt class="descname">DetectorBoundarySimulation</tt><big>(</big><em>corsikafile_path</em>, <em>max_core_distance</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.DetectorBoundarySimulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>More accuratly simulate the detection area of the detectors.</p>
+<p>This requires a slightly more complex query which is a bit slower.</p>
+<dl class="method">
+<dt id="sapphire.simulations.groundparticles.DetectorBoundarySimulation.get_line_boundary_eqs">
+<tt class="descname">get_line_boundary_eqs</tt><big>(</big><em>p0</em>, <em>p1</em>, <em>p2</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.DetectorBoundarySimulation.get_line_boundary_eqs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get line equations using three points</p>
+<p>Given three points, this function computes the equations for two
+parallel lines going through these points.  The first and second
+point are on the same line, whereas the third point is taken to
+be on a line which runs parallel to the first.  The return value
+is an equation and two boundaries which can be used to test if a
+point is between the two lines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p1</strong> (<em>p0,</em>) &#8211; (x, y) tuples on the same line</li>
+<li><strong>p2</strong> &#8211; (x, y) tuple on the parallel line</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">value1, equation, value2, such that points satisfying
+value1 &lt; equation &lt; value2 are between the parallel lines</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_line_boundary_eqs</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">(0.0, &#39;y - 1.000000 * x&#39;, 2.0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.groundparticles.DetectorBoundarySimulation.simulate_detector_response">
+<tt class="descname">simulate_detector_response</tt><big>(</big><em>detector</em>, <em>shower_parameters</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.DetectorBoundarySimulation.simulate_detector_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate the detector detection area accurately.</p>
+<p>First particles are filtered to see which fall inside a
+non-rotated square box around the detector (i.e. sides of 1.2m).
+For the remaining particles a more accurate query is used to see
+which actually hit the detector. The advantage of using the
+square is that column indexes can be used, which may speed up
+queries.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.simulations.groundparticles.DetectorSignalSimulation">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.groundparticles.</tt><tt class="descname">DetectorSignalSimulation</tt><big>(</big><em>corsikafile_path</em>, <em>max_core_distance</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.DetectorSignalSimulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>More accuratly simulate the detection area of the detectors.</p>
+<p>This requires a slightly more complex query which is a bit slower.</p>
+<dl class="method">
+<dt id="sapphire.simulations.groundparticles.DetectorSignalSimulation.simulate_detector_response">
+<tt class="descname">simulate_detector_response</tt><big>(</big><em>detector</em>, <em>shower_parameters</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.DetectorSignalSimulation.simulate_detector_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate the detector detection area accurately.</p>
+<p>First particles are filtered to see which fall inside a
+non-rotated square box around the detector (i.e. sides of 1.2m).
+For the remaining particles a more accurate query is used to see
+which actually hit the detector. The advantage of using the
+square is that column indexes can be used, which may speed up
+queries.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sapphire.simulations.groundparticles.GroundParticlesSimulation">
+<em class="property">class </em><tt class="descclassname">sapphire.simulations.groundparticles.</tt><tt class="descname">GroundParticlesSimulation</tt><big>(</big><em>corsikafile_path</em>, <em>max_core_distance</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.GroundParticlesSimulation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sapphire.simulations.groundparticles.GroundParticlesSimulation.finish">
+<tt class="descname">finish</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.GroundParticlesSimulation.finish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean-up after simulation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.groundparticles.GroundParticlesSimulation.generate_shower_parameters">
+<tt class="descname">generate_shower_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.GroundParticlesSimulation.generate_shower_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate shower parameters like core position, energy, etc.</p>
+<p>For this groundparticles simulation, only the shower core position
+and rotation angle of the shower are generated.  Do <em>not</em>
+interpret these parameters as the position of the cluster, or the
+rotation of the cluster!  Interpret them as <em>shower</em> parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary with shower parameters: core_pos
+(x, y-tuple) and azimuth.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_detector_response">
+<tt class="descname">simulate_detector_response</tt><big>(</big><em>detector</em>, <em>shower_parameters</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_detector_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate detector response to a shower.</p>
+<p>Checks if leptons have passed a detector. If so, it returns the number
+of leptons in the detector and the arrival time of the first lepton
+passing the detector.</p>
+<p>The detector is approximated by a square with a surface of 0.5
+square meter which is <em>not</em> correctly rotated.  In fact, during
+the simulation, the rotation of the detector is undefined.  This
+might be faster than a more thorough implementation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_gps">
+<tt class="descname">simulate_gps</tt><big>(</big><em>station_observables</em>, <em>shower_parameters</em>, <em>station</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_gps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate gps timestamp.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_gps_uncertainty">
+<tt class="descname">simulate_gps_uncertainty</tt><big>(</big><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_gps_uncertainty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate uncertainty from GPS receiver</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_signal_transport_time">
+<tt class="descname">simulate_signal_transport_time</tt><big>(</big><em>size</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_signal_transport_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate transport times of scintillation light to the PMT</p>
+<p>Generates random transit times within a given distribution and adds it
+to the times the particles passed the detector.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_trigger">
+<tt class="descname">simulate_trigger</tt><big>(</big><em>detector_observables</em><big>)</big><a class="headerlink" href="#sapphire.simulations.groundparticles.GroundParticlesSimulation.simulate_trigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate a trigger response.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if at least 2 detectors detect at least one particle,
+False otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/header.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="base.html"
+                        title="previous chapter">3.9.1. Simulation base classes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ldf.html"
+                        title="next chapter">3.9.3. Simulations based on theoretical models of EAS lateral distributions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/simulations/groundparticles.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldf.html" title="3.9.3. Simulations based on theoretical models of EAS lateral distributions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="base.html" title="3.9.1. Simulation base classes"
+             >previous</a> |</li>
+        <li><a href="../index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
+          <li><a href="../sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li>
+          <li><a href="../simulations.html" >3.9. Performing simulations</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, David Fokkema.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

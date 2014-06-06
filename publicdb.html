@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3.7. Public data access &mdash; SAPPHiRE 0.9 documentation</title>
+    <title>3.8. Public data access &mdash; SAPPHiRE 0.9 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="top" title="SAPPHiRE 0.9 documentation" href="index.html" />
     <link rel="up" title="3. SAPPHiRE Reference" href="sapphire.html" />
-    <link rel="next" title="3.8. Performing simulations" href="simulations.html" />
-    <link rel="prev" title="3.6. Working with KASCADE data" href="kascade.html" /> 
+    <link rel="next" title="3.9. Performing simulations" href="simulations.html" />
+    <link rel="prev" title="3.7. Working with KASCADE data" href="kascade.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,10 +42,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="simulations.html" title="3.8. Performing simulations"
+          <a href="simulations.html" title="3.9. Performing simulations"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="kascade.html" title="3.6. Working with KASCADE data"
+          <a href="kascade.html" title="3.7. Working with KASCADE data"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" accesskey="U">3. SAPPHiRE Reference</a> &raquo;</li> 
@@ -58,7 +58,7 @@
           <div class="body">
             
   <div class="section" id="module-sapphire.publicdb">
-<span id="public-data-access"></span><h1>3.7. Public data access<a class="headerlink" href="#module-sapphire.publicdb" title="Permalink to this headline">¶</a></h1>
+<span id="public-data-access"></span><h1>3.8. Public data access<a class="headerlink" href="#module-sapphire.publicdb" title="Permalink to this headline">¶</a></h1>
 <p>Fetch events and other data from the public database</p>
 <p>This module enables you to access the public database and even the raw
 event data.</p>
@@ -88,7 +88,8 @@ day, it returns a start and stop value.  See example below.</p>
 <span class="gp">... </span>                       <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">)):</span>
 <span class="gp">... </span>    <span class="n">x</span>
 <span class="gp">...</span>
-<span class="go">(datetime.datetime(2010, 1, 1, 11, 0), datetime.datetime(2010, 1, 1, 13, 0))</span>
+<span class="go">(datetime.datetime(2010, 1, 1, 11, 0),</span>
+<span class="go"> datetime.datetime(2010, 1, 1, 13, 0))</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">datetimerange</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
 <span class="gp">... </span>                       <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
@@ -101,7 +102,8 @@ day, it returns a start and stop value.  See example below.</p>
 <span class="gp">... </span>    <span class="n">x</span>
 <span class="gp">...</span>
 <span class="go">(datetime.datetime(2010, 1, 1, 11, 0), None)</span>
-<span class="go">(datetime.datetime(2010, 1, 2, 0, 0), datetime.datetime(2010, 1, 2, 13, 0))</span>
+<span class="go">(datetime.datetime(2010, 1, 2, 0, 0),</span>
+<span class="go"> datetime.datetime(2010, 1, 2, 13, 0))</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">datetimerange</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
 <span class="gp">... </span>                       <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">)):</span>
@@ -111,7 +113,8 @@ day, it returns a start and stop value.  See example below.</p>
 <span class="go">(datetime.datetime(2010, 1, 2, 0, 0), None)</span>
 <span class="go">(datetime.datetime(2010, 1, 3, 0, 0), None)</span>
 <span class="go">(datetime.datetime(2010, 1, 4, 0, 0), None)</span>
-<span class="go">(datetime.datetime(2010, 1, 5, 0, 0), datetime.datetime(2010, 1, 5, 13, 0))</span>
+<span class="go">(datetime.datetime(2010, 1, 5, 0, 0),</span>
+<span class="go"> datetime.datetime(2010, 1, 5, 13, 0))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -145,8 +148,10 @@ should be fetched</li>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">tables</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sapphire.publicdb</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">openFile</span><span class="p">(</span><span class="s">&#39;data.h5&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">publicdb</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/s501&#39;</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="s">&#39;data.h5&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sapphire</span><span class="o">.</span><span class="n">publicdb</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;/s501&#39;</span><span class="p">,</span> <span class="mi">501</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
 <span class="go">INFO:hisparc.publicdb:2010-09-01 00:00:00 None</span>
 <span class="go">INFO:hisparc.publicdb:Getting server data URL (2010-09-01 00:00:00)</span>
 <span class="go">INFO:hisparc.publicdb:Downloading data...</span>
@@ -169,10 +174,10 @@ should be fetched</li>
             </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="kascade.html"
-                        title="previous chapter">3.6. Working with KASCADE data</a></p>
+                        title="previous chapter">3.7. Working with KASCADE data</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="simulations.html"
-                        title="next chapter">3.8. Performing simulations</a></p>
+                        title="next chapter">3.9. Performing simulations</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/publicdb.txt"
@@ -205,10 +210,10 @@ should be fetched</li>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="simulations.html" title="3.8. Performing simulations"
+          <a href="simulations.html" title="3.9. Performing simulations"
              >next</a> |</li>
         <li class="right" >
-          <a href="kascade.html" title="3.6. Working with KASCADE data"
+          <a href="kascade.html" title="3.7. Working with KASCADE data"
              >previous</a> |</li>
         <li><a href="index.html">SAPPHiRE 0.9 documentation</a> &raquo;</li>
           <li><a href="sapphire.html" >3. SAPPHiRE Reference</a> &raquo;</li> 
