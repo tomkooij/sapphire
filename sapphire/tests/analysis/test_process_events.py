@@ -6,7 +6,7 @@ import warnings
 import operator
 
 import tables
-from numpy import array
+import numpy as np
 from numpy.testing import assert_array_equal
 from mock import Mock
 
@@ -15,6 +15,7 @@ from sapphire.analysis import process_events
 
 TEST_DATA_FILE = 'test_data/process_events.h5'
 DATA_GROUP = '/s501'
+DATA_GROUP_2DET = '/s203'
 
 
 class ProcessEventsTests(unittest.TestCase):
@@ -309,18 +310,38 @@ class ProcessSinglesTests(unittest.TestCase):
         self.data = tables.open_file(self.data_path, 'a')
         self.proc = process_events.ProcessSingles(self.data, DATA_GROUP,
                                                   progress=False)
+        self.proc.process_and_store_results()
+        self.singles_table = self.data.get_node(DATA_GROUP, 'singles')
 
     def tearDown(self):
         warnings.resetwarnings()
         self.data.close()
         os.remove(self.data_path)
 
-    def test_process_and_store_results(self):
-        self.proc.process_and_store_results()
-        # check for unique and sorted timestamps
-        singles_table = self.data.get_node(DATA_GROUP, 'singles')
-        ts = singles_table.col('timestamp')
-        unique_ts = array(sorted(set(ts)))
+    def test_tables_description(self):
+
+        class HisparcSingle(tables.IsDescription):
+            event_id = tables.UInt32Col(pos=0)
+            timestamp = tables.Time32Col(pos=1)
+            mas_ch1_low = tables.Int32Col(dflt=-1, pos=2)
+            mas_ch1_high = tables.Int32Col(dflt=-1, pos=3)
+            mas_ch2_low = tables.Int32Col(dflt=-1, pos=4)
+            mas_ch2_high = tables.Int32Col(dflt=-1, pos=5)
+            slv_ch1_low = tables.Int32Col(dflt=-1, pos=6)
+            slv_ch1_high = tables.Int32Col(dflt=-1, pos=7)
+            slv_ch2_low = tables.Int32Col(dflt=-1, pos=8)
+            slv_ch2_high = tables.Int32Col(dflt=-1, pos=9)
+
+        # compare table description using numpy.dtype
+        dtype_singles = tables.description.dtype_from_descr(HisparcSingle)
+        dtype_table = \
+            tables.description.dtype_from_descr(self.singles_table.description)
+        self.assertEqual(dtype_table, dtype_singles)
+
+    def test_unique_and_sorted_rows(self):
+        self.assertEqual(len(self.singles_table), 18)
+        ts = self.singles_table.col('timestamp')
+        unique_ts = np.array(sorted(set(ts)))
         assert_array_equal(ts, unique_ts)
 
     def create_tempfile_from_testdata(self):
@@ -348,6 +369,8 @@ class ProcessSinglesFromSourceTests(ProcessSinglesTests):
         self.dest_data = tables.open_file(self.dest_path, 'a')
         self.proc = process_events.ProcessSinglesFromSource(
             self.source_data, self.dest_data, DATA_GROUP, '/')
+        self.proc.process_and_store_results()
+        self.singles_table = self.dest_data.get_node('/singles')
 
     def tearDown(self):
         warnings.resetwarnings()
@@ -356,13 +379,61 @@ class ProcessSinglesFromSourceTests(ProcessSinglesTests):
         self.dest_data.close()
         os.remove(self.dest_path)
 
-    def test_process_and_store_results(self):
-        self.proc.process_and_store_results()
-        # check for unique and sorted timestamps
-        singles_table = self.dest_data.get_node('/', 'singles')
+
+class ProcessSinglesMissingSlaveTests(unittest.TestCase):
+    def setUp(self):
+        warnings.filterwarnings('ignore')
+        self.data_path = self.create_tempfile_from_testdata()
+        self.data = tables.open_file(self.data_path, 'a')
+
+    def tearDown(self):
+        warnings.resetwarnings()
+        self.data.close()
+        os.remove(self.data_path)
+
+    def test_runtime_error(self):
+        self.proc = process_events.ProcessSingles(self.data, DATA_GROUP,
+                                                  progress=False)
+
+        with self.assertRaises(RuntimeError):
+            self.proc.process_and_store_results_for_missing_slave()
+
+    def test_replace_slave_cols(self):
+        self.proc = process_events.ProcessSingles(self.data, DATA_GROUP_2DET,
+                                                  progress=False)
+        self.proc.process_and_store_results_for_missing_slave()
+
+        singles_table = self.data.get_node(DATA_GROUP_2DET, 'singles')
+        self.assertEqual(len(singles_table), 18)
+
         ts = singles_table.col('timestamp')
-        unique_ts = array(sorted(set(ts)))
+        unique_ts = np.array(sorted(set(ts)))
         assert_array_equal(ts, unique_ts)
+
+        singles = singles_table.read()
+        self.assertFalse(np.all(singles['mas_ch1_low'] == -1))
+        self.assertFalse(np.all(singles['mas_ch1_high'] == -1))
+        self.assertFalse(np.all(singles['mas_ch2_low'] == -1))
+        self.assertFalse(np.all(singles['mas_ch2_high'] == -1))
+        self.assertTrue(np.all(singles['slv_ch1_low'] == -1))
+        self.assertTrue(np.all(singles['slv_ch1_high'] == -1))
+        self.assertTrue(np.all(singles['slv_ch2_low'] == -1))
+        self.assertTrue(np.all(singles['slv_ch2_high'] == -1))
+
+    def create_tempfile_from_testdata(self):
+        tmp_path = self.create_tempfile_path()
+        data_path = self.get_testdata_path()
+        shutil.copyfile(data_path, tmp_path)
+        return tmp_path
+
+    def create_tempfile_path(self):
+        fd, path = tempfile.mkstemp('.h5')
+        os.close(fd)
+        return path
+
+    def get_testdata_path(self):
+        dir_path = os.path.dirname(__file__)
+        return os.path.join(dir_path, TEST_DATA_FILE)
 
 
 if __name__ == '__main__':

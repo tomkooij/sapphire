@@ -1013,6 +1013,7 @@ class ProcessEventsFromSourceWithTriggerOffset(ProcessEventsFromSource,
         else:
             self.station = Station(station)
 
+
     def __repr__(self):
         if not self.source_file.isopen or not self.dest_file.isopen:
             return "<finished %s>" % self.__class__.__name__
@@ -1042,7 +1043,8 @@ class ProcessDataTable(ProcessEvents):
     table_name = 'abstract_data'  # overwrite with 'weather' or 'singles'
 
     def process_and_store_results(self, destination=None, overwrite=False,
-                                  limit=None):
+                                  limit=None, dest_table_description=None,
+                                  transform_values=None):
         """Process table and store the results.
 
         :param destination: name of the table where the results will be
@@ -1051,9 +1053,16 @@ class ProcessDataTable(ProcessEvents):
         :param overwrite: if True, overwrite previously obtained results.
         :param limit: the maximum number of records that will be stored.
             The default, None, corresponds to no limit.
+        :param dest_table_description: if not None it is a new
+            tables.IsDescription class that describes the table in which the
+            values are stored.
+        :param transform_values: if not None it is a function that transforms
+            the cleaned data.
 
         """
         self.limit = limit
+        self.dest_table_description = dest_table_description
+        self.transform_values = transform_values
 
         self._check_destination(destination, overwrite)
 
@@ -1108,6 +1117,7 @@ class ProcessDataTable(ProcessEvents):
         self.source = new_data
         self._normalize_event_ids(new_data)
 
+
     def _replace_table_with_selected_rows(self, table, row_ids):
         """Replace data table with selected rows.
 
@@ -1116,10 +1126,24 @@ class ProcessDataTable(ProcessEvents):
             the destination table.
 
         """
+        if self.dest_table_description is None:
+            table_description = table.description
+        else:
+            table_description = self.dest_table_description
+            table_dtype = tables.description.dtype_from_descr(
+                self.dest_table_description)
+
         tmptable = self.data.create_table(self.group,
                                           '_t_%s' % self.table_name,
-                                          description=table.description)
+                                          description=table_description)
+
         selected_rows = table.read_coordinates(row_ids)
+        if self.dest_table_description is not None:
+            selected_rows = selected_rows.astype(table_dtype)
+
+        if self.transform_values is not None:
+            selected_rows = self.transform_values(selected_rows)
+
         tmptable.append(selected_rows)
         tmptable.flush()
         self.data.rename_node(tmptable, self.destination, overwrite=True)
@@ -1179,10 +1203,23 @@ class ProcessDataTableFromSource(ProcessDataTable):
             the destination table.
 
         """
+        if self.dest_table_description is None:
+            table_description = table.description
+        else:
+            table_description = self.dest_table_description
+            table_dtype = tables.description.dtype_from_descr(
+                self.dest_table_description)
+
         new_table = self.dest_file.create_table(self.dest_group,
                                                 self.table_name,
-                                                description=table.description)
+                                                description=table_description)
+
         selected_rows = table.read_coordinates(row_ids)
+        if self.dest_table_description is not None:
+            selected_rows = selected_rows.astype(table_dtype)
+
+        if self.transform_values is not None:
+            selected_rows = self.transform_values(selected_rows)
         new_table.append(selected_rows)
         new_table.flush()
         return new_table
@@ -1223,8 +1260,74 @@ class ProcessWeatherFromSource(ProcessDataTableFromSource):
     """
     table_name = 'weather'
 
+class SinglesMixin(object):
 
-class ProcessSingles(ProcessDataTable):
+    """Provide singles data specific transformations
+
+    HisparcSingle columns used to be `tables.UInt16Col` before
+    HiSPARC/datastore@dec64079. Convert old tables to the new
+    format. This also means that for a missing slave (two detector
+    stations) the slave columns are set to all zero, instead of all `-1`.
+
+    This means raw data before (some date in the future) may have incorrect
+    formatting. This mixin provides transparant conversion and optional fixup.
+    """
+
+    class HisparcSingle(tables.IsDescription):
+        event_id = tables.UInt32Col(pos=0)
+        timestamp = tables.Time32Col(pos=1)
+        mas_ch1_low = tables.Int32Col(dflt=-1, pos=2)
+        mas_ch1_high = tables.Int32Col(dflt=-1, pos=3)
+        mas_ch2_low = tables.Int32Col(dflt=-1, pos=4)
+        mas_ch2_high = tables.Int32Col(dflt=-1, pos=5)
+        slv_ch1_low = tables.Int32Col(dflt=-1, pos=6)
+        slv_ch1_high = tables.Int32Col(dflt=-1, pos=7)
+        slv_ch2_low = tables.Int32Col(dflt=-1, pos=8)
+        slv_ch2_high = tables.Int32Col(dflt=-1, pos=9)
+
+    def process_and_store_results(self):
+        """Process table and store the results.
+
+        Convert table description.
+        """
+        super(SinglesMixin, self).process_and_store_results(
+            dest_table_description=self.HisparcSingle)
+
+    def process_and_store_results_for_missing_slave(self):
+        """Process table and store the results.
+
+        Convert table description. Convert slave columns to all `-1`.
+        This will raise a RuntimeError if slave columns are not all
+        zero or all `-1`.
+        """
+        super(SinglesMixin, self).process_and_store_results(
+            dest_table_description=self.HisparcSingle,
+            transform_values=self.mark_slave_columns_as_missing)
+
+    @staticmethod
+    def mark_slave_columns_as_missing(table):
+        """
+        Mark data for missing slave as `-1` instead of zero.
+
+        Raise RuntimeError if the columns are not all zeros or `-1`
+
+        To be used as self.transform_values()
+        """
+
+        cols = ['slv_ch1_low', 'slv_ch2_low', 'slv_ch1_high', 'slv_ch2_high']
+        for col in cols:
+            if not np.all(table[col] == 0) and not np.all(table[col] == -1):
+                raise RuntimeError("Slave columns are not all zero or -1. "
+                                   "Cannot continue.")
+
+        n = len(table)
+        for col in cols:
+            table[col] = n * [-1]
+
+        return table
+
+
+class ProcessSingles(SinglesMixin, ProcessDataTable):
 
     """Process HiSPARC singles data to clean the data.
 
@@ -1236,7 +1339,7 @@ class ProcessSingles(ProcessDataTable):
     table_name = 'singles'
 
 
-class ProcessSinglesFromSource(ProcessDataTableFromSource):
+class ProcessSinglesFromSource(SinglesMixin, ProcessDataTableFromSource):
 
     """Process HiSPARC singles data from a different source.
 
