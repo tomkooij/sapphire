@@ -82,7 +82,9 @@ from .analysis.process_traces import (TraceObservables, MeanFilter,
                                       DataReduction)
 from .analysis.reconstructions import (ReconstructESDEvents,
                                        ReconstructESDEventsFromSource,
-                                       ReconstructESDCoincidences)
+                                       ReconstructESDCoincidences,
+                                       ReconstructSimulatedEvents,
+                                       ReconstructSimulatedCoincidences)
 from .analysis.time_deltas import ProcessTimeDeltas
 from .api import Network, Station
 from .clusters import HiSPARCStations, HiSPARCNetwork, ScienceParkCluster
@@ -123,7 +125,8 @@ __all__ = ['analysis',
            'ProcessSingles', 'ProcessSinglesFromSource',
            'TraceObservables', 'MeanFilter', 'DataReduction',
            'ReconstructESDEvents', 'ReconstructESDEventsFromSource',
-           'ReconstructESDCoincidences',
+           'ReconstructESDCoincidences', 'ReconstructSimulatedEvents',
+           'ReconstructSimulatedCoincidences',
            'ProcessTimeDeltas',
            'Network', 'Station',
            'HiSPARCStations', 'HiSPARCNetwork', 'ScienceParkCluster',
